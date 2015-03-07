@@ -1,16 +1,26 @@
 ---
-- name: Install tools + build dependencies for rTorrent-PS
+- name: Install runtime dependencies for rTorrent-PS
   sudo: yes
   apt: name={{ item }} state=latest
   with_items:
     - tmux
     - locales
+
+- name: Install build tools for rTorrent-PS
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
     - git
     - wget
     - build-essential
     - libtool
     - autoconf
     - automake
+
+- name: Install build dependencies for rTorrent-PS
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
     - libssl-dev
     - libcppunit-dev
     - libncurses5-dev
