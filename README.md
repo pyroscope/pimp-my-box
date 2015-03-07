@@ -8,7 +8,17 @@ Automated install of rTorrent-PS etc. via
 
 ## Introduction
 
-**TODO**
+Ansible is a tool that allows you to install a complete setup remotely on one or any number of *target hosts*,
+from the comfort of your own workstation.
+The setup is described in so called *playbooks*,
+before executing them you just have to add a few values like the name of target.
+
+The playbooks contained in this repository install the following components:
+
+* [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps#rtorrent-ps)
+* [PyroScope](https://code.google.com/p/pyroscope/) command line tools
+
+Each includes a default configuration, so you end up with a fully working system.
 
 The Ansible playbooks and related commands have been tested on Debian Wheezy, Ubuntu Trusty, and Ubuntu Lucid.
 They should work on other platforms too, especially when they're Debian derivatives, but you might have to make some modifications.
@@ -16,7 +26,9 @@ They should work on other platforms too, especially when they're Debian derivati
 
 ## Installing Ansible
 
-**TODO** Package install
+Ansible has to be installed on the workstation from where you control your target hosts.
+See the [Ansible documentation](http://docs.ansible.com/intro_installation.html)
+for how to install it using the package manager of your platform.
 
 Another way to install Ansible is to put it into your home directory.
 The following commands just require Python to be installed to your system,
@@ -34,3 +46,7 @@ bin/pip install "ansible"
 ln -s "$PWD/bin"/ansible* "$HOME/bin"
 ansible --version
 ```
+
+To get it running on Windows is also possible by
+[using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
+(untested, success stories welcome).
