@@ -54,3 +54,40 @@ ansible --version
 To get it running on Windows is also possible by
 [using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
 (untested, success stories welcome).
+
+
+## Setting Up Your Environment
+
+If Ansible is installed and ready to run, you next have to configure the target host.
+This can either be added to ``/etc/ansible/hosts``, or else  via a ``hosts`` file in your working directory.
+The ``hosts-example`` file shows how this has to look like, enter the name of your target instead of ``box.example.com``.
+
+
+```ini
+[box]
+box.example.com
+```
+
+Next, we check your setup and that Ansible is able to connect to the target and do its job there.
+Call the command as shown after the ``$``, and it should print what OS you have installed, like shown in the example.
+
+'''sh
+$ ansible box -m setup -a "filter=*distribution*"
+box.example.com | success >> {
+    "ansible_facts": {
+        "ansible_distribution": "Debian",
+        "ansible_distribution_major_version": "7",
+        "ansible_distribution_release": "wheezy",
+        "ansible_distribution_version": "7.8"
+    },
+    "changed": false
+}
+```
+
+If anything goes wrong, add ``-vvvv`` to the ``ansible`` command.
+
+
+## Running the Playbook
+
+To execute the playbook, call either ``ansible-playbook site.yml`` with a configuration in ``/etc``,
+or else ``ansible-playbook -i hosts site.yml``.
