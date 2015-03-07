@@ -1,0 +1,18 @@
+---
+- name: Install tools + build dependencies for rTorrent-PS
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - tmux
+    - locales
+    - git
+    - wget
+    - build-essential
+    - libtool
+    - autoconf
+    - automake
+    - libssl-dev
+    - libcppunit-dev
+    - libncurses5-dev
+    - libncursesw5-dev
+    - libsigc++-2.0-dev

@@ -1,0 +1,12 @@
+---
+- name: Install tools + build dependencies for PyroScope
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - git
+    - subversion
+    - python-setuptools
+    - python-virtualenv
+    - python-dev
+    - libxml2-dev
+    - libxslt1-dev
