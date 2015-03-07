@@ -71,7 +71,7 @@ box.example.com
 Next, we check your setup and that Ansible is able to connect to the target and do its job there.
 Call the command as shown after the ``$``, and it should print what OS you have installed, like shown in the example.
 
-'''sh
+```sh
 $ ansible box -m setup -a "filter=*distribution*"
 box.example.com | success >> {
     "ansible_facts": {
