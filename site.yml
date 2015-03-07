@@ -1,0 +1,4 @@
+---
+# All available playbooks
+- include: security.yml
+- include: rtorrent.yml
