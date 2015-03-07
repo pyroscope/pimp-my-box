@@ -56,9 +56,22 @@ To get it running on Windows is also possible by
 (untested, success stories welcome).
 
 
+## Checking Out the Code
+
+To work with the playbooks, you of course need a local copy.
+Unsurprisingly, you also need ``git`` installed for this.
+
+```sh
+which git || sudo apt-get install git
+mkdir ~/src; cd ~/src
+git clone "https://github.com/pyroscope/pimp-my-box.git"
+cd "pimp-my-box"
+```
+
+
 ## Setting Up Your Environment
 
-If Ansible is installed and ready to run, you next have to configure the target host.
+Now with Ansible installed and having local working directory, you next need to configure the target host.
 This can either be added to ``/etc/ansible/hosts``, or else  via a ``hosts`` file in your working directory.
 The ``hosts-example`` file shows how this has to look like, enter the name of your target instead of ``box.example.com``.
 
