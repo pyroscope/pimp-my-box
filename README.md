@@ -11,7 +11,7 @@ Automated install of rTorrent-PS etc. via
 Ansible is a tool that allows you to install a complete setup remotely on one or any number of *target hosts*,
 from the comfort of your own workstation.
 The setup is described in so called *playbooks*,
-before executing them you just have to add a few values like the name of target.
+before executing them you just have to add a few values like the name of your target.
 
 The playbooks contained in this repository install the following components:
 
