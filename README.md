@@ -51,8 +51,8 @@ ln -s "$PWD/bin"/ansible* "$HOME/bin"
 ansible --version
 ```
 
-To get it running on Windows is also possible by
-[using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
+To get it running on Windows is also possible,
+by [using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
 (untested, success stories welcome).
 
 
