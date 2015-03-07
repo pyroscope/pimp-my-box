@@ -23,6 +23,10 @@ Each includes a default configuration, so you end up with a fully working system
 The Ansible playbooks and related commands have been tested on Debian Wheezy, Ubuntu Trusty, and Ubuntu Lucid.
 They should work on other platforms too, especially when they're Debian derivatives, but you might have to make some modifications.
 
+If you have questions or need help, please use
+the [pyroscope-users](http://groups.google.com/group/pyroscope-users) mailing list
+or the inofficial ``##rtorrent`` channel on ``irc.freenode.net``.
+
 
 ## Installing Ansible
 
