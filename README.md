@@ -104,3 +104,6 @@ If anything goes wrong, add ``-vvvv`` to the ``ansible`` command.
 
 To execute the playbook, call either ``ansible-playbook site.yml`` with a configuration in ``/etc``,
 or else ``ansible-playbook -i hosts site.yml``.
+If you added more than one host into the ``box`` group and want to only address one of them,
+use ``ansible-playbook -l ‹hostname› site.yml``.
+Add ``-v`` to get more detailed information on what each action does.
