@@ -1,0 +1,12 @@
+---
+- name: Install basic tools
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - htop
+    - wget
+    - curl
+    - links
+    - lsof
+    - bind9-host
+    - tmux

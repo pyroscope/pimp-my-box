@@ -1,0 +1,5 @@
+---
+# Basic host setup
+- hosts: box
+  roles:
+    - common
