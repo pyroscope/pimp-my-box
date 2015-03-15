@@ -4,6 +4,7 @@
   apt: name={{ item }} state=latest
   with_items:
     - htop
+    - ncdu
     - wget
     - curl
     - links
