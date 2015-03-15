@@ -71,7 +71,7 @@ cd "pimp-my-box"
 
 ## Setting Up Your Environment
 
-Now with Ansible installed and having local working directory, you next need to configure the target host.
+Now with Ansible installed and having a local working directory, you next need to configure the target host.
 This can either be added to ``/etc/ansible/hosts``, or else  via a ``hosts`` file in your working directory.
 The ``hosts-example`` file shows how this has to look like, enter the name of your target instead of ``box.example.com``.
 
