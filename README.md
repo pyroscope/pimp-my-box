@@ -107,3 +107,10 @@ or else ``ansible-playbook -i hosts site.yml``.
 If you added more than one host into the ``box`` group and want to only address one of them,
 use ``ansible-playbook -l ‹hostname› site.yml``.
 Add ``-v`` to get more detailed information on what each action does.
+
+
+## References
+
+### Server Hardening
+
+ * [Secure Secure Shell](https://stribika.github.io/2015/01/04/secure-secure-shell.html)
