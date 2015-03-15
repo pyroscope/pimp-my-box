@@ -28,10 +28,20 @@ the [pyroscope-users](http://groups.google.com/group/pyroscope-users) mailing li
 or the inofficial ``##rtorrent`` channel on ``irc.freenode.net``.
 
 
-## Installing Ansible
+## How to use this?
+
+Here's the steps you need to follow to get a working installation on your target host.
+Note that this cannot be an Ansible or Linux shell 101, so for details refer to
+the usual sources
+like [The Debian Administrator's Handbook](http://debian-handbook.info/browse/stable/),
+[The Linux Command Line](http://linuxcommand.org/tlcl.php),
+and the [Ansible Documentation](http://docs.ansible.com/#ansible-documentation).
+
+
+### Installing Ansible
 
 Ansible has to be installed on the workstation from where you control your target hosts.
-See the [Ansible documentation](http://docs.ansible.com/intro_installation.html)
+See the [Ansible Documentation](http://docs.ansible.com/intro_installation.html)
 for how to install it using the package manager of your platform.
 
 Another way to install Ansible is to put it into your home directory.
@@ -56,7 +66,7 @@ by [using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
 (untested, success stories welcome).
 
 
-## Checking Out the Code
+### Checking Out the Code
 
 To work with the playbooks, you of course need a local copy.
 Unsurprisingly, you also need ``git`` installed for this.
@@ -69,7 +79,7 @@ cd "pimp-my-box"
 ```
 
 
-## Setting Up Your Environment
+### Setting Up Your Environment
 
 Now with Ansible installed and having a local working directory, you next need to configure the target host.
 This can either be added to ``/etc/ansible/hosts``, or else  via a ``hosts`` file in your working directory.
@@ -100,7 +110,7 @@ box.example.com | success >> {
 If anything goes wrong, add ``-vvvv`` to the ``ansible`` command.
 
 
-## Running the Playbook
+### Running the Playbook
 
 To execute the playbook, call either ``ansible-playbook site.yml`` with a configuration in ``/etc``,
 or else ``ansible-playbook -i hosts site.yml``.
