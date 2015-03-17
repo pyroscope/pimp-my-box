@@ -26,3 +26,9 @@
     - libncurses5-dev
     - libncursesw5-dev
     - libsigc++-2.0-dev
+- name: Create rtorrent group
+  sudo: yes
+  group: name=rtorrent state=present
+- name: Create rtorrent user
+  sudo: yes
+  user: name=rtorrent comment="rTorrent Client" group=rtorrent groups=users
