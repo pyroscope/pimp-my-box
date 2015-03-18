@@ -59,6 +59,11 @@ cd "$base/ansible"
 bin/pip install "ansible"
 ln -s "$PWD/bin"/ansible* "$HOME/bin"
 ansible --version
+
+test -f ~/.ansible.cfg || cat >~/.ansible.cfg <<'EOF'
+remote_tmp      = $HOME/.ansible/tmp
+roles_path      = $HOME/.ansible/roles:/etc/ansible/roles
+EOF
 ```
 
 To get it running on Windows is also possible,
