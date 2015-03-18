@@ -7,4 +7,5 @@ before_install:
 install:
   - pip install ansible
 script:
+  - ansible --version
   - ansible-playbook -i hosts-example -l localhost --syntax-check --list-tasks site.yml
