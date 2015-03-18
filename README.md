@@ -131,3 +131,4 @@ Add ``-v`` to get more detailed information on what each action does.
 ### Server Hardening
 
  * [Secure Secure Shell](https://stribika.github.io/2015/01/04/secure-secure-shell.html)
+ * https://github.com/sfromm/ansible-rkhunter
