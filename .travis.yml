@@ -7,5 +7,4 @@ before_install:
 install:
   - pip install ansible
 script:
-  - echo -e "[box]\\nlocalhost" >hosts
-  - ansible-playbook -i hosts --syntax-check --list-tasks site.yml
+  - ansible-playbook -i hosts-example -l localhost --syntax-check --list-tasks site.yml
