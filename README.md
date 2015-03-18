@@ -1,6 +1,8 @@
 # pimp-my-box
 
 ![logo](https://raw.githubusercontent.com/pyroscope/pimp-my-box/master/images/pimp-my-box.png)
+[![issues](https://img.shields.io/github/issues/pyroscope/pimp-my-box.svg)](https://github.com/pyroscope/pimp-my-box/issues)
+[![travis](https://api.travis-ci.org/pyroscope/pimp-my-box.svg)](https://travis-ci.org/pyroscope/pimp-my-box)
 
 Automated install of rTorrent-PS etc. via
 [Ansible](http://docs.ansible.com/).
