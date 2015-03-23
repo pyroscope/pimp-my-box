@@ -1,0 +1,3 @@
+---
+- name: Install 'pi' scripts
+  copy: src=bin dest=/home/pi owner=pi group=pi mode=0755
