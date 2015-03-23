@@ -1,3 +1,5 @@
 ---
+- name: Install 'pi' home dir files
+  copy: src=pi/home/ dest=/home/pi owner=pi group=pi mode=0644
 - name: Install 'pi' scripts
-  copy: src=bin dest=/home/pi owner=pi group=pi mode=0755
+  copy: src=pi/bin dest=/home/pi owner=pi group=pi mode=0755
