@@ -1,13 +1,11 @@
 ---
 - name: Install runtime dependencies for rTorrent-PS
-  sudo: yes
   apt: name={{ item }} state=latest
   with_items:
     - tmux
     - locales
 
 - name: Install build tools for rTorrent-PS
-  sudo: yes
   apt: name={{ item }} state=latest
   with_items:
     - git
@@ -18,7 +16,6 @@
     - automake
 
 - name: Install build dependencies for rTorrent-PS
-  sudo: yes
   apt: name={{ item }} state=latest
   with_items:
     - libssl-dev
@@ -28,11 +25,9 @@
     - libsigc++-2.0-dev
 
 - name: Create rtorrent group
-  sudo: yes
   group: name=rtorrent state=present
 
 - name: Create rtorrent user
-  sudo: yes
   user: name=rtorrent comment="rTorrent Client" group=rtorrent groups=users shell=/bin/bash
 
 - name: Create rtorrent home directory

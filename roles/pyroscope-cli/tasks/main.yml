@@ -1,6 +1,5 @@
 ---
 - name: Install tools + build dependencies for PyroScope
-  sudo: yes
   apt: name={{ item }} state=latest
   with_items:
     - git

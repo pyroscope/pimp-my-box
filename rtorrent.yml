@@ -2,5 +2,5 @@
 # Install rTorrent-PS and PyroScope CLI
 - hosts: box
   roles:
-    - rtorrent-ps
-    - pyroscope-cli
+    - { role: rtorrent-ps, sudo: yes, tags: rtps }
+    - { role: pyroscope-cli, sudo: yes, tags: cli }
