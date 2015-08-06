@@ -26,9 +26,20 @@
     - libncurses5-dev
     - libncursesw5-dev
     - libsigc++-2.0-dev
+
 - name: Create rtorrent group
   sudo: yes
   group: name=rtorrent state=present
+
 - name: Create rtorrent user
   sudo: yes
-  user: name=rtorrent comment="rTorrent Client" group=rtorrent groups=users
+  user: name=rtorrent comment="rTorrent Client" group=rtorrent groups=users shell=/bin/bash
+
+- name: Create rtorrent home directory
+  file: path=/home/rtorrent state=directory owner=rtorrent group=rtorrent mode=0750
+
+- name: Create rtorrent home subdirs
+  file: path=/home/rtorrent/{{ item }} state=directory owner=rtorrent group=rtorrent mode=0750
+  with_items:
+    - bin
+    - src
