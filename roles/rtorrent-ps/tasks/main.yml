@@ -38,3 +38,11 @@
   with_items:
     - bin
     - src
+
+- name: Copy rtorrent dot files
+  copy: src=dotfiles/{{ item }} dest=/home/rtorrent/.{{ item }} owner=rtorrent group=rtorrent mode=0640
+  with_items:
+    - bash_aliases
+
+- name: Create rtorrent /var symlink
+  file: src=/home/rtorrent/rtorrent path=/var/torrent state=link
