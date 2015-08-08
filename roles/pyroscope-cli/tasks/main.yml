@@ -7,5 +7,7 @@
     - python-setuptools
     - python-virtualenv
     - python-dev
+    - python-cffi
+    - libffi-dev
     - libxml2-dev
     - libxslt1-dev
