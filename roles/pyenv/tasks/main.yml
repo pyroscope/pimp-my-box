@@ -1,0 +1,28 @@
+---
+- name: Create .local directory
+  file: path=/home/rtorrent/.local state=directory owner=rtorrent group=rtorrent mode=0750
+
+- name: Probe pyenv checkout
+  stat: path=/home/rtorrent/.local/pyenv/plugins/pyenv-installer/.gitignore
+  register: pyenv_flagfile
+
+- name: git clone pyenv project
+  git: repo=https://github.com/yyuu/pyenv.git dest=/home/rtorrent/.local/pyenv
+  when: not pyenv_flagfile.stat.exists
+
+- name: Create plugins directory
+  file: path=/home/rtorrent/.local/pyenv/plugins state=directory owner=rtorrent group=rtorrent mode=0750
+
+- name: git clone pyenv plugins
+  git: repo=https://github.com/yyuu/{{ item }}.git dest=/home/rtorrent/.local/pyenv/plugins/{{ item }}
+  when: not pyenv_flagfile.stat.exists
+  with_items:
+    - pyenv-doctor
+    - pyenv-update
+    - pyenv-virtualenv
+    - pyenv-which-ext
+    - pyenv-installer
+
+- name: Fix pyenv ownership
+  file: path=/home/rtorrent/.local/pyenv state=directory recurse=true owner=rtorrent group=rtorrent
+  when: not pyenv_flagfile.stat.exists

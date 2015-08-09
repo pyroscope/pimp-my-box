@@ -3,4 +3,5 @@
 - hosts: box
   roles:
     - { role: rtorrent-ps, sudo: yes, tags: rtps }
+    - { role: pyenv, sudo: yes, tags: pyenv }
     - { role: pyroscope-cli, sudo: yes, tags: cli }
