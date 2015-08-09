@@ -4,12 +4,34 @@
   with_items:
     - git
     - subversion
+    - build-essential
     - python-setuptools
+    - python-pkg-resources
     - python-virtualenv
     - python-dev
+    - python-pip
     - python-cffi
     - libffi-dev
     - libreadline-dev
     - libsqlite3-dev
     - libxml2-dev
     - libxslt1-dev
+
+- name: git clone 'pyrocore'
+  shell: su -c 'git clone https://github.com/pyroscope/pyrocore.git pyroscope' rtorrent
+  args:
+    executable: /bin/bash
+    chdir: /home/rtorrent/lib
+    creates: /home/rtorrent/lib/pyroscope/.gitignore
+
+- name: Initial 'pyroscope' installation
+  shell: su -c './update-to-head.sh' rtorrent
+  args:
+    executable: /bin/bash
+    chdir: /home/rtorrent/lib/pyroscope
+    creates: /home/rtorrent/lib/pyroscope/bin/pyroadmin
+
+- shell: /home/rtorrent/bin/pyroadmin --version
+  changed_when: False
+  register: pyro_version
+- debug: var=pyro_version.stdout
