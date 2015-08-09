@@ -38,6 +38,9 @@
   with_items:
     - bin
     - src
+    - tmp
+    - .local
+    - .local/profile.d
 
 - name: Copy rtorrent dot files
   copy: src=dotfiles/{{ item }} dest=/home/rtorrent/.{{ item }} owner=rtorrent group=rtorrent mode=0640

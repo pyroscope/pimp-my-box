@@ -3,3 +3,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 umask 0027
+
+# BEGIN profile.d
+for i in ~/.local/profile.d/*.sh; do test ! -f "$i" || . "$i"; done
+unset i
+# END profile.d
