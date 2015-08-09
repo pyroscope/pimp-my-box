@@ -9,5 +9,7 @@
     - python-dev
     - python-cffi
     - libffi-dev
+    - libreadline-dev
+    - libsqlite3-dev
     - libxml2-dev
     - libxslt1-dev
