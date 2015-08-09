@@ -1,6 +1,5 @@
 ---
 - name: Install basic tools
-  sudo: yes
   apt: name={{ item }} state=latest
   with_items:
     - htop
