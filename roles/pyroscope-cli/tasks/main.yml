@@ -25,13 +25,15 @@
     creates: /home/rtorrent/lib/pyroscope/.gitignore
 
 - name: Initial 'pyroscope' installation
-  shell: su -c './update-to-head.sh' rtorrent
+  shell: su -c './update-to-head.sh ~/.local/pyenv/versions/2.7.10/bin/python' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent/lib/pyroscope
     creates: /home/rtorrent/lib/pyroscope/bin/pyroadmin
 
-- shell: /home/rtorrent/bin/pyroadmin --version
+- name: Installed versions
+  name: Get PyroScope & Python version
+  shell: "/home/rtorrent/bin/pyroadmin --version ; /home/rtorrent/lib/pyroscope/bin/python --version 2>&1"
   changed_when: False
-  register: pyro_version
-- debug: var=pyro_version.stdout
+  register: pyro_versions
+- debug: var=pyro_versions.stdout_lines
