@@ -13,16 +13,17 @@ Automated install of rTorrent-PS etc. via
 Ansible is a tool that allows you to install a complete setup remotely on one or any number of *target hosts*,
 from the comfort of your own workstation.
 The setup is described in so called *playbooks*,
-before executing them you just have to add a few values like the name of your target.
+before executing them you just have to add a few values like the name of your target host.
 
 The playbooks contained in this repository install the following components:
 
 * [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps#rtorrent-ps)
 * [PyroScope](https://code.google.com/p/pyroscope/) command line tools
+* [FlexGet](http://flexget.com/)
 
 Each includes a default configuration, so you end up with a fully working system.
 
-The Ansible playbooks and related commands have been tested on Debian Wheezy, Ubuntu Trusty, and Ubuntu Lucid.
+The Ansible playbooks and related commands have been tested on Debian Jessie, Ubuntu Trusty, and Ubuntu Lucid.
 They should work on other platforms too, especially when they're Debian derivatives, but you might have to make some modifications.
 
 If you have questions or need help, please use
