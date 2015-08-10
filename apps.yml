@@ -1,0 +1,5 @@
+---
+# Install miscellaneous applications
+- hosts: box
+  roles:
+    - { role: flexget, sudo: yes, tags: fg }
