@@ -1,2 +1,17 @@
 ---
-- debug: msg=flexget
+- name: Create FlexGet virtualenv
+  shell: su -c '{{ venv_bin }} lib/flexget' rtorrent
+  args:
+    executable: /bin/bash
+    chdir: /home/rtorrent
+    creates: /home/rtorrent/lib/flexget/bin/pip
+
+- name: Install FlexGet
+  shell: su -c 'lib/flexget/bin/pip install flexget' rtorrent
+  args:
+    executable: /bin/bash
+    chdir: /home/rtorrent
+    creates: /home/rtorrent/lib/flexget/bin/flexget
+
+- name: Create flexget ~/bin symlink
+  file: src=../lib/flexget/bin/flexget path=/home/rtorrent/bin/flexget state=link owner=rtorrent group=rtorrent
