@@ -39,3 +39,10 @@
 
 - name: Define global pyenv version
   copy: content="2.7.10" dest=/home/rtorrent/.local/pyenv/version owner=rtorrent group=rtorrent mode=0640 force=no
+
+- name: Install virtualenv and update pip
+  shell: su -c '.local/pyenv/versions/2.7.10/bin/pip install -U pip virtualenv' rtorrent
+  args:
+    executable: /bin/bash
+    chdir: /home/rtorrent
+    creates: /home/rtorrent/.local/pyenv/versions/2.7.10/bin/virtualenv
