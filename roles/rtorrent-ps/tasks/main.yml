@@ -37,6 +37,7 @@
   file: path=/home/rtorrent/{{ item }} state=directory owner=rtorrent group=rtorrent mode=0750
   with_items:
     - bin
+    - etc
     - lib
     - src
     - tmp
@@ -47,6 +48,11 @@
   copy: src=dotfiles/{{ item }} dest=/home/rtorrent/.{{ item }} owner=rtorrent group=rtorrent mode=0640
   with_items:
     - bash_aliases
+
+- name: Copy rtorrent bash helpers
+  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0640
+  with_items:
+    - _tools.sh
 
 - name: Create rtorrent /var symlink
   file: src=/home/rtorrent/rtorrent path=/var/torrent state=link

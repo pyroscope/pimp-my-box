@@ -1,0 +1,21 @@
+#! /bin/bash
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Auto-label items in ruTorrent
+#
+set -e
+set +x
+
+rule() {
+    local label=$1; shift
+    ~/bin/rtcontrol -Drtorrent_rc="$rtorrent_rc_file" custom_1= --cron --custom 1="$label" "$@" || :
+}
+
+. ~/bin/_tools.sh
+pid_guard $(basename "$0")
+. ~/etc/autolabel_rules
+
+# EOF

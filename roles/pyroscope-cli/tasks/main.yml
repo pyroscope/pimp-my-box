@@ -37,3 +37,16 @@
   changed_when: False
   register: pyro_versions
 - debug: var=pyro_versions.stdout_lines
+
+- name: Copy helper scripts & cron jobs
+  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0750
+  with_items:
+    - _cron_autolabel
+
+- name: Copy ~/etc config files (once)
+  copy: src=etc/{{ item }} dest=/home/rtorrent/etc/{{ item }} owner=rtorrent group=rtorrent mode=0640 force=no
+  with_items:
+    - autolabel_rules
+
+- name: Add rtorrent cron job '_cron_autolabel'
+  cron: user=rtorrent minute=*/31 name=_cron_autolabel job="~/bin/_cron_autolabel --cron"

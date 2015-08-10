@@ -1,0 +1,18 @@
+#! script for /bin/bash inclusion
+#
+# rtcontrol rules for auto-labeling
+#
+# This file is initially installed by Ansible, but never overwritten, so
+# you can add your own modifications or replace it using your own playbooks!
+# It is sourced by the "~/bin/_cron_autolabel" cron job.
+#
+# Order matters - once a label is set, the later rules will ignore that labeled item.
+#
+
+rule BluRay     /COMPLETE.BLURAY/,/Full.BluRay/
+rule Movies     traits=movie
+rule WEB-DL     /WEB-DL/
+rule TV-Pack    traits=tv size=+1.5G "!/S[0-9][0-9]E[0-9][0-9]/"
+rule TV         traits=tv
+
+# EOF
