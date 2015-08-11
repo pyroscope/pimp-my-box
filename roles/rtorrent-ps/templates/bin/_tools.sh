@@ -7,8 +7,8 @@
 # Source this in other scripts.
 
 # common env vars
-rtorrent_rc_file="$HOME/rtorrent/rtorrent.rc"
-
+main_rtrc_file="{{ main_rtrc_file }}"
+rutorrent_rtrc_file="{{ rutorrent_rtrc_file }}" # normally the same as 'main_rtrc_file'
 
 # Prevent concurrent script execution
 pid_guard() { # scriptname

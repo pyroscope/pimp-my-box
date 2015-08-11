@@ -11,7 +11,7 @@ set +x
 
 rule() {
     local label=$1; shift
-    ~/bin/rtcontrol -Drtorrent_rc="$rtorrent_rc_file" custom_1= --cron --custom 1="$label" "$@" || :
+    ~/bin/rtcontrol -Drtorrent_rc="$rutorrent_rtrc_file" custom_1= --cron --custom 1="$label" "$@" || :
 }
 
 . ~/bin/_tools.sh

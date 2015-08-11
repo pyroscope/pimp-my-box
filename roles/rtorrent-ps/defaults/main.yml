@@ -1,0 +1,2 @@
+main_rtrc_file: /home/rtorrent/rtorrent/rtorrent.rc
+rutorrent_rtrc_file: "{{ main_rtrc_file }}"
