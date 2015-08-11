@@ -39,6 +39,7 @@
     - bin
     - etc
     - lib
+    - rtorrent
     - src
     - tmp
     - .local
