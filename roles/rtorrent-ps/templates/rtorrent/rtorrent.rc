@@ -78,7 +78,7 @@ view.sort_current = seeding,greater=d.ratio=
 
 
 #
-# PyroScope SETTINGS
+# PyroScope Settings
 #
 
 # Set "pyro.extended" to 1 to activate rTorrent-PS features!
