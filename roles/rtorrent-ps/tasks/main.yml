@@ -67,3 +67,9 @@
 
 - name: Install initial rtorrent crontab
   copy: src=crontab dest=/var/spool/cron/crontabs/rtorrent owner=rtorrent group=crontab mode=0600 force=no
+
+- name: Render default configuration and start script
+  template: src="rtorrent/{{ item.name }}" dest="/home/rtorrent/rtorrent/{{ item.name }}" owner=rtorrent group=rtorrent mode="{{ item.mode }}" force="{{ force_cfg }}"
+  with_items:
+    - { name: 'rtorrent.rc', mode: 0640 }
+    - { name: 'start', mode: 0750 }

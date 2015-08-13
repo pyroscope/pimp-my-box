@@ -1,2 +1,8 @@
+force_cfg: no
 main_rtrc_file: /home/rtorrent/rtorrent/rtorrent.rc
 rutorrent_rtrc_file: "{{ main_rtrc_file }}"
+rtorrent_bindir: /opt/rtorrent/bin/
+rt_global_up_rate_kb: 120000
+rt_global_down_rate_kb: "{{ rt_global_up_rate_kb }}"
+rt_pieces_memory = 1800M
+rt_keys_layout = qwertz

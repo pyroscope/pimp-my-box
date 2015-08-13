@@ -1,0 +1,186 @@
+### rtorrent settings #######################################################
+#
+# This is the standard configuration that supports both PyroScope and
+# (optionally) rTorrent-PS features. This file is configured for a
+# rTorrent instance located in
+#
+#       /home/rtorrent/rtorrent (a/k/a /var/torrent)
+#
+#############################################################################
+
+#
+# Environment & personal preferences (check & adapt these)
+#
+
+# general
+throttle.global_up.max_rate.set_kb = {{ rt_global_up_rate_kb }}
+throttle.global_down.max_rate.set_kb = {{ rt_global_down_rate_kb }}
+throttle.max_uploads.set = 100
+throttle.max_uploads.global.set = 250
+trackers.numwant.set = 80
+network.http.max_open.set = 64
+network.max_open_files.set = 600
+network.max_open_sockets.set = 300
+protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
+system.umask.set = 0027
+keys.layout.set = {{ rt_keys_layout }}
+pieces.hash.on_completion.set = no
+
+# range for listening port
+network.port_range.set = 64333-64666
+network.port_random.set = no
+
+# tracker-less torrent support
+dht.mode.set = disable
+protocol.pex.set = no
+trackers.use_udp.set = no
+
+# peer settings
+throttle.min_peers.normal.set = 20
+throttle.max_peers.normal.set = 60
+throttle.min_peers.seed.set = 30
+throttle.max_peers.seed.set = 80
+
+# resource usage
+pieces.memory.max.set = {{ rt_pieces_memory }}
+network.xmlrpc.size_limit.set = 3M
+
+
+#
+# CORE settings (mostly keep these, but still check them)
+#
+network.http.capath.set = /etc/ssl/certs
+encoding.add = utf8
+
+directory.default.set = /var/torrent/work
+session.path.set = /var/torrent/.session
+network.scgi.open_local = /var/torrent/.scgi_local
+##network.scgi.open_port = localhost:5099
+log.execute = /var/torrent/log/execute.log
+
+# SCHEDULE: Make SCGI socket group-writable
+schedule = scgi_permission,0,0,"execute.nothrow=chmod,g+w,/var/torrent/.scgi_local"
+
+# SCHEDULE: Watch directories
+schedule = watch_start_directory,10,10,load.start=/var/torrent/watch/start/*.torrent
+schedule = watch_load_directory,15,20,load.normal=/var/torrent/watch/load/*.torrent
+
+# SCHEDULE: Watch disk space
+schedule = low_diskspace,15,60,close_low_diskspace=1000M
+
+# EVENTS: Logging (don't log "opened", or you get swamped at startup)
+method.set_key = event.download.inserted_new,log,"print=\"LOADED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
+method.set_key = event.download.finished,log,"print=\"COMPLETED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
+method.set_key = event.download.closed,log,"print=\"CLOSED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
+
+# UI/VIEW: Sort "seeding" by ratio
+view.sort_current = seeding,greater=d.ratio=
+
+
+#
+# PyroScope SETTINGS
+#
+
+# Set "pyro.extended" to 1 to activate rTorrent-PS features!
+method.insert = pyro.extended, value|const, 1
+
+# Set "pyro.bin_dir" to the "bin" directory where you installed the pyrocore tools!
+# Make sure you end it with a "/"; if this is left empty, then the shell's path is searched.
+method.insert = pyro.bin_dir, string|const, ~/bin/
+
+# Remove the ".default" if you want to change something (else your
+# changes get over-written on update).
+method.insert = pyro.rtorrent_rc, string|const|private, "$cat=~/.pyroscope/rtorrent-0.8.9.rc.default"
+import = $pyro.rtorrent_rc=
+
+# TORQUE: Daemon watchdog schedule
+# Must be activated by touching the "~/.pyroscope/run/pyrotorque" file!
+# Set the second argument to "-v" or "-q" to change log verbosity.
+schedule = pyro_watchdog,30,300,"pyro.watchdog=~/.pyroscope,"
+
+# CURL options
+branch=pyro.extended=,"network.http.ssl_verify_peer.set=0"
+branch=pyro.extended=,"network.http.ssl_verify_host.set=0"
+branch=pyro.extended=,"network.http.dns_cache_timeout.set=25"
+
+# The following view changes rely on additional fields available with PyroScope added,
+# but are a matter of preference, so you may comment them out
+
+# UI/VIEW: Sort incomplete by date added
+view.sort_current = incomplete,greater=d.custom=tm_loaded
+view.sort_new     = incomplete,greater=d.custom=tm_loaded
+
+# UI/VIEW: Show recently completed top-most in "main"
+view.sort_current = main,"compare=-+,d.custom=tm_completed,d.custom=tm_loaded"
+view.filter_on = main,event.download.finished
+
+# UI/VIEW: Show active and incomplete torrents (in view #0) and update every 20 seconds
+#   Items are grouped into complete, incomplete, and queued, in that order (rT-PS only).
+#   Within each group, they're sorted by download and then upload speed.
+branch=pyro.extended=,false=,"view_sort_current = active,greater=d.get_up_rate="
+branch=pyro.extended=,"view_sort_current = active,\"compare=----,d.is_open=,d.get_complete=,d.get_down_rate=,d.get_up_rate=\""
+schedule = filter_active,12,20,"view_filter = active,\"or={d.get_up_rate=,d.get_down_rate=,not=$d.get_complete=}\" ;view_sort=active"
+
+# UI: PgUp/Dn, Home, End
+branch=pyro.extended=,"schedule = bind_home,0,0,\"ui.bind_key=download_list,0406,ui.focus.home=\""
+branch=pyro.extended=,"schedule = bind_end, 0,0,\"ui.bind_key=download_list,0550,ui.focus.end=\""
+branch=pyro.extended=,"schedule = bind_pgup,0,0,\"ui.bind_key=download_list,0523,ui.focus.pgup=\""
+branch=pyro.extended=,"schedule = bind_pgdn,0,0,\"ui.bind_key=download_list,0522,ui.focus.pgdn=\""
+
+
+#
+# LOCAL Settings
+#
+
+# Add anything of your own here...
+
+# Throttles
+throttle.up = kb500, 500
+throttle.up = onemb, 1024
+throttle.up = lo_up, 2048
+# throttle.ip = lo_up, some.domain.name
+# or rtxmlrpc throttle.ip=,lo_up,some.domain.name
+
+# Set your own session name
+## session.name.set = "$cat=MY_ID,:,$system.pid="
+
+# Stupid ^Q be gone!
+method.insert = quit, simple, "execute=kill,-INT,$system.pid="
+method.insert = print_noquit, simple|private, "print=\"^Q is disabled, use '^X quit='\""
+branch=pyro.extended=,"schedule = bind_no_quit,0,0,\"ui.bind_key=download_list,^q,print_noquit=\""
+
+# VIEWs
+schedule = bind_hashing,0,0,"ui.bind_key=download_list,#,ui.current_view.set=hashing"
+##schedule = bind_active,0,0,"ui.bind_key=download_list,0,ui.current_view.set=active"
+
+# UI: Collapsed view defaults
+branch=pyro.extended=,"view.collapsed.toggle=main"
+branch=pyro.extended=,"view.collapsed.toggle=name"
+branch=pyro.extended=,"view.collapsed.toggle=stopped"
+branch=pyro.extended=,"view.collapsed.toggle=incomplete"
+branch=pyro.extended=,"view.collapsed.toggle=active"
+branch=pyro.extended=,"view.collapsed.toggle=rtcontrol"
+
+# UI: Add day break to log
+schedule = log_new_day,00:00:00,24:00:00,"print=\"New day \",$to_date=$system.time="
+
+# UI: Show traffic of the last hour
+network.history.depth.set = 112
+schedule = network_history_sampling,1,32, network.history.sample=
+method.insert = network.history.auto_scale.toggle, simple|private, "branch=network.history.auto_scale=,\"network.history.auto_scale.set=0\",\"network.history.auto_scale.set=1\""
+method.insert = network.history.auto_scale.ui_toggle, simple|private, "network.history.auto_scale.toggle= ;network.history.refresh="
+branch=pyro.extended=,"schedule = bind_auto_scale,0,0,\"ui.bind_key=download_list,=,network.history.auto_scale.ui_toggle=\""
+
+# NETWORK: Unwanted peers
+##ipv4_filter.add_address = 1.2.3.666, unwanted
+
+# Logging:
+#   Levels = critical error warn notice info debug
+#   Groups = connection_* dht_* peer_* rpc_* storage_* thread_* tracker_* torrent_*
+method.insert = log.filename, string|const|simple|private,"cat=/var/torrent/log/rtorrent-,\"$system.time=\",\".log\""
+print=(cat,"Logging to ",(log.filename))
+log.open_file = "log", (log.filename)
+log.add_output = "info", "log"
+##log.add_output = "tracker_debug", "log"
+
+### END rtorrent.rc #########################################################
