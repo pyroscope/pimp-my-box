@@ -40,6 +40,13 @@
     - etc
     - lib
     - rtorrent
+    - rtorrent/.session
+    - rtorrent/done
+    - rtorrent/log
+    - rtorrent/watch
+    - rtorrent/watch/load
+    - rtorrent/watch/start
+    - rtorrent/work
     - src
     - tmp
     - .local
