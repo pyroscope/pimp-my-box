@@ -15,3 +15,6 @@
 
 - name: Create flexget ~/bin symlink
   file: src=../lib/flexget/bin/flexget path=/home/rtorrent/bin/flexget state=link owner=rtorrent group=rtorrent
+
+- name: Create default FlexGet config (so --help works)
+  copy: content="" dest=/home/rtorrent/lib/flexget/config.yml owner=rtorrent group=rtorrent mode=0640 force=no
