@@ -126,6 +126,9 @@ If you added more than one host into the ``box`` group and want to only address 
 use ``ansible-playbook -l ‹hostname› site.yml``.
 Add ``-v`` to get more detailed information on what each action does.
 
+Note that at the moment, you still need to additionally download and install the `rtorrent-ps` Debian package
+as found on [Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
+
 
 ## References
 
