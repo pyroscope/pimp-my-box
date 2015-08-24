@@ -2,4 +2,5 @@
 # Security hardening
 - hosts: box
   roles:
-    - sshd
+    - { role: sshd, sudo: yes, tags: sshd }
+    - { role: ufw, sudo: yes, when: ufw, tags: ufw }
