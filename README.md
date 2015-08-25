@@ -17,6 +17,7 @@ before executing them you just have to add a few values like the name of your ta
 
 The playbooks contained in this repository install the following components:
 
+* Security hardening of your server
 * [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps#rtorrent-ps)
 * [PyroScope](https://code.google.com/p/pyroscope/) command line tools
 * [FlexGet](http://flexget.com/)
@@ -115,7 +116,16 @@ box.example.com | success >> {
 }
 ```
 
-If anything goes wrong, add ``-vvvv`` to the ``ansible`` command.
+If anything goes wrong, add ``-vvvv`` to the ``ansible`` command for more diagnostics,
+and also check your `~/.ssh/config` and the Ansible connection settings in your `host_vars`.
+
+Example `~/.ssh/config` snippet:
+
+**TODO**
+
+Example host variables in `host_vars/box/main.yml`:
+
+**TODO**
 
 
 ### Running the Playbook
@@ -126,8 +136,55 @@ If you added more than one host into the ``box`` group and want to only address 
 use ``ansible-playbook -l ‹hostname› site.yml``.
 Add ``-v`` to get more detailed information on what each action does.
 
-Note that at the moment, you still need to additionally download and install the `rtorrent-ps` Debian package
-as found on [Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
+Note that at the moment, you still need to additionally download and install (`dpkg -i`)
+the `rtorrent-ps` Debian package as found on
+[Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
+
+
+### Starting rTorrent
+
+As mentione before, after successfully running the Ansible playbook, a fully configured
+setup is found on the target. So to start rTorrent, call this command as the `rTorrent` user:
+
+```sh
+tmux -2u new -n rT-PS -s rtorrent "~/rtorrent/start; exec bash"
+```
+
+To detach from this session (meaning rTorrent continues to run), press `Ctrl-a` followed by `d`.
+
+
+### Activating Firewall Rules
+
+If you want to set up firewall rules using the
+[Uncomplicated Firewall](https://en.wikipedia.org/wiki/Uncomplicated_Firewall) (UFW) tool,
+then call the playbook using this command:
+
+```sh
+# See above regarding adding '-i' and '-l' options
+ansible-playbook site.yml -t ufw -e ufw=true
+```
+
+This will install the `ufw` package if missing, and set up all rules needed by apps installed
+using this project. Note that activating the firewall is left as a manual task, since you can
+make a remote server pretty much unusable when SSH connections get disabled by accident – only
+a rescue mode or virtual console can help to avoid a full reinstall then, if you have no
+physical access to the machine.
+
+So to activate the firewall rules, use this in a `root` shell on the *target host*:
+
+```sh
+egrep 'ssh|22' /lib/ufw/user.rules
+# Make sure the output contains
+#   ### tuple ### limit tcp 22 0.0.0.0/0 any 0.0.0.0/0 in
+# followed by 3 lines starting with '-A'.
+
+ufw enable  # activate the firewall
+ufw status verbose  # show all the settings
+```
+
+### Changing Configuration Defaults
+
+**TODO**
 
 
 ## References
