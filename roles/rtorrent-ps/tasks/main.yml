@@ -54,9 +54,10 @@
     - .local/profile.d
 
 - name: Copy rtorrent dot files
-  copy: src=dotfiles/{{ item }} dest=/home/rtorrent/.{{ item }} owner=rtorrent group=rtorrent mode=0640
+  copy: src=dotfiles/{{ item.name }} dest=/home/rtorrent/.{{ item.name }} owner=rtorrent group=rtorrent mode=0640 force={{ item.force }}
   with_items:
-    - bash_aliases
+    - { name: bash_aliases, force: yes }
+    - { name: tmux.conf, force: no }
 
 - name: Render rtorrent bash helpers
   template: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0640
