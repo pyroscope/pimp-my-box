@@ -144,7 +144,7 @@ the `rtorrent-ps` Debian package as found on
 ### Starting rTorrent
 
 As mentione before, after successfully running the Ansible playbook, a fully configured
-setup is found on the target. So to start rTorrent, call this command as the `rTorrent` user:
+setup is found on the target. So to start rTorrent, call this command as the `rtorrent` user:
 
 ```sh
 tmux -2u new -n rT-PS -s rtorrent "~/rtorrent/start; exec bash"
