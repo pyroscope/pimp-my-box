@@ -12,3 +12,11 @@
 
 - name: Create rutorrent home directory
   file: path=/home/rutorrent state=directory owner=rutorrent group=rutorrent mode=0750
+
+- name: Render ruTorrent FPM pool definition
+  template: src=fpm-rutorrent.conf dest=/etc/php5/fpm/pool.d/rutorrent.conf owner=root group=www-data mode=0644
+
+- name: Set up FPM "php.ini"
+  lineinfile: dest=/etc/php5/fpm/php.ini regexp="^;? ?{{ item.name }}=" line="{{ item.name }}={{ item.value }}"
+  with_items:
+    - {name: 'cgi.fix_pathinfo', value: '1' }
