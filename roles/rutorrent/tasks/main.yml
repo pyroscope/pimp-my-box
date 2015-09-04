@@ -1,0 +1,14 @@
+---
+- name: Install ruTorrent packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - php5-fpm
+
+- name: Create rutorrent group
+  group: name=rutorrent state=present
+
+- name: Create rutorrent user
+  user: name=rutorrent comment="ruTorrent Web UI" group=rutorrent groups=rtorrent,users shell=/bin/bash
+
+- name: Create rutorrent home directory
+  file: path=/home/rutorrent state=directory owner=rutorrent group=rutorrent mode=0750

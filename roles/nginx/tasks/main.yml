@@ -1,0 +1,6 @@
+---
+- name: Install nginx packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - nginx-full
+    - apache2-utils
