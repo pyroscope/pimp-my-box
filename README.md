@@ -187,11 +187,25 @@ ufw status verbose  # show all the settings
 **TODO**
 
 
-### Installing ruTorrent
+### Installing and Updating ruTorrent
 
 The ruTorrent web UI is an optional add-on, and you have to activate it by setting
 `rutorrent_enabled` to `yes` and providing a `rutorrent_www_pass` value, usually in
 your `host_vars/box/main.yml` and `host_vars/box/secrets.yml` files, respectively.
+
+To update to a new version of ruTorrent, first add the desired version as
+`rutorrent_version` to your variables – that version has to be available on
+[Bintray](https://bintray.com/novik65/generic/ruTorrent#files).
+Then move the old installation tree away:
+
+```sh
+cd ~rutorrent
+mv ruTorrent-master _ruTorrent-master-$(date "+%Y-%m-%d-%H%M").bak
+tar cfz _profile-$(date "+%Y-%m-%d-%H%M").bak profile
+```
+
+Finally, rerun the playbook to install the new version. In case anything goes wrong,
+you can move back that backup.
 
 
 ## References
