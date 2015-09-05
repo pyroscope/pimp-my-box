@@ -1,0 +1,27 @@
+---
+- name: Create rutorrent htpasswd
+  shell: "umask 0027; htpasswd -b -c rutorrent.htpasswd {{ rutorrent_www_user }} {{ rutorrent_www_pass }}; chgrp www-data rutorrent.htpasswd"
+  args:
+    chdir: /etc/nginx
+    creates: /etc/nginx/rutorrent.htpasswd
+
+- name: Create rutorrent WWW symlink
+  file: path=/usr/share/nginx/htdocs/rutorrent state=link src=/home/rutorrent/ruTorrent-master
+
+# In nginx.conf:
+#   include /etc/nginx/conf.d/*.conf;
+#   include /etc/nginx/sites-enabled/*;
+
+- name: Render ruTorrent NginX config
+  template: src=nginx-rutorrent.conf dest=/etc/nginx/sites-available/rutorrent owner=root group=www-data mode=0644 force=yes
+  notify:
+    - Test and restart nginx
+
+- name: Disable 'default' site
+  file: path=/etc/nginx/sites-enabled/default state=absent
+
+- name: Enable 'rutorrent' site
+  file: path=/etc/nginx/sites-enabled/rutorrent state=link src=../sites-available/rutorrent
+
+- name: Ensure nginx is running (and enable it at boot)
+  service: name=nginx state=started enabled=yes

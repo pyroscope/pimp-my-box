@@ -1,0 +1,40 @@
+---
+- name: Install PHP packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - php5-cli
+    - php5-fpm
+    - php-apc
+
+- name: Download ruTorrent release archive
+  get_url:
+    dest: "/root/ruTorrent-{{ rutorrent_version }}.zip"
+    url: "https://bintray.com/artifact/download/novik65/generic/ruTorrent-{{ rutorrent_version }}.zip"
+
+- name: Unpack ruTorrent release archive
+  unarchive:
+    copy: no
+    src: "/root/ruTorrent-{{ rutorrent_version }}.zip"
+    dest: /home/rutorrent
+    creates: /home/rutorrent/ruTorrent-master/conf/config.php
+
+- name: Download additional themes
+  get_url:
+    dest: "/root/InAnimaTe-rutorrent-themes.zip"
+    url: "https://github.com/InAnimaTe/rutorrent-themes/archive/master.zip"
+
+- name: Unpack additional themes
+  unarchive:
+    copy: no
+    src: "/root/InAnimaTe-rutorrent-themes.zip"
+    dest: /home/rutorrent/src
+    creates: /home/rutorrent/src/rutorrent-themes-master/README.md
+
+- name: Symlink additional themes
+  file:
+    src: "/home/rutorrent/src/rutorrent-themes-master/{{ item }}"
+    path: "/home/rutorrent/ruTorrent-master/plugins/theme/themes/{{ item }}"
+    state: link
+  with_items:
+    - Agent46
+    - OblivionBlue

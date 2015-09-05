@@ -1,22 +1,66 @@
 ---
-- name: Install ruTorrent packages
-  apt: name={{ item }} state=latest
-  with_items:
-    - php5-fpm
-
 - name: Create rutorrent group
   group: name=rutorrent state=present
 
 - name: Create rutorrent user
   user: name=rutorrent comment="ruTorrent Web UI" group=rutorrent groups=rtorrent,users shell=/bin/bash
 
-- name: Create rutorrent home directory
-  file: path=/home/rutorrent state=directory owner=rutorrent group=rutorrent mode=0750
+- name: Add rtorrent user to www-data group
+  user: name=rtorrent groups=www-data append=yes
 
-- name: Render ruTorrent FPM pool definition
-  template: src=fpm-rutorrent.conf dest=/etc/php5/fpm/pool.d/rutorrent.conf owner=root group=www-data mode=0644
-
-- name: Set up FPM "php.ini"
-  lineinfile: dest=/etc/php5/fpm/php.ini regexp="^;? ?{{ item.name }}=" line="{{ item.name }}={{ item.value }}"
+- name: Create rutorrent home directories
+  file: path=/home/rutorrent/{{ item }} state=directory owner=rutorrent group=www-data mode=0750
   with_items:
-    - {name: 'cgi.fix_pathinfo', value: '1' }
+    - .
+    - bin
+    - src
+    - profile
+    - profile/users
+    - profile/settings
+    - profile/torrents
+
+- include: install.yml
+
+- name: Render rutorrent include for rtorrent
+  template: src=_rutorrent.rc dest=/var/torrent/_rutorrent.rc owner=rtorrent group=rtorrent mode=0640 force=yes
+
+- name: Set ruTorrent config values
+  lineinfile:
+    dest: /home/rutorrent/ruTorrent-master/conf/config.php
+    regexp: "^\\s+\\${{ item.name }} = "
+    line: "\t${{ item.name }} = {{ item.value }};"
+  with_items:
+    # Upper available directory. Absolute path with trailing slash.
+    - {name: 'topDirectory', value: "'/var/torrent/'" }
+    - {name: 'scgi_port', value: '0' }
+    - {name: 'scgi_host', value: '"unix:///var/torrent/.scgi_local"' }
+    - {name: 'profileMask', value: '0770' }
+    - {name: 'profilePath', value: "'/home/rutorrent/profile'" }
+  notify:
+    - Restart php5-fpm
+
+- name: Set ruTorrent permissions
+  file: dest=/home/rutorrent/ruTorrent-master owner=rutorrent group=www-data mode=g+rX,o= recurse=yes
+
+- name: Create user directories
+  file: path="/home/rutorrent/profile/users/{{ item }}" state=directory owner=rutorrent group=www-data mode=0770
+  with_items:
+    - rutorrent
+    - rutorrent/settings
+    - rutorrent/torrents
+
+- name: Create user default settings
+  copy:
+    src: "settings/{{ item }}"
+    dest: "/home/rutorrent/profile/users/rutorrent/settings/{{ item }}"
+    owner: rutorrent
+    group: www-data
+    mode: 0660
+    force: no
+  with_items:
+    - theme.dat
+
+# TODO: ln -s /usr/bin/avconv ~rtorrent/bin/ffmpeg
+
+- include: fpm.yml
+- include: nginx.yml

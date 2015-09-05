@@ -4,3 +4,38 @@
   with_items:
     - nginx-full
     - apache2-utils
+
+- name: Create nginx cert directory
+  file: path=/etc/nginx/ssl state=directory owner=root group=root mode=0755
+
+- name: Set up OpenSSL cert data
+  lineinfile: dest=/etc/ssl/openssl.cnf regexp="^#?{{ item.name }}\\s*=" line="{{ item.name }} = {{ item.value }}"
+  with_items:
+    - {name: 'countryName_default', value: 'US' }
+    - {name: 'stateOrProvinceName_default', value: 'Data Center' }
+    - {name: '0.organizationName_default', value: 'pimp-my-box' }
+    ## TODO: - {name: 'organizationalUnitName_default', value: '{{ nginx_server_name }}\ncommonName_default = {{ nginx_server_name }}\nemailAddress_default = root@localhost' }
+
+- name: Create nginx cert files
+  command: ": openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout cert.key -out cert.pem"
+  args:
+    chdir: /etc/nginx/ssl
+    creates: /etc/nginx/ssl/cert.pem
+
+- name: Create nginx dhparam file
+  command: openssl dhparam -out dhparam.pem 2048
+  args:
+    chdir: /etc/nginx/ssl
+    creates: /etc/nginx/ssl/dhparam.pem
+
+- name: Copy default site contents
+  copy:
+    src: htdocs
+    dest: /usr/share/nginx
+    force: yes
+    owner: root
+    group: root
+    mode: go+r
+    directory_mode: go+rx
+
+# /etc/init.d/nginx configtest && /etc/init.d/nginx restart

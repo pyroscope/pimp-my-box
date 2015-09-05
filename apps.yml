@@ -3,5 +3,5 @@
 - hosts: box
   roles:
     - { role: flexget,   sudo: yes, tags: fg }
-    - { role: nginx,     sudo: yes, tags: www }
-    - { role: rutorrent, sudo: yes, tags: wui, when: rutorrent_www_pass != '' }
+    - { role: nginx,     sudo: yes, tags: www, when: rutorrent_enabled }
+    - { role: rutorrent, sudo: yes, tags: wui, when: rutorrent_enabled }

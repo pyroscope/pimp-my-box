@@ -189,8 +189,9 @@ ufw status verbose  # show all the settings
 
 ### Installing ruTorrent
 
-The ruTorrent web UI is an optional add-on, and you have to activate it by providing
-a `rutorrent_www_pass` value, usually in your `host_vars/box/secrets.yml` file.
+The ruTorrent web UI is an optional add-on, and you have to activate it by setting
+`rutorrent_enabled` to `yes` and providing a `rutorrent_www_pass` value, usually in
+your `host_vars/box/main.yml` and `host_vars/box/secrets.yml` files, respectively.
 
 
 ## References
