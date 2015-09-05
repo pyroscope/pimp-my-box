@@ -101,7 +101,9 @@ box.example.com
 ```
 
 Next, we check your setup and that Ansible is able to connect to the target and do its job there.
-Call the command as shown after the ``$``, and it should print what OS you have installed, like shown in the example.
+Make sure you have working SSH access based on a pubkey login first (see
+[here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)).
+Then call the command as shown after the ``$``, and it should print what OS you have installed, like shown in the example.
 
 ```sh
 $ ansible box -m setup -a "filter=*distribution*"
@@ -119,13 +121,33 @@ box.example.com | success >> {
 If anything goes wrong, add ``-vvvv`` to the ``ansible`` command for more diagnostics,
 and also check your `~/.ssh/config` and the Ansible connection settings in your `host_vars`.
 
-Example `~/.ssh/config` snippet:
+Here is an example `~/.ssh/config` snippet:
 
-**TODO**
+```ini
+Host rpi
+    HostName 192.168.1.2
+    User pi
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+    CheckHostIP no
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+```
 
-Example host variables in `host_vars/box/main.yml`:
+And these are example host variables in `host_vars/rpi/main.yml` (remember changing `rpi` to your hostname):
 
-**TODO**
+```ini
+box_ipv4: 192.168.1.2
+ansible_ssh_host: "{{ box_ipv4 }}"
+ansible_ssh_port: 22
+ansible_ssh_user: pi
+ansible_ssh_private_key_file: ~/.ssh/id_rsa
+ansible_sudo: true
+```
+
+This works with a default *Raspberry Pi* setup which has a password-less sudo account,
+normally you'd add `ansible_sudo_pass` in `host_vars/box/secrets.yml`, or else use
+`-K` on the command line to prompt for the password.
 
 
 ### Running the Playbook
