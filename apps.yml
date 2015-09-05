@@ -2,6 +2,6 @@
 # Install miscellaneous applications
 - hosts: box
   roles:
-    - { role: flexget,   sudo: yes, tags: fg }
+    - { role: flexget,   sudo: yes, tags: fg,  when: flexget_enabled }
     - { role: nginx,     sudo: yes, tags: www, when: rutorrent_enabled }
     - { role: rutorrent, sudo: yes, tags: wui, when: rutorrent_enabled }
