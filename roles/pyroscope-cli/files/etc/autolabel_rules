@@ -9,11 +9,13 @@
 # Order matters - once a label is set, the later rules will ignore that labeled item.
 #
 
-rule BluRay     /COMPLETE.BLURAY/,/Full.BluRay/,/Remux.1080p.BluRay/
+rule BluRay     /COMPLETE.BLURAY/,/Full.BluRay/,/BD25/,/BD50/
+rule Music      kind=flac,mp3,aac '!/ebook/'
+rule Books      kind=pdf,epub,mobi OR /ebook/
 rule Movie      traits=movie
 rule WEB-DL     /WEB-DL/
 rule Video      traits=video
-rule TV-Pack    traits=tv size=+1.5G "!/S[0-9][0-9]E[0-9][0-9]/"
+rule Packs      traits=tv size=+1.5G "!/S[0-9][0-9]E[0-9][0-9]/"
 rule TV         traits=tv
 
 # EOF
