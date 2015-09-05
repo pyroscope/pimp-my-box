@@ -1,0 +1,17 @@
+---
+- name: Restart php5-fpm
+  service: name=php5-fpm state=restarted
+
+- name: Test and restart nginx
+  command: nginx -t
+  notify: Restart nginx
+
+- name: Restart nginx
+  service: name=nginx state=restarted
+
+- name: Test and reload nginx
+  command: nginx -t
+  notify: Reload nginx
+
+- name: Reload nginx
+  service: name=nginx state=reloaded
