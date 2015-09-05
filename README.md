@@ -17,10 +17,14 @@ before executing them you just have to add a few values like the name of your ta
 
 The playbooks contained in this repository install the following components:
 
-* Security hardening of your server
-* [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps#rtorrent-ps)
-* [PyroScope](https://code.google.com/p/pyroscope/) command line tools
-* [FlexGet](http://flexget.com/)
+* Security hardening of your server.
+* [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps#rtorrent-ps) with UI enhancements, colorization, and some added features.
+* [PyroScope](https://code.google.com/p/pyroscope/) command line tools for rTorrent automation.
+
+Optionally:
+
+* [FlexGet](http://flexget.com/), the best feed reader and download automation tool there is.
+* [ruTorrent](https://github.com/Novik/ruTorrent) web UI, served by [Nginx](http://wiki.nginx.org/) over HTTPS and run by PHP5-FPM.
 
 Each includes a default configuration, so you end up with a fully working system.
 
@@ -156,11 +160,19 @@ To execute the playbook, call either ``ansible-playbook site.yml`` with a config
 or else ``ansible-playbook -i hosts site.yml``.
 If you added more than one host into the ``box`` group and want to only address one of them,
 use ``ansible-playbook -l ‹hostname› site.yml``.
-Add ``-v`` to get more detailed information on what each action does.
+Add (multiple) ``-v`` to get more detailed information on what each task does.
 
 Note that at the moment, you still need to additionally download and install (`dpkg -i`)
 the `rtorrent-ps` Debian package as found on
 [Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
+Choose one that fits the distribution of your target host, e.g. current *Mint*
+is based on *Ubuntu 14.04 LTS*. Or compile a binary yourself.
+
+Also, the SSL certificate generation is not fully automatic yet, run the command shown in
+the error message you'll get, as `root` in the `/etc/nginx/ssl` directory – once the
+certificate is created, re-run the playbook and it should progress beyond that point.
+See [this blog post](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)
+if you want *excessive* detail on secure HTTPS setups.
 
 
 ### Starting rTorrent
