@@ -220,6 +220,14 @@ ufw status verbose  # show all the settings
 
 **TODO**
 
+Once created, the file `rtorrent.rc` is only overwritten when you provide
+`-e force_cfg=yes` on the Ansible command line, and `_rtlocal.rc` is never
+overwritten.
+This gives you the opportunity to easily refresh the main configuration from
+this repository, while still being able to provide your own version from
+a custom playbook (which you then have to merge with changes made to the master
+in this repo).
+
 
 ### Installing and Updating ruTorrent
 
