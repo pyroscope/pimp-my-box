@@ -22,7 +22,7 @@ network.http.max_open.set = 64
 network.max_open_files.set = 600
 network.max_open_sockets.set = 300
 protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
-system.umask.set = 0027
+system.umask.set = {{ '%04o' | format(rt_system_umask) }}
 keys.layout.set = {{ rt_keys_layout }}
 pieces.hash.on_completion.set = no
 
@@ -58,8 +58,8 @@ network.scgi.open_local = /var/torrent/.scgi_local
 ##network.scgi.open_port = localhost:5099
 log.execute = /var/torrent/log/execute.log
 
-# SCHEDULE: Make SCGI socket group-writable
-schedule = scgi_permission,0,0,"execute.nothrow=chmod,g+w,/var/torrent/.scgi_local"
+# SCHEDULE: Make SCGI socket group-writable and secure
+schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/var/torrent/.scgi_local"
 
 # SCHEDULE: Watch directories
 schedule = watch_start_directory,10,10,load.start=/var/torrent/watch/start/*.torrent
