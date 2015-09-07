@@ -223,7 +223,7 @@ ufw status verbose  # show all the settings
 To activate the optional applications, add these settings to your `host_vars`:
 
  * `flexget_enabled: yes` for FlexGet.
- * `rutorrent_enabled: yes` for ruTorrent.
+ * `rutorrent_enabled: yes` for ruTorrent (see below for details).
 
 Then run the playbook again.
 
