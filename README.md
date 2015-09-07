@@ -220,6 +220,13 @@ ufw status verbose  # show all the settings
 
 **TODO**
 
+To activate the optional applications, add these settings to your `host_vars`:
+
+ * `flexget_enabled: yes` for FlexGet.
+ * `rutorrent_enabled: yes` for ruTorrent.
+
+Then run the playbook again.
+
 Once created, the file `rtorrent.rc` is only overwritten when you provide
 `-e force_cfg=yes` on the Ansible command line, and `_rtlocal.rc` is never
 overwritten.
