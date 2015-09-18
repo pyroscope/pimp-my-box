@@ -10,3 +10,4 @@
     - lsof
     - bind9-host
     - tmux
+    - unzip
