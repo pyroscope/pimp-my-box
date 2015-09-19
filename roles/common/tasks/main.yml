@@ -2,12 +2,13 @@
 - name: Install basic tools
   apt: name={{ item }} state=latest
   with_items:
-    - htop
-    - ncdu
-    - wget
+    - bind9-host
     - curl
+    - htop
+    - httpie
     - links
     - lsof
-    - bind9-host
+    - ncdu
     - tmux
     - unzip
+    - wget
