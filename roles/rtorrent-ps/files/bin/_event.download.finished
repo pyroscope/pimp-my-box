@@ -1,0 +1,12 @@
+#! /bin/bash
+#
+# Called in rTorrent event handler
+
+infohash="${1:?You MUST provide the infohash of the completed item!}"
+name="${2:?You MUST provide the name of the completed item!}"
+base_path="${3:?You MUST provide the base path of the completed item!}"
+
+# Call custom handler scripts
+for i in ~/bin/$(basename "$0")-*.sh; do
+    test ! -x "$i" || "$i" "$@"
+done

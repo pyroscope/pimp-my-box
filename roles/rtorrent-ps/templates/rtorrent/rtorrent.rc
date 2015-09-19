@@ -127,6 +127,9 @@ branch=pyro.extended=,"schedule = bind_end, 0,0,\"ui.bind_key=download_list,0550
 branch=pyro.extended=,"schedule = bind_pgup,0,0,\"ui.bind_key=download_list,0523,ui.focus.pgup=\""
 branch=pyro.extended=,"schedule = bind_pgdn,0,0,\"ui.bind_key=download_list,0522,ui.focus.pgdn=\""
 
+# EVENT: Call bash completion handlers
+method.set_key = event.download.finished, bash_handlers, "d.save_full_session= ; execute=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
+
 # INCLUDE: Local settings
 import = /var/torrent/_rtlocal.rc
 

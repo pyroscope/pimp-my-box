@@ -59,6 +59,11 @@
     - { name: bash_aliases, force: yes }
     - { name: tmux.conf, force: no }
 
+- name: Copy rtorrent scripts
+  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0750
+  with_items:
+    - _event.download.finished
+
 - name: Render rtorrent bash helpers
   template: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0640
   with_items:
