@@ -236,7 +236,7 @@ a custom playbook (which you then have to merge with changes made to the master
 in this repo).
 
 
-# Enabling Optional Applications
+### Enabling Optional Applications
 
 To activate the optional applications, add these settings to your `host_vars`:
 
