@@ -1,0 +1,73 @@
+/*
+ *  Pimp My Box Index Page CSS
+ */
+body {
+    color: #ddd;
+    background: #111;
+    background: linear-gradient(to bottom, #333 0%, #222 25%, #111 100%); /* W3C */
+}
+
+h1 {
+    color: #003; /* #73f; */
+    position: relative;
+    margin: auto;
+    padding: 1rem;
+    font-size: 42pt;
+    text-align: center;
+    text-shadow: 1px 1px 6px #93f;
+}
+#logo {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+#logo2 {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+div.footer {
+    color: #666;
+    position: relative;
+    margin: auto;
+    padding: .3rem;
+    text-align: center;
+    font-size: x-small;
+}
+
+.tile-menu {
+    position: relative;
+    margin: auto;
+    padding: 40px;
+    max-width: 950px;
+}
+
+.box {
+    font-size: xx-large;
+    color: #999;
+    background: #113;
+    display: inline-block;
+    position: relative;
+    width: 420px;
+    height: 250px;
+    margin: 15px 12px;
+    padding: .5rem;
+    z-index: 0;
+    transition: all .25s ease-in-out;
+}
+.box:hover {
+    color: #fff;
+    background: #215;
+    z-index: 100;
+    transform: scale(1.1,1.1);
+    box-shadow: 1px 1px 4px 2px rgba(255,255,255,.5);
+}
+
+.box .label {
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    width: 400px;
+    padding: .5rem;
+}

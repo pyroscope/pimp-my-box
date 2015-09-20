@@ -28,14 +28,26 @@
     chdir: /etc/nginx/ssl
     creates: /etc/nginx/ssl/dhparam.pem
 
-- name: Copy default site contents
-  copy:
-    src: htdocs
-    dest: /usr/share/nginx
-    force: yes
-    owner: root
-    group: root
-    mode: go+r
-    directory_mode: go+rx
+- name: Create nginx content directories
+  file: path=/usr/share/nginx/htdocs/{{ item }} state=directory owner=root group=www-data mode=0755
+  with_items:
+    - .
+    - css
+    - img
+    - js
+
+- name: Copy index images
+  copy: src=images/{{ item }} dest=/usr/share/nginx/htdocs/img/{{ item }} owner=root group=www-data mode=0640 force=yes
+  with_items:
+    - favicon.ico
+    - pimp-my-box.png
+    - pyroscope.png
+
+- name: Render index HTML + CSS
+  template: src={{ item }} dest=/usr/share/nginx/htdocs/{{ item }} owner=root group=www-data mode=0640 force=yes
+  with_items:
+    - index.html
+    - 50x.html
+    - css/default.css
 
 # /etc/init.d/nginx configtest && /etc/init.d/nginx restart
