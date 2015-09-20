@@ -36,7 +36,7 @@ the [pyroscope-users](http://groups.google.com/group/pyroscope-users) mailing li
 or the inofficial ``##rtorrent`` channel on ``irc.freenode.net``.
 
 
-## How to use this?
+## How to Use This?
 
 Here's the steps you need to follow to get a working installation on your target host.
 Note that this cannot be an Ansible or Linux shell 101, so for details refer to
@@ -224,16 +224,8 @@ ufw enable  # activate the firewall
 ufw status verbose  # show all the settings
 ```
 
+
 ### Changing Configuration Defaults
-
-**TODO**
-
-To activate the optional applications, add these settings to your `host_vars`:
-
- * `flexget_enabled: yes` for FlexGet.
- * `rutorrent_enabled: yes` for ruTorrent (see below for details).
-
-Then run the playbook again.
 
 Once created, the file `rtorrent.rc` is only overwritten when you provide
 `-e force_cfg=yes` on the Ansible command line, and `_rtlocal.rc` is never
@@ -242,6 +234,21 @@ This gives you the opportunity to easily refresh the main configuration from
 this repository, while still being able to provide your own version from
 a custom playbook (which you then have to merge with changes made to the master
 in this repo).
+
+
+# Enabling Optional Applications
+
+To activate the optional applications, add these settings to your `host_vars`:
+
+ * `flexget_enabled: yes` for FlexGet.
+ * `rutorrent_enabled: yes` for ruTorrent (see below for details).
+
+Then run the playbook again.
+
+FlexGet is just installed ready to be used, for full operation a configuration file
+(see the [cookbook](http://flexget.com/wiki/Cookbook)) and a cronjob must be added.
+
+ruTorrent, if enabled, is available at `https://my-box.example.com/rutorrent/`.
 
 
 ### Installing and Updating ruTorrent
