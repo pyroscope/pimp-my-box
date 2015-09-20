@@ -111,7 +111,7 @@ Then call the command as shown after the ``$``, and it should print what OS you 
 
 ```sh
 $ ansible my-box.example.com -m setup -a "filter=*distribution*"
-box.example.com | success >> {
+my-box.example.com | success >> {
     "ansible_facts": {
         "ansible_distribution": "Debian",
         "ansible_distribution_major_version": "7",
