@@ -265,6 +265,59 @@ Finally, rerun the playbook to install the new version. In case anything goes wr
 you can move back that backup.
 
 
+## Advanced Configuration
+
+### Using the bash Completion Handler
+
+The default configuration adds a *finished* event handler that calls the `~rtorrent/bin/_event.download.finished` script.
+That script in turn just calls any existing `_event.download.finished-*.sh` script,
+which allows you to easily add custom completion behaviour via your own playbooks.
+The passed parameters are `hash`, `name`, and `base_path`;
+the completion handler ensures the session state is flushed,
+so you can confidently read the session files associated with the provided hash.
+
+Here is an example `~/bin/_event.download.finished-jenkins.sh`
+that triggers a Jenkins job for any completed item:
+
+```sh
+#! /bin/bash
+#
+# Called in rTorrent event handler
+
+set -x
+
+infohash="${1:?You MUST provide the infohash of the completed item!}"
+url="http://localhost:8080/job/event.download.finished/build?delay=0sec"
+json="$(python -c "import json; print json.dumps(dict(parameter=dict(name='INFOHASH', value='$infohash')))")"
+
+http --ignore-stdin --form POST "$url" token=C0mpl3t3 json="$json"
+```
+
+You need to add the related `event.download.finished` job
+and `rtorrent` user to Jenkins of course.
+The user's credentials must be added to `~rtorrent/.netrc`, like this:
+
+```sh
+machine localhost
+    login rtorrent
+    password YOUR_PWD
+```
+
+Make sure to call `chmod 0600 ~/.netrc` after creating the file.
+To check that everything is working, download something
+and check the build history of your Jenkins job
+– if nothing seems to happen, look into `~/rtorrent/log/execute.log` to debug.
+
+
+### Extending the Nginx Site
+
+The main Nginx server configuration includes any `/etc/nginx/conf.d/rutorrent-*.include`
+files, so you can add your own locations in addition to the default `/rutorrent` one.
+The main configuration file is located at `/etc/nginx/sites-available/rutorrent`.
+
+Use a `/etc/nginx/conf.d/upstream-*.conf` file in case you need to add your own `upstream` definitions.
+
+
 ## References
 
 ### Server Hardening
