@@ -96,12 +96,12 @@ cd "pimp-my-box"
 
 Now with Ansible installed and having a local working directory, you next need to configure the target host.
 This can either be added to ``/etc/ansible/hosts``, or else  via a ``hosts`` file in your working directory.
-The ``hosts-example`` file shows how this has to look like, enter the name of your target instead of ``box.example.com``.
+The ``hosts-example`` file shows how this has to look like, enter the name of your target instead of ``my-box.example.com``.
 
 
 ```ini
 [box]
-box.example.com
+my-box.example.com
 ```
 
 Next, we check your setup and that Ansible is able to connect to the target and do its job there.
@@ -110,7 +110,7 @@ Make sure you have working SSH access based on a pubkey login first (see
 Then call the command as shown after the ``$``, and it should print what OS you have installed, like shown in the example.
 
 ```sh
-$ ansible box -m setup -a "filter=*distribution*"
+$ ansible my-box.example.com -m setup -a "filter=*distribution*"
 box.example.com | success >> {
     "ansible_facts": {
         "ansible_distribution": "Debian",
@@ -133,6 +133,7 @@ Host rpi
     User pi
     IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
+    # The following is unsecure, for a Raspberry PI it allows easy card swapping...
     CheckHostIP no
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
@@ -147,10 +148,17 @@ ansible_ssh_port: 22
 ansible_ssh_user: pi
 ansible_ssh_private_key_file: ~/.ssh/id_rsa
 ansible_sudo: true
+
+rt_global_up_rate_kb: 50
+rt_global_down_rate_kb: 500
+rt_pieces_memory: 500M
+
+flexget_enabled: yes
+rutorrent_enabled: no
 ```
 
 This works with a default *Raspberry Pi* setup which has a password-less sudo account,
-normally you'd add `ansible_sudo_pass` in `host_vars/box/secrets.yml`, or else use
+normally you'd add `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`, or else use
 `-K` on the command line to prompt for the password.
 
 
@@ -240,7 +248,7 @@ in this repo).
 
 The ruTorrent web UI is an optional add-on, and you have to activate it by setting
 `rutorrent_enabled` to `yes` and providing a `rutorrent_www_pass` value, usually in
-your `host_vars/box/main.yml` and `host_vars/box/secrets.yml` files, respectively.
+your `host_vars/my-box/main.yml` and `host_vars/my-box/secrets.yml` files, respectively.
 
 To update to a new version of ruTorrent, first add the desired version as
 `rutorrent_version` to your variables – that version has to be available on
