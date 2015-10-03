@@ -28,8 +28,12 @@ Optionally:
 
 Each includes a default configuration, so you end up with a fully working system.
 
-The Ansible playbooks and related commands have been tested on Debian Jessie, Ubuntu Trusty, and Ubuntu Lucid.
+The Ansible playbooks and related commands have been tested on Debian Jessie, Ubuntu Trusty, and Ubuntu Lucid
+– the recommended distribution is Ubuntu Server LTS 64bit (i.e. release 14.04 at the time of this writing).
 They should work on other platforms too, especially when they're Debian derivatives, but you might have to make some modifications.
+Files are mostly installed into the user accounts `rtorrent` and `rutorrent`,
+and only a few global configuration files are affected. If you run this against a host
+with an existing installation, make sure that there are no conflicts.
 
 If you have questions or need help, please use
 the [pyroscope-users](http://groups.google.com/group/pyroscope-users) mailing list
@@ -94,9 +98,11 @@ cd "pimp-my-box"
 
 ### Setting Up Your Environment
 
-Now with Ansible installed and having a local working directory, you next need to configure the target host.
-This can either be added to ``/etc/ansible/hosts``, or else  via a ``hosts`` file in your working directory.
-The ``hosts-example`` file shows how this has to look like, enter the name of your target instead of ``my-box.example.com``.
+Now with Ansible installed and having a local working directory,
+you next need to configure the target host
+via a ``hosts`` file in your working directory (the so-called *inventory*).
+The ``hosts-example`` file shows how this has to look like,
+enter the name of your target instead of ``my-box.example.com``.
 
 
 ```ini
@@ -107,10 +113,15 @@ my-box.example.com
 Next, we check your setup and that Ansible is able to connect to the target and do its job there.
 Make sure you have working SSH access based on a pubkey login first (see
 [here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)).
-Then call the command as shown after the ``$``, and it should print what OS you have installed, like shown in the example.
+Otherwise, use `--ask-pass` in combination with a password login
+– for any details with this, consult the Ansible documentation.
+
+Then call the command as shown after the ``$``,
+and it should print what OS you have installed,
+like shown in the example.
 
 ```sh
-$ ansible my-box.example.com -m setup -a "filter=*distribution*"
+$ ansible my-box.example.com -i hosts -m setup -a "filter=*distribution*"
 my-box.example.com | success >> {
     "ansible_facts": {
         "ansible_distribution": "Debian",
@@ -164,10 +175,9 @@ normally you'd add `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`, or els
 
 ### Running the Playbook
 
-To execute the playbook, call either ``ansible-playbook site.yml`` with a configuration in ``/etc``,
-or else ``ansible-playbook -i hosts site.yml``.
+To execute the playbook, call ``ansible-playbook -i hosts site.yml``.
 If you added more than one host into the ``box`` group and want to only address one of them,
-use ``ansible-playbook -l ‹hostname› site.yml``.
+use ``ansible-playbook -i hosts -l ‹hostname› site.yml``.
 Add (multiple) ``-v`` to get more detailed information on what each task does.
 
 Note that at the moment, you still need to additionally download and install (`dpkg -i`)
@@ -179,6 +189,8 @@ is based on *Ubuntu 14.04 LTS*. Or compile a binary yourself.
 Also, the SSL certificate generation is not fully automatic yet, run the command shown in
 the error message you'll get, as `root` in the `/etc/nginx/ssl` directory – once the
 certificate is created, re-run the playbook and it should progress beyond that point.
+Of course, you can also copy a certificate you got from other sources to the paths
+`/etc/nginx/ssl/cert.key` and `/etc/nginx/ssl/cert.pem`.
 See [this blog post](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)
 if you want *excessive* detail on secure HTTPS setups.
 
