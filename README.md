@@ -215,7 +215,7 @@ then call the playbook using this command:
 
 ```sh
 # See above regarding adding '-i' and '-l' options
-ansible-playbook site.yml -t ufw -e ufw=true
+ansible-playbook -i hosts site.yml -t ufw -e ufw=true
 ```
 
 This will install the `ufw` package if missing, and set up all rules needed by apps installed
