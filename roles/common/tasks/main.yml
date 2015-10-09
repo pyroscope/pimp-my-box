@@ -4,6 +4,7 @@
   with_items:
     - bind9-host
     - curl
+    - haveged
     - htop
     - httpie
     - links
