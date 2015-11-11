@@ -2,3 +2,4 @@ rutorrent_enabled: no
 rutorrent_version: 3.7
 rutorrent_www_user: rutorrent
 rutorrent_www_pass:
+rutorrent_php_memory_limit: 512M
