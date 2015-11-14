@@ -30,7 +30,7 @@
     creates: /home/rtorrent/lib/pyroscope/.gitignore
 
 - name: Initial 'pyroscope' installation
-  shell: su -c './update-to-head.sh ~/.local/pyenv/versions/2.7.10/bin/python' rtorrent
+  shell: su -c './update-to-head.sh {{ python_bin }}' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent/lib/pyroscope

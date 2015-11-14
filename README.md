@@ -286,6 +286,21 @@ you can move back that backup.
 
 ## Advanced Configuration
 
+### Using the System Python Interpreter
+
+By default, Python 2.7.10 is installed because that version handles SSL connections
+according to current security standards; the version installed in your system often
+does not. This has an impact on e.g. FlexGet's handling of ``https`` feeds.
+
+If you want to use the system's Python interpreter, add these variables to your host vars:
+
+```ini
+pyenv_enabled: false
+python_bin: /usr/bin/python2
+venv_bin: /usr/bin/virtualenv
+```
+
+
 ### Using the bash Completion Handler
 
 The default configuration adds a *finished* event handler that calls the `~rtorrent/bin/_event.download.finished` script.

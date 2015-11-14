@@ -1,4 +1,4 @@
-rutorrent_enabled: no
+rutorrent_enabled: false
 rutorrent_version: 3.7
 rutorrent_www_user: rutorrent
 rutorrent_www_pass:
