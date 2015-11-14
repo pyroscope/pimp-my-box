@@ -28,7 +28,7 @@ if test -z "$1"; then
     rtorrent_rc=~/.rtorrent.rc
     test -e "$rtorrent_rc" || rtorrent_rc="$(rtxmlrpc system.get_cwd)/rtorrent.rc"
     if test -e "$rtorrent_rc"; then
-        throttles="$(egrep '^throttle[._](up|down)' $rtorrent_rc | tr ._=, ' ' | cut -f3 -d" " | sort | uniq)"
+        throttles="$(egrep '^throttle[._](up|down)' $rtorrent_rc | tr -s ._=, ' ' | cut -f3 -d" " | sort | uniq)"
         echo
         echo "CURRENT THROTTLE SETTINGS"
         for throttle in $throttles; do
