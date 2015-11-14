@@ -102,13 +102,21 @@ Now with Ansible installed and having a local working directory,
 you next need to configure the target host
 via a ``hosts`` file in your working directory (the so-called *inventory*).
 The ``hosts-example`` file shows how this has to look like,
-enter the name of your target instead of ``my-box.example.com``.
+enter the name of your target instead of ``my-box.example.com``
+(and anywhere else ``my-box`` appears further below).
 
 
 ```ini
 [box]
 my-box.example.com
 ```
+
+You also need a file with the specifics of your box in ``host_vars/my-box/main.yml``,
+the so-called host variables. There is an example in
+[host_vars/rpi/main.yml](https://github.com/pyroscope/pimp-my-box/blob/master/host_vars/rpi/main.yml)
+which works with a default *Raspberry Pi* setup that comes with a password-less sudo account.
+Normally you'd add `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`, or else use
+`-K` on the command line to prompt for the password.
 
 Next, we check your setup and that Ansible is able to connect to the target and do its job there.
 Make sure you have working SSH access based on a pubkey login first (see
@@ -136,7 +144,8 @@ my-box.example.com | success >> {
 If anything goes wrong, add ``-vvvv`` to the ``ansible`` command for more diagnostics,
 and also check your `~/.ssh/config` and the Ansible connection settings in your `host_vars`.
 
-Here is an example `~/.ssh/config` snippet:
+Here is an example `~/.ssh/config` snippet that provides details on
+how to connect to the ``rpi`` host:
 
 ```ini
 Host rpi
@@ -149,28 +158,6 @@ Host rpi
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
 ```
-
-And these are example host variables in `host_vars/rpi/main.yml` (remember changing `rpi` to your hostname):
-
-```ini
-box_ipv4: 192.168.1.2
-ansible_ssh_host: "{{ box_ipv4 }}"
-ansible_ssh_port: 22
-ansible_ssh_user: pi
-ansible_ssh_private_key_file: ~/.ssh/id_rsa
-ansible_sudo: true
-
-rt_global_up_rate_kb: 50
-rt_global_down_rate_kb: 500
-rt_pieces_memory: 500M
-
-flexget_enabled: yes
-rutorrent_enabled: no
-```
-
-This works with a default *Raspberry Pi* setup which has a password-less sudo account,
-normally you'd add `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`, or else use
-`-K` on the command line to prompt for the password.
 
 
 ### Running the Playbook
