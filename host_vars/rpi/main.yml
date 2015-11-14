@@ -1,0 +1,13 @@
+box_ipv4: 192.168.1.2
+ansible_ssh_host: "{{ box_ipv4 }}"
+ansible_ssh_port: 22
+ansible_ssh_user: pi
+ansible_ssh_private_key_file: ~/.ssh/id_rsa
+ansible_sudo: true
+
+rt_global_up_rate_kb: 50
+rt_global_down_rate_kb: 500
+rt_pieces_memory: 500M
+
+flexget_enabled: yes
+rutorrent_enabled: no
