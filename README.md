@@ -19,7 +19,7 @@ The playbooks contained in this repository install the following components:
 
 * Security hardening of your server.
 * [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps#rtorrent-ps) with UI enhancements, colorization, and some added features.
-* [PyroScope](https://code.google.com/p/pyroscope/) command line tools for rTorrent automation.
+* PyroScope [command line tools](https://github.com/pyroscope/pyrocore#pyrocore) (pyrocore) for rTorrent automation.
 
 Optionally:
 
