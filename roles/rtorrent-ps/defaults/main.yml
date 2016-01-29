@@ -7,5 +7,6 @@ rtorrent_bindir: /opt/rtorrent/bin/
 rt_global_up_rate_kb: 120000
 rt_global_down_rate_kb: "{{ rt_global_up_rate_kb }}"
 rt_pieces_memory: 1800M
+rt_xmlrpc_size_limit: 16M
 rt_system_umask: 0027
 rt_keys_layout: qwertz

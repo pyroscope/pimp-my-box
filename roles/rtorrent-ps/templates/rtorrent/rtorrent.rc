@@ -43,7 +43,7 @@ throttle.max_peers.seed.set = 80
 
 # resource usage
 pieces.memory.max.set = {{ rt_pieces_memory }}
-network.xmlrpc.size_limit.set = 3M
+network.xmlrpc.size_limit.set = {{ rt_xmlrpc_size_limit }}
 
 
 #
