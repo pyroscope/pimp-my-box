@@ -2,14 +2,51 @@
 - name: Install basic tools
   apt: name={{ item }} state=latest
   with_items:
+    - autossh
+    - bash-completion
+    - bc
     - bind9-host
+    - bzip2
+    - cfv
+    - colordiff
     - curl
+    - gawk
+    - genisoimage
+    - git
     - haveged
     - htop
     - httpie
+    - iotop
+    - lftp
     - links
+    - lsb-release
     - lsof
+    - mailutils
+    - mkvtoolnix
     - ncdu
+    - p7zip-full
+    - psmisc
+    - python-virtualenv
+    - realpath
+    - sysstat
     - tmux
     - unzip
+    - vim
+    - virtualenvwrapper
+    - vnstat
     - wget
+    - zip
+
+- name: Install fuseiso9660 + unrar
+  apt: name={{ item }} state=latest
+  when: not(ansible_distribution == "Debian") or not(ansible_distribution_major_version == "7")
+  with_items:
+    - fuseiso9660
+    - unrar
+
+- name: Install fuseiso + unrar-free
+  apt: name={{ item }} state=latest
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version == "7"
+  with_items:
+    - fuseiso
+    - unrar-free
