@@ -22,6 +22,7 @@
     - lsb-release
     - lsof
     - mailutils
+    - mediainfo
     - mkvtoolnix
     - ncdu
     - p7zip-full
@@ -36,6 +37,14 @@
     - vnstat
     - wget
     - zip
+
+- name: Install ffmpeg
+  apt: name=ffmpeg state=latest
+  when: av_tool == 'ffmpeg' or ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "12"
+
+- name: Install libav
+  apt: name=libav-tools state=latest
+  when: av_tool == 'libav' or not(ansible_distribution == "Ubuntu") or ansible_distribution_major_version != "12"
 
 - name: Install fuseiso9660 + unrar
   apt: name={{ item }} state=latest
