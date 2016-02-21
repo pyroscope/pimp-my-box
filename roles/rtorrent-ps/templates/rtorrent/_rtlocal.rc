@@ -17,7 +17,7 @@ throttle.up = lo_up, 2048
 
 # Stupid ^Q be gone!
 method.insert = quit, simple, "execute=kill,-INT,$system.pid="
-method.insert = q, simple, quit=
+method.insert = q, simple|private, quit=
 method.insert = print_noquit, simple|private, "print=\"^Q is disabled, use '^X quit='\""
 branch=pyro.extended=,"schedule = bind_no_quit,0,0,\"ui.bind_key=download_list,^q,print_noquit=\""
 
