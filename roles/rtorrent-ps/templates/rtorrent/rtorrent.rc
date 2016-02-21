@@ -62,8 +62,8 @@ log.execute = /var/torrent/log/execute.log
 schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/var/torrent/.scgi_local"
 
 # SCHEDULE: Watch directories
-schedule = watch_start_directory,10,10,load.start=/var/torrent/watch/start/*.torrent
-schedule = watch_load_directory,15,20,load.normal=/var/torrent/watch/load/*.torrent
+schedule = watch_start_directory,120,10,load.start=/var/torrent/watch/start/*.torrent
+schedule = watch_load_directory,125,20,load.normal=/var/torrent/watch/load/*.torrent
 
 # SCHEDULE: Watch disk space
 schedule = low_diskspace,15,60,close_low_diskspace=1000M
