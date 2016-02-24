@@ -50,6 +50,7 @@
     - rtorrent/work
     - src
     - tmp
+    - .config
     - .local
     - .local/profile.d
 

@@ -246,7 +246,12 @@ To activate the optional applications, add these settings to your `host_vars`:
 Then run the playbook again.
 
 FlexGet is just installed ready to be used, for full operation a configuration file
-(see the [cookbook](http://flexget.com/wiki/Cookbook)) and a cronjob must be added.
+located in `~/.config/flexget/config.yml` must be added
+(see the [cookbook](http://flexget.com/wiki/Cookbook)).
+A cronjob is provided too (called every 11 minutes), but only starts to do something meaningful
+after you add that configuration file.
+Look into the files `~/.config/flexget/flexget.log` and `~/.config/flexget/flexget-cron.log`
+to diagnose any problems.
 
 ruTorrent, if enabled, is available at `https://my-box.example.com/rutorrent/`.
 
