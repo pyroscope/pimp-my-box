@@ -1,4 +1,21 @@
 ---
+# ansible_architecture: "x86_64" or "armv7l"
+- name: Load distro-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "os_{{ ansible_lsb.codename }}_{{ ansible_architecture }}.yml"
+    - "os_{{ ansible_distribution_release }}.yml"
+    - "os_default.yml"
+
+- name: Download rTorrent-PS Debian package
+  get_url: dest=/root/rt-ps.deb url="{{ rtps_deb_url }}"
+  # 2.0 only - checksum="sha1:{{ rtps_deb_SHA1 }}"
+  when: 'not(rtps_deb_url == "")'
+
+- name: Unavailable rTorrent-PS Debian package?
+  debug: msg="WARNING - No DEB package URL defined for {{ ansible_distribution_release }}, you need to install /opt/rtorrent manually!"
+  when: 'rtps_deb_url == ""'
+
 - name: Install runtime dependencies for rTorrent-PS
   apt: name={{ item }} state=latest
   with_items:
