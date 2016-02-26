@@ -167,6 +167,14 @@ Host rpi
     StrictHostKeyChecking no
 ```
 
+To give you an idea why this way to do things is way superior to the usual
+*“call a bash script to set up things once and never update them again”*,
+you can now also easily call commands over a fleet of machines, *in parallel*:
+
+```sh
+ansible all -i hosts -f 9 -a "apt-get -qq update"
+```
+
 
 ### Running the Playbook
 
