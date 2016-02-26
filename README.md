@@ -133,12 +133,12 @@ Otherwise, use `--ask-pass` in combination with a password login
 – for any details with this, consult the Ansible documentation.
 
 Then call the command as shown after the ``$``,
-and it should print what OS you have installed,
+and it should print what OS you have installed on the target(s),
 like shown in the example.
 
 ```sh
-$ ansible my-box.example.com -i hosts -m setup -a "filter=*distribution*"
-my-box.example.com | success >> {
+$ ansible all -i hosts -m setup -a "filter=*distribution*"
+rpi | success >> {
     "ansible_facts": {
         "ansible_distribution": "Debian",
         "ansible_distribution_major_version": "7",
