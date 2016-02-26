@@ -62,21 +62,27 @@ The following commands just require Python to be installed to your system,
 and the installation is easy to get rid of (everything is contained within a single directory).
 
 ```sh
-# just to make sure you have what you need
+# just to make sure you have the packages you need
 sudo apt-get install build-essential python-virtualenv python-dev
 
+# install Ansible 1.9
 base="$HOME/.local/venvs"
 mkdir -p "$base" "$HOME/bin"
 /usr/bin/virtualenv "$base/ansible"
 cd "$base/ansible"
-bin/pip install "ansible"
-ln -s "$PWD/bin"/ansible* "$HOME/bin"
-ansible --version
+bin/pip install "ansible==1.9.4"
 
-test -f ~/.ansible.cfg || cat >~/.ansible.cfg <<'EOF'
-remote_tmp      = $HOME/.ansible/tmp
-roles_path      = $HOME/.ansible/roles:/etc/ansible/roles
-EOF
+# create a configuration file
+if test '!' -f ~/.ansible.cfg; then
+    curl -o ~/.ansible.cfg "https://raw.githubusercontent.com/ansible/ansible/stable-1.9/examples/ansible.cfg"
+    ${EDITOR:-vi} ~/.ansible.cfg # uncomment and change line containing 'roles_path'
+    # roles_path      = $HOME/.ansible/roles:/etc/ansible/roles
+fi
+
+# make Ansible commands available by default
+test -d ~/bin || { mkdir -p ~/bin; exec -l $SHELL; }
+ln -s "$PWD/bin"/ansible* "$HOME/bin"
+cd; ansible --version
 ```
 
 To get it running on Windows is also possible,
