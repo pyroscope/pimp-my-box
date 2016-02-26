@@ -20,7 +20,16 @@ _at_exit() {
 trap _at_exit INT TERM EXIT
 test -z "$TMUX" || tmux 'rename-w' 'rT-PS'
 
-BIN={{ rtorrent_bindir }}
-#BIN="$HOME/src/rtorrent-ps/rtorrent-0.9.4/src/"
-#BIN="$HOME/src/rtorrent-ps/rtorrent-0.9.5/src/"
+BIN="{{ rtorrent_bindir }}"
+if test -n "$BIN"; then
+    BIN="${BIN%/}/"
+
+    # Try usual suspects if config is wrong
+    test -x ${BIN}rtorrent || BIN="$HOME/bin/"
+    test -x ${BIN}rtorrent || BIN="/opt/rtorrent/bin/"
+    test -x ${BIN}rtorrent || BIN="/usr/local/bin/"
+    test -x ${BIN}rtorrent || BIN="/usr/bin/"
+    test -x ${BIN}rtorrent || BIN=""
+fi
+#BIN="$HOME/src/rtorrent-ps/rtorrent-0.9.6/src/"
 ${BIN}rtorrent -n -o import=$PWD/rtorrent.rc
