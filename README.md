@@ -67,7 +67,7 @@ sudo apt-get install build-essential python-virtualenv python-dev
 
 # install Ansible 1.9
 base="$HOME/.local/venvs"
-mkdir -p "$base" "$HOME/bin"
+mkdir -p "$base"
 /usr/bin/virtualenv "$base/ansible"
 cd "$base/ansible"
 bin/pip install "ansible==1.9.4"
@@ -80,7 +80,7 @@ if test '!' -f ~/.ansible.cfg; then
 fi
 
 # make Ansible commands available by default
-test -d ~/bin || { mkdir -p ~/bin; exec -l $SHELL; }
+test -d "$HOME/bin" || { mkdir -p "$HOME/bin"; exec -l $SHELL; }
 ln -s "$PWD/bin"/ansible* "$HOME/bin"
 cd; ansible --version
 ```
