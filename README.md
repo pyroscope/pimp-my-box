@@ -215,7 +215,7 @@ If you want to set up firewall rules using the
 then call the playbook using this command:
 
 ```sh
-# See above regarding adding '-i' and '-l' options
+# See above regarding adding the '-l' option to select a single host
 ansible-playbook -i hosts site.yml -t ufw -e ufw=true
 ```
 
