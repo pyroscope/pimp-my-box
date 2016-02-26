@@ -247,6 +247,7 @@ This gives you the opportunity to easily refresh the main configuration from
 this repository, while still being able to provide your own version from
 a custom playbook (which you then have to merge with changes made to the master
 in this repo).
+Or apply customizations manually, by editing ``~rtorrent/rtorrent/_rtlocal.rc``.
 
 
 ### Enabling Optional Applications
