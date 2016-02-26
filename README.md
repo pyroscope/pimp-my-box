@@ -175,11 +175,17 @@ If you added more than one host into the ``box`` group and want to only address 
 use ``ansible-playbook -i hosts -l ‹hostname› site.yml``.
 Add (multiple) ``-v`` to get more detailed information on what each task does.
 
-Note that at the moment, you still need to additionally download and install (`dpkg -i`)
-the `rtorrent-ps` Debian package as found on
+Note that at the moment, you still need to additionally install (`dpkg -i /root/rt-ps.deb`)
+the `rtorrent-ps` Debian package that was downloaded from
 [Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
-Choose one that fits the distribution of your target host, e.g. current *Mint*
-is based on *Ubuntu 14.04 LTS*. Or compile a binary yourself.
+
+If your Linux release isn't supported, you'll see a message like the following:
+
+    WARNING - No DEB package URL defined for '‹platform›',
+    you need to install /opt/rtorrent manually!
+
+In that case,
+[compile a binary yourself](https://github.com/pyroscope/pyroscope/blob/wiki/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source).
 
 Also, the SSL certificate generation is not fully automatic yet, run the command shown in
 the error message you'll get, as `root` in the `/etc/nginx/ssl` directory – once the
