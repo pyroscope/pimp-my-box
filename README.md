@@ -54,6 +54,7 @@ and the [Ansible Documentation](http://docs.ansible.com/#ansible-documentation).
 ### Installing Ansible
 
 Ansible has to be installed on the workstation from where you control your target hosts.
+This can also be the target host itself, if you don't have a Linux or Mac OSX desktop at hand.
 See the [Ansible Documentation](http://docs.ansible.com/intro_installation.html)
 for how to install it using the package manager of your platform.
 
