@@ -8,7 +8,7 @@
     - "os_default.yml"
 
 - name: Download rTorrent-PS Debian package
-  get_url: dest=/root/rt-ps.deb url="{{ rtps_deb_url }}"
+  get_url: dest=/root/rt-ps.deb url="{{ rtps_deb_url }}" validate_certs=no
   # 2.0 only - checksum="sha1:{{ rtps_deb_SHA1 }}"
   when: 'not(rtps_deb_url == "")'
 

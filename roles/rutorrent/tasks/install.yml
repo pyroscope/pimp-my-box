@@ -10,6 +10,7 @@
   get_url:
     dest: "/root/ruTorrent-{{ rutorrent_version }}.zip"
     url: "https://bintray.com/artifact/download/novik65/generic/ruTorrent-{{ rutorrent_version }}.zip"
+    validate_certs: no
 
 - name: Unpack ruTorrent release archive
   unarchive:
