@@ -66,7 +66,7 @@
 
 - name: Create ffmpeg to avconv symlink
   file: src=/usr/bin/avconv path=/home/rtorrent/bin/ffmpeg state=link owner=rtorrent group=rtorrent
-  when: avconv_bin.stat.exists
+  when: "( av_tool is not defined or av_tool != 'ffmpeg' ) and avconv_bin.stat.exists"
 
 - include: fpm.yml
 - include: nginx.yml
