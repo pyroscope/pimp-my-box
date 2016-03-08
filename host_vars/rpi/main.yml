@@ -10,4 +10,5 @@ rt_global_down_rate_kb: 500
 rt_pieces_memory: 500M
 
 flexget_enabled: yes
-rutorrent_enabled: no
+rutorrent_enabled: yes
+# Set a 'rutorrent_www_pass' in 'secrets.yml'!
