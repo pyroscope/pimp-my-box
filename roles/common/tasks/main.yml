@@ -48,14 +48,14 @@
 
 - name: Install fuseiso9660 + unrar
   apt: name={{ item }} state=latest
-  when: not(ansible_distribution == "Debian") or not(ansible_distribution_major_version == "7")
+  when: not(ansible_distribution == "Debian") or not(ansible_distribution_major_version in "789")
   with_items:
     - fuseiso9660
     - unrar
 
 - name: Install fuseiso + unrar-free
   apt: name={{ item }} state=latest
-  when: ansible_distribution == "Debian" and ansible_distribution_major_version == "7"
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version in "789"
   with_items:
     - fuseiso
     - unrar-free
