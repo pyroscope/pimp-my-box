@@ -60,7 +60,13 @@
   with_items:
     - theme.dat
 
-# TODO: ln -s /usr/bin/avconv ~rtorrent/bin/ffmpeg
+- name: Probe avconv binary
+  stat: path=/usr/bin/avconv
+  register: avconv_bin
+
+- name: Create ffmpeg to avconv symlink
+  file: src=/usr/bin/avconv path=/home/rtorrent/bin/ffmpeg state=link owner=rtorrent group=rtorrent
+  when: avconv_bin.stat.exists
 
 - include: fpm.yml
 - include: nginx.yml
