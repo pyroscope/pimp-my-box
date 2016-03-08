@@ -1,6 +1,10 @@
 ---
+- name: Check rutorrent password
+  fail: msg="You MUST set a non-empty 'rutorrent_www_pass' in your host_vars!"
+  when: "not (rutorrent_www_pass)"
+
 - name: Create rutorrent htpasswd
-  shell: "umask 0027; htpasswd -b -c rutorrent.htpasswd {{ rutorrent_www_user }} {{ rutorrent_www_pass }}; chgrp www-data rutorrent.htpasswd"
+  shell: "umask 0027 && htpasswd -b -c rutorrent.htpasswd {{ rutorrent_www_user }} {{ rutorrent_www_pass }} && chgrp www-data rutorrent.htpasswd"
   args:
     chdir: /etc/nginx
     creates: /etc/nginx/rutorrent.htpasswd
