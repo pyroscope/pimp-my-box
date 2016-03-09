@@ -46,14 +46,14 @@
   apt: name=libav-tools state=latest
   when: av_tool == 'libav' or not(ansible_distribution == "Ubuntu") or ansible_distribution_major_version != "12"
 
-- name: Install fuseiso9660 + unrar
+- name: Install fuseiso9660 + unrar (most distros)
   apt: name={{ item }} state=latest
   when: not(ansible_distribution == "Debian") or not(ansible_distribution_major_version in "789")
   with_items:
     - fuseiso9660
     - unrar
 
-- name: Install fuseiso + unrar-free
+- name: Install fuseiso + unrar-free (Wheezy, Jessie, Stretch)
   apt: name={{ item }} state=latest
   when: ansible_distribution == "Debian" and ansible_distribution_major_version in "789"
   with_items:
