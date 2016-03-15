@@ -7,6 +7,26 @@
 Automated install of rTorrent-PS etc. via
 [Ansible](http://docs.ansible.com/).
 
+**Contents**
+
+  * [Introduction](#introduction)
+  * [How to Use This?](#how-to-use-this)
+      * [Installing Ansible](#installing-ansible)
+      * [Checking Out the Code](#checking-out-the-code)
+      * [Setting Up Your Environment](#setting-up-your-environment)
+      * [Running the Playbook](#running-the-playbook)
+      * [Starting rTorrent](#starting-rtorrent)
+      * [Activating Firewall Rules](#activating-firewall-rules)
+      * [Changing Configuration Defaults](#changing-configuration-defaults)
+      * [Enabling Optional Applications](#enabling-optional-applications)
+      * [Installing and Updating ruTorrent](#installing-and-updating-rutorrent)
+  * [Advanced Configuration](#advanced-configuration)
+      * [Using the System Python Interpreter](#using-the-system-python-interpreter)
+      * [Using the bash Completion Handler](#using-the-bash-completion-handler)
+      * [Extending the Nginx Site](#extending-the-nginx-site)
+  * [Trouble-Shooting](#trouble-shooting)
+  * [References](#references)
+
 
 ## Introduction
 
