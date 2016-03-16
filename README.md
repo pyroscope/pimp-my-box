@@ -389,6 +389,18 @@ The main configuration file is located at `/etc/nginx/sites-available/rutorrent`
 Use a `/etc/nginx/conf.d/upstream-*.conf` file in case you need to add your own `upstream` definitions.
 
 
+## Trouble-Shooting
+
+### SSH Error: Host key verification failed
+
+If you get this error, one easy way out is to first enter the following command
+and then repeat your failing Ansible command:
+
+```sh
+export ANSIBLE_HOST_KEY_CHECKING=False
+```
+
+
 ## References
 
 ### Server Hardening
