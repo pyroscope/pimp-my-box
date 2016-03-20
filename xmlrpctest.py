@@ -6,6 +6,7 @@ import socket
 import xmlrpclib
 from datetime import datetime
 
+
 def main(args):
     """XMLRPC /RPC2 test."""
     host = 'localhost'
@@ -24,9 +25,10 @@ def main(args):
             time_usec, datetime.fromtimestamp(time_usec/1E6).isoformat()))
     except (socket.error, xmlrpclib.Error) as cause:
         print("ERROR: %s" % cause)
+        return 1
     else:
         print("OK")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    sys.exit(main(sys.argv[1:]))
