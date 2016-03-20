@@ -25,6 +25,9 @@ Automated install of rTorrent-PS etc. via
       * [Using the bash Completion Handler](#using-the-bash-completion-handler)
       * [Extending the Nginx Site](#extending-the-nginx-site)
   * [Trouble-Shooting](#trouble-shooting)
+      * [SSH Error: Host key verification failed](#ssh-error-host-key-verification-failed)
+  * [Implementation Details](#implementation-details)
+      * [Secure Communications](#secure-communications)
   * [References](#references)
 
 
@@ -399,6 +402,16 @@ and then repeat your failing Ansible command:
 ```sh
 export ANSIBLE_HOST_KEY_CHECKING=False
 ```
+
+
+## Implementation Details
+
+### Secure Communications
+
+All internal RPC is done via Unix domain sockets.
+
+ * `/var/run/php-fpm-rutorrent.sock` — *NginX* sends requests to PHP using the *php-fpm* pool `rutorrent` via this socket; it's owned by `rutorrent` and belongs to the `www-data` group.
+ * `/var/torrent/.scgi_local` — The XMLRPC socket of rTorrent. It's group-writable and owned by `rtorrent.rtorrent`; ruTorrent talks directly to that socket (see issue #9 for problems with using /RPC2).
 
 
 ## References
