@@ -57,5 +57,15 @@
   apt: name={{ item }} state=latest
   when: ansible_distribution == "Debian" and ansible_distribution_major_version in "789"
   with_items:
-    - fuseiso
+    # TODO: check what name to use for what distro/version (it's a mess)
+    #- fuseiso
+    #- fuseiso9660
     - unrar-free
+
+- name: Create local/lib directory
+  file: path=/usr/local/lib/pmb state=directory owner=root group=root mode=0755
+
+- name: Copy bash helper files
+  copy: src={{ item }} dest=/usr/local/lib/pmb/{{ item }} owner=root group=root mode=0644
+  with_items:
+    - common.sh
