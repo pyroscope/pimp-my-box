@@ -1,0 +1,30 @@
+#! script for /bin/bash inclusion
+#
+# Rules to manage disk space
+#
+# This file is initially installed by Ansible, but never overwritten, so
+# you can add your own modifications or replace it using your own playbooks!
+# It is sourced by the "~/bin/_cron_sweep" job.
+#
+# Order matters - once enough space is freed, the script aborts.
+#
+# Note that active, prio 3, and ignored items are protected!
+# If the rules listed here fail to provide enough space, as much
+# of the oldest items as needed are removed.
+
+# Full BD / Remux older than 7 days
+make_space -s loaded /BLURAY/,/Remux/ size=+14g loaded=+7d -/1
+
+# Bigger items older than 5 days and with ratio > 3
+make_space -s active,-size loaded=+5d size=+3g ratio=+3 -/3
+
+# 1080p after 2 weeks
+make_space -s loaded /1080p/ loaded=+15d -/10
+
+# 720p after 3 weeks
+make_space -s loaded /720p/ loaded=+22d -/10
+
+# Bigger than 1.5G after 5 days, inactive and big items first
+make_space -s active,-size loaded=+5d size=+1.5g
+
+# EOF

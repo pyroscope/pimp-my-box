@@ -48,11 +48,13 @@
   with_items:
     - rt-throttle
     - _cron_autolabel
+    - _cron_sweep
 
 - name: Copy ~/etc config files (once)
   copy: src=etc/{{ item }} dest=/home/rtorrent/etc/{{ item }} owner=rtorrent group=rtorrent mode=0640 force=no
   with_items:
     - autolabel_rules
+    - sweep_rules
 
 - name: Add rtorrent cron job '_cron_autolabel'
   cron: user=rtorrent minute=*/31 name=_cron_autolabel job="~/bin/_cron_autolabel --cron"

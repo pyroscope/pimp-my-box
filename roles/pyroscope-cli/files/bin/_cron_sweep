@@ -1,0 +1,160 @@
+#! /bin/bash
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Disk Space Management
+#
+# Called from download scripts when space is low.
+# Can also be started directly from a shell prompt or cron job.
+#
+
+set -e
+source /usr/local/lib/pmb/common.sh
+
+MAX_REQUEST_GiB=99
+RESERVED_GiB=10
+PROTECTED="xfer=+0 OR prio=3 OR is_ignored=y"
+
+INTERACTIVE=""
+INFO="log INFO:"
+DRY=""
+simulate=false
+
+
+# Option parsing
+while test "${1:0:1}" = '-'; do
+    case "$1" in
+        -n)
+            shift
+            DRY=echo
+            simulate=true
+            ;;
+        --yes)
+            shift
+            INTERACTIVE="--yes"
+            ;;
+        --cron)
+            shift
+            INTERACTIVE="--cron --yes"
+            INFO=:
+            ;;
+        *)
+            echo "usage: $0 [-n|--yes|--cron] nnn[MG]"
+            fail "Unknown option '$1'"
+            ;;
+    esac
+done
+
+# Argument parsing
+case "$1" in
+    [0-9]*m|[0-9]*g|[0-9]*M|[0-9]*G|[0-9]*)
+        block=1
+        requested=$(tr -dc [0-9] <<<"$1")
+        unit=$(tr -d [0-9] <<<"$1" | tr [a-z] [A-Z])
+        test "$unit" != 'G' || block=$GiB
+        test "$unit" != 'M' || block=$(( 1024 * 1024 ))
+        requested=$(( $requested * $block))
+        shift
+        ;;
+    '')
+        requested=$(( 8 * $GiB ))
+        ;;
+    *)
+        fail "Expecting a numeric argument: '$1'"
+        ;;
+esac
+
+test $requested -le $(( $MAX_REQUEST_GiB * $GiB )) \
+    || fail "You cannot request more than $MAX_REQUEST_GiB GiB, you wanted $(print_gib $requested)!"
+
+
+#
+# Helpers
+#
+log() {
+    echo $(date +"%Y-%m-%d %H:%M:%S") "$@"
+}
+
+check_guard_file() {
+    pid=$$
+    script=$(basename $0)
+    guard="/tmp/$script-$(id -nu).pid"
+    if test -f $guard ; then
+        $INFO "Script already runs... own PID=$pid; others: $(ps auxw | grep $script | grep -v grep)"
+        exit 69
+    fi
+    trap "rm -f $guard" EXIT ERR TERM
+    echo $pid >$guard
+    ##sleep 30; exit
+}
+
+download_free() {
+    bytes_free "/var/torrent/" # TODO: make this configurable
+}
+
+items_loaded() {
+    ~/bin/rtxmlrpc view.size '' main
+}
+
+finished() {
+    after_items=$(items_loaded)
+    after_free=$(download_free)
+    took_secs=$(took_ms $start_tm)
+
+    if test $start_items -ne $after_items; then
+        $INFO "Removed $(( $start_items - $after_items )) item(s)," \
+            "freeing $(print_gib $(( $after_free - $start_free ))) disk space" \
+            "[now $(print_gib $(download_free)) free, took ${took_secs}s]."
+    fi
+
+    $INFO "Disk space management finished in ${took_secs}s [$(print_gib $(download_free)) free," \
+        "$(print_gib $requested) requested]"
+
+    exit 0
+}
+
+make_space() {
+    test $(download_free) -lt $needed || finished
+    rc=0
+    test "$1" = "--aggressive" && { shift; activity=5i; } || activity=4h
+    while test $(download_free) -lt $needed -a $rc -ne 44; do
+        set +e
+        $DRY ~/bin/rtcontrol -/1 --cull active=+$activity [ NOT [ $PROTECTED ] ] \
+            -qco loaded,size.sz,uploaded.sz,seedtime,ratio,name "$@" $INTERACTIVE; rc=$?
+        set -e
+        if $simulate; then break; fi
+        ##echo "RC=$rc for" "$@"
+        test $rc -eq 0 -o $rc -eq 44 || fail "rtcontrol aborted with RC=$rc"
+    done
+    test $(download_free) -lt $needed || finished
+    $INFO "No matches for" "$@"
+}
+
+
+# Calculate target
+needed=$(( $requested + $RESERVED_GiB * $GiB )) # Add a few GiB for the system
+
+# Remember start state
+start_items=$(items_loaded)
+start_free=$(download_free)
+
+# ANY disk check must run protected by the lock, else there's race conditions!
+check_guard_file
+
+# Exit immediately if there's enough space
+test $(download_free) -lt $needed || exit 0
+
+start_tm=$(now)
+$INFO "Disk space management started [with $(print_gib $(download_free)) free]"
+
+# Execute rules
+source ~/etc/sweep_rules
+
+# Finally, go through everything sorted by age
+make_space -s loaded // -/5
+make_space --aggressive -s loaded // -/5
+
+# As it says…
+finished

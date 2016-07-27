@@ -2,4 +2,4 @@
 # Basic host setup
 - hosts: box
   roles:
-    - { role: common, sudo: yes }
+    - { role: common, sudo: yes, tags: base}
