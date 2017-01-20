@@ -71,9 +71,9 @@ or the inofficial ``##rtorrent`` channel on ``irc.freenode.net``.
 ## How to Use This?
 
 Here's the steps you need to follow to get a working installation on your target host.
-Note that this cannot be an Ansible or Linux shell 101, so for details refer to
-the usual sources
-like [The Debian Administrator's Handbook](http://debian-handbook.info/browse/stable/),
+Note that this cannot be an Ansible or Linux shell 101, so if these topics are now for you
+refer to the usual sources like
+[The Debian Administrator's Handbook](http://debian-handbook.info/browse/stable/),
 [The Linux Command Line](http://linuxcommand.org/tlcl.php)
 and [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line#the-art-of-command-line),
 and the [Ansible Documentation](http://docs.ansible.com/#ansible-documentation).
