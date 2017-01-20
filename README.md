@@ -81,8 +81,9 @@ and the [Ansible Documentation](http://docs.ansible.com/#ansible-documentation).
 
 ### Installing Ansible
 
-Ansible has to be installed on the workstation from where you control your target hosts.
+Ansible **must** be installed on the workstation from where you control your target hosts.
 This can also be the target host itself, if you don't have a Linux or Mac OSX desktop at hand.
+
 See the [Ansible Documentation](http://docs.ansible.com/intro_installation.html)
 for how to install it using the package manager of your platform.
 Make sure you get the right version that way, the playbooks are tested using Ansible *1.9.6*,
@@ -91,6 +92,10 @@ and Ansible 2 might not work (yet).
 Another way to install Ansible is to put it into your home directory.
 The following commands just require Python to be installed to your system,
 and the installation is easy to get rid of (everything is contained within a single directory).
+When you have no ``~/.ansible.cfg`` yet (which you very likely do not),
+your editor will open – perform the changes as explained in the comments below.
+
+**Enter / copy+paste these commands into a shell prompt on your workstation!**
 
 ```sh
 # just to make sure you have the packages you need
@@ -118,7 +123,7 @@ cd; ansible --version
 
 To get it running on Windows is also possible,
 by [using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
-(untested, success stories welcome).
+(this is untested, success stories welcome).
 
 
 ### Checking Out the Code
