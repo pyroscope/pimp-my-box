@@ -243,7 +243,8 @@ If your Linux release isn't supported, you'll see a message like the following:
 In that case,
 [compile a binary yourself](https://github.com/pyroscope/rtorrent-ps/blob/master/docs/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source).
 
-Also, the SSL certificate generation is not fully automatic yet, run the command shown in
+Also, when you chose to install ruTorrent and NginX,
+the SSL certificate generation is not fully automatic yet, run the command shown in
 the error message you'll get, as `root` in the `/etc/nginx/ssl` directory – once the
 certificate is created, re-run the playbook and it should progress beyond that point.
 Of course, you can also copy a certificate you got from other sources to the paths
@@ -262,6 +263,10 @@ tmux -2u new -n rT-PS -s rtorrent "~/rtorrent/start; exec bash"
 ```
 
 To detach from this session (meaning rTorrent continues to run), press `Ctrl-a` followed by `d`.
+
+If you get ``rtorrent: command not found`` when calling above ``tmux`` command,
+then a pre-built Debian package is not available for your OS distribution
+and you need to build from source (see previous section).
 
 
 ### Activating Firewall Rules
