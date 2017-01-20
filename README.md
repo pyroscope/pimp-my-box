@@ -149,22 +149,18 @@ Now with Ansible installed and having a local working directory,
 you next need to configure the target host
 via a ``hosts`` file in your working directory (the so-called *inventory*).
 The ``hosts-example`` file shows how this has to look like,
-enter the name of your target instead of ``my-box.example.com``
-(and change ``my-box`` anywhere else it appears further below, *including* any paths).
+we add a ``my-box`` targetto the ``box`` group using this echo command:
 
-**…/pimp-my-box/hosts**
-
-```ini
-[box]
-my-box.example.com
+```sh
+echo -e >hosts '[box]\nmy-box'
 ```
 
 You also need to create a new file with the specifics of your box in ``host_vars/my-box/main.yml``,
 the so-called host variables. There is an example in
 [host_vars/rpi/main.yml](https://github.com/pyroscope/pimp-my-box/blob/master/host_vars/rpi/main.yml)
 which works with a default *Raspberry Pi* setup that comes with a password-less sudo account.
-Normally you'd add `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`, or else use
-`-K` on the command line to prompt for the password.
+For a normal dedicated server, you must also add an `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`,
+like so:
 
 ```sh
 mkdir -p "host_vars/my-box"
@@ -181,14 +177,25 @@ echo >"host_vars/my-box/secrets.yml" "ansible_sudo_pass: YOUR_OWN_SUDO_PASSWORD_
 If you don't understand what is done here, read the Ansible documentation again,
 specifically the “Getting Started” page.
 
-Next, we check your setup and that Ansible is able to connect to the target and do its job there.
-Make sure you have working SSH access based on a pubkey login first (see
-[here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)),
-for the account name you provided after ``ansible_ssh_user:`` in ``main.yml``.
-Otherwise, use `--ask-pass` in combination with a password login
-– for any details with this, consult the Ansible documentation.
+Finally, the last snippet of configuration goes into ``~/.ssh/config``,
+add these lines providing details on how to connect to your target host
+(and replace the text in ``ALL_CAPS`` by the correct values):
 
-Then call the command as shown after the ``$``,
+```ini
+Host my-box
+    HostName IP_ADDRESS_OR_DOMAIN_OF_TARGET
+    User ANSIBLE_SSH_USER
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+```
+
+See [here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
+for establishing working SSH access based on a pubkey login, if you never done that before.
+The account with the name you provided after ``ansible_ssh_user:`` in ``main.yml`` must allow
+login using the ``id_rsa`` key, and have ``sudo`` priviledges.
+
+Now we can check your setup and that Ansible is able to connect to the target and do its job there.
+For this, call the command as shown after the ``$``,
 and it should print what OS you have installed on the target(s),
 like shown in the example.
 
@@ -208,23 +215,8 @@ rpi | success >> {
 If anything goes wrong, add ``-vvvv`` to the ``ansible`` command for more diagnostics,
 and also check your `~/.ssh/config` and the Ansible connection settings in your `host_vars`.
 
-Here is an example `~/.ssh/config` snippet that provides details on
-how to connect to the ``rpi`` host:
-
-```ini
-Host rpi
-    HostName 192.168.1.2
-    User pi
-    IdentityFile ~/.ssh/id_rsa
-    IdentitiesOnly yes
-    # The following is unsecure, for a Raspberry PI it allows easy card swapping...
-    CheckHostIP no
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
-```
-
-To give you an idea why this way to do things is way superior to the usual
-*“call a bash script to set up things once and never update them again”*,
+To give you an idea why doing all this is way superior to the usual
+*“call a bash script to set up things once and never be able to update them again”*,
 you can now also easily call commands over a fleet of machines, *in parallel*:
 
 ```sh
