@@ -149,7 +149,7 @@ Now with Ansible installed and having a local working directory,
 you next need to configure the target host
 via a ``hosts`` file in your working directory (the so-called *inventory*).
 The ``hosts-example`` file shows how this has to look like,
-we add a ``my-box`` targetto the ``box`` group using this echo command:
+we add a ``my-box`` target to the ``box`` group using this echo command:
 
 ```sh
 echo -e >hosts '[box]\nmy-box'
