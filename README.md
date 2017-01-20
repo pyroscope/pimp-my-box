@@ -241,7 +241,7 @@ If your Linux release isn't supported, you'll see a message like the following:
     you need to install /opt/rtorrent manually!
 
 In that case,
-[compile a binary yourself](https://github.com/pyroscope/pyroscope/blob/wiki/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source).
+[compile a binary yourself](https://github.com/pyroscope/rtorrent-ps/blob/master/docs/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source).
 
 Also, the SSL certificate generation is not fully automatic yet, run the command shown in
 the error message you'll get, as `root` in the `/etc/nginx/ssl` directory – once the
