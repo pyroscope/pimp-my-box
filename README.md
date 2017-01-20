@@ -121,6 +121,8 @@ ln -s "$PWD/bin"/ansible* "$HOME/bin"
 cd; ansible --version
 ```
 
+The last command should print ``ansible 1.9.6`` when all went well.
+
 To get it running on Windows is also possible,
 by [using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
 (this is untested, success stories welcome).
