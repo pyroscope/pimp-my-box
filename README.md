@@ -150,24 +150,41 @@ you next need to configure the target host
 via a ``hosts`` file in your working directory (the so-called *inventory*).
 The ``hosts-example`` file shows how this has to look like,
 enter the name of your target instead of ``my-box.example.com``
-(and anywhere else ``my-box`` appears further below).
+(and change ``my-box`` anywhere else it appears further below, *including* any paths).
 
+**…/pimp-my-box/hosts**
 
 ```ini
 [box]
 my-box.example.com
 ```
 
-You also need a file with the specifics of your box in ``host_vars/my-box/main.yml``,
+You also need to create a new file with the specifics of your box in ``host_vars/my-box/main.yml``,
 the so-called host variables. There is an example in
 [host_vars/rpi/main.yml](https://github.com/pyroscope/pimp-my-box/blob/master/host_vars/rpi/main.yml)
 which works with a default *Raspberry Pi* setup that comes with a password-less sudo account.
 Normally you'd add `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`, or else use
 `-K` on the command line to prompt for the password.
 
+```sh
+mkdir -p "host_vars/my-box"
+
+# now add the values into 'main.yml' as they apply to *your* target host,
+# use the "host_vars/rpi/main.yml" example as a template
+${EDITOR:-vi} "host_vars/my-box/main.yml"
+
+# insert the actual password instead of 'YOUR_OWN_SUDO_PASSWORD_ON_TARGET',
+# for the 'ansible_ssh_user' account you provided in 'main.yml'
+echo >"host_vars/my-box/secrets.yml" "ansible_sudo_pass: YOUR_OWN_SUDO_PASSWORD_ON_TARGET"
+```
+
+If you don't understand what is done here, read the Ansible documentation again,
+specifically the “Getting Started” page.
+
 Next, we check your setup and that Ansible is able to connect to the target and do its job there.
 Make sure you have working SSH access based on a pubkey login first (see
-[here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)).
+[here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)),
+for the account name you provided after ``ansible_ssh_user:`` in ``main.yml``.
 Otherwise, use `--ask-pass` in combination with a password login
 – for any details with this, consult the Ansible documentation.
 
