@@ -131,7 +131,9 @@ by [using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
 ### Checking Out the Code
 
 To work with the playbooks, you of course need a local copy.
-Unsurprisingly, you also need ``git`` installed for this.
+Unsurprisingly, you also need ``git`` installed for this, to create that local copy (a/k/a *clone*).
+
+Executing these commands *on your workstation* takes care of that:
 
 ```sh
 which git || sudo apt-get install git
