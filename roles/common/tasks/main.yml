@@ -16,9 +16,11 @@
     - haveged
     - htop
     - httpie
+    - inxi
     - iotop
     - lftp
     - links
+    - lnav
     - lsb-release
     - lsof
     - mailutils
