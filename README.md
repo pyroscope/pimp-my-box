@@ -245,15 +245,6 @@ If your Linux release isn't supported, you'll see a message like the following:
 In that case,
 [compile a binary yourself](https://github.com/pyroscope/rtorrent-ps/blob/master/docs/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source).
 
-Also, when you chose to install ruTorrent and NginX,
-the SSL certificate generation is not fully automatic yet, run the command shown in
-the error message you'll get, as `root` in the `/etc/nginx/ssl` directory – once the
-certificate is created, re-run the playbook and it should progress beyond that point.
-Of course, you can also copy a certificate you got from other sources to the paths
-`/etc/nginx/ssl/cert.key` and `/etc/nginx/ssl/cert.pem`.
-See [this blog post](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)
-if you want *excessive* detail on secure HTTPS setups.
-
 
 ### Starting rTorrent
 
@@ -321,6 +312,13 @@ To activate the optional applications, add these settings to your `host_vars`:
  * `rutorrent_enabled: yes` for ruTorrent (see below for details).
 
 Then run the playbook again.
+The SSL certificate generation is not fully automatic yet, run the command shown in
+the error message you'll get while running the playbook, as `root` in the `/etc/nginx/ssl` directory – once the
+certificate is created, re-run the playbook and it should progress beyond that point.
+Alternatively, you can also copy a certificate you got from other sources to the paths
+`/etc/nginx/ssl/cert.key` and `/etc/nginx/ssl/cert.pem`.
+See [this blog post](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)
+if you want *excessive* detail on secure HTTPS setups.
 
 FlexGet is just installed ready to be used, for full operation a configuration file
 located in `~/.config/flexget/config.yml` must be added
