@@ -325,12 +325,14 @@ if you want *excessive* detail on secure HTTPS setups.
 FlexGet is just installed ready to be used, for full operation a configuration file
 located in `~/.config/flexget/config.yml` must be added
 (see the [cookbook](http://flexget.com/wiki/Cookbook)).
-A cronjob is provided too (called every 11 minutes), but only starts to do something meaningful
-after you add that configuration file.
+A cronjob is provided too (called every 11 minutes),
+but only starts to actually call FlexGet
+*after* you add that configuration file.
 Look into the files `~/.config/flexget/flexget.log` and `~/.config/flexget/flexget-cron.log`
 to diagnose any problems.
 
-ruTorrent, if enabled, is available at `https://my-box.example.com/rutorrent/`.
+ruTorrent, if enabled, is available at `https://my-box.example.com/rutorrent/`
+(use you own domain or IP in that URL).
 
 
 ### Installing and Updating ruTorrent
