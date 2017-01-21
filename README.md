@@ -206,7 +206,7 @@ To execute the playbook, call ``ansible-playbook -i hosts site.yml``.
 Note that at the moment, you still need to additionally install (`dpkg -i /root/rt-ps.deb`)
 the `rtorrent-ps` Debian package that was downloaded from
 [Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
-This must ne done in a ``root`` shell, after the first playbook run.
+This must be done in a ``root`` shell, after the first playbook run.
 
 If your Linux release isn't supported, you'll see a message like the following:
 
