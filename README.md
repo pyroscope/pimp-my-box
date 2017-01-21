@@ -438,6 +438,18 @@ export ANSIBLE_HOST_KEY_CHECKING=False
 
 ## Implementation Details
 
+### Location of Configuration Files
+
+ * ``/home/rtorrent/rtorrent/rtorrent.rc`` – Main rTorrent configuration file; to update it from this repository use ``-e force_cfg=yes``, see above for details.
+ * ``/home/rtorrent/rtorrent/_rtlocal.rc`` – rTorrent configuration include for custom modifications, this is *never* overwritten once it exists.
+ * ``/home/rtorrent/.pyroscope/config.ini`` – ``pyrocore`` main configuration.
+ * ``/home/rtorrent/.pyroscope/config.py`` – ``pyrocore`` custom field configuration.
+ * ``/home/rtorrent/.config/flexget/config.yml`` – FlexGet configuration.
+ * ``/home/rutorrent/ruTorrent-master/conf/config.php`` – ruTorrent configuration.
+ * ``/etc/nginx/sites-available/rutorrent`` – NginX configuration for the ruTorrent site.
+ * ``/etc/php5/fpm/pool.d/rutorrent.conf`` – PHP worker pool for ruTorrent.
+
+
 ### Secure Communications
 
 All internal RPC is done via Unix domain sockets.
