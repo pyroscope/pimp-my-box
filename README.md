@@ -179,7 +179,7 @@ and it should print what OS you have installed on the target(s),
 like shown in the example.
 
 ```sh
-$ ansible all -i hosts -m setup -a "filter=*distribution*"
+$ ansible box -i hosts -m setup -a "filter=*distribution*"
 rpi | success >> {
     "ansible_facts": {
         "ansible_distribution": "Debian",
