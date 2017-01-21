@@ -85,6 +85,21 @@ and [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line#t
 and the [Ansible Documentation](http://docs.ansible.com/#ansible-documentation).
 
 
+### Checking Out the Code
+
+To work with the playbooks, you of course need a local copy.
+Unsurprisingly, you also need ``git`` installed for this, to create that local copy (a/k/a *clone*).
+
+Executing these commands *on your workstation* takes care of that:
+
+```sh
+which git || sudo apt-get install git
+mkdir ~/src; cd ~/src
+git clone "https://github.com/pyroscope/pimp-my-box.git"
+cd "pimp-my-box"
+```
+
+
 ### Installing Ansible
 
 Ansible **must** be installed on the workstation from where you control your target hosts.
@@ -99,55 +114,18 @@ The *recommended* way to install Ansible is to put it into your home directory.
 The following commands just require Python to be installed to your system,
 and the installation is easy to get rid of (everything is contained within a single directory).
 When you have no ``~/.ansible.cfg`` yet (which you very likely do not),
-your editor will open – perform the changes as explained in the comments below.
+one is added.
 
-**Enter / copy+paste these commands into a shell prompt on your workstation!**
+**Enter / copy+paste this command into a shell prompt on your workstation, within the 'pimp-my-box' directory!**
 
 ```sh
-# just to make sure you have the packages you need
-sudo apt-get install build-essential python-virtualenv python-dev
-
-# install Ansible 1.9
-base="$HOME/.local/venvs"
-mkdir -p "$base"
-/usr/bin/virtualenv "$base/ansible"
-cd "$base/ansible"
-bin/pip install "ansible==1.9.6"
-
-# create a configuration file
-if test '!' -f ~/.ansible.cfg; then
-    curl -o ~/.ansible.cfg "https://raw.githubusercontent.com/ansible/ansible/stable-1.9/examples/ansible.cfg"
-    ${EDITOR:-vi} ~/.ansible.cfg # uncomment and change line containing 'roles_path'
-    # roles_path      = $HOME/.ansible/roles:/etc/ansible/roles
-fi
-
-# make Ansible commands available by default
-test -d "$HOME/bin" || { mkdir -p "$HOME/bin"; exec -l $SHELL; }
-ln -s "$PWD/bin"/ansible* "$HOME/bin"
-cd; ansible --version
+./scripts/install_ansible.sh
 ```
-
-The last command should print ``ansible 1.9.6`` when all went well.
 
 To get it running on Windows is also possible, by using
 [Bash for Windows 10](http://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux)
 or [CygWin](https://servercheck.in/blog/running-ansible-within-windows) on older systems
 (this is untested, success stories welcome).
-
-
-### Checking Out the Code
-
-To work with the playbooks, you of course need a local copy.
-Unsurprisingly, you also need ``git`` installed for this, to create that local copy (a/k/a *clone*).
-
-Executing these commands *on your workstation* takes care of that:
-
-```sh
-which git || sudo apt-get install git
-mkdir ~/src; cd ~/src
-git clone "https://github.com/pyroscope/pimp-my-box.git"
-cd "pimp-my-box"
-```
 
 
 ### Setting Up Your Environment
