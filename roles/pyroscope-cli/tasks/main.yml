@@ -22,6 +22,14 @@
     - python-cffi
     - libffi-dev
 
+- name: Create PyroScope config dir
+  file: path=/home/rtorrent/.pyroscope state=directory owner=rtorrent group=rtorrent mode=0750
+
+- name: Render default configuration files (no overwrite)
+  template: src="{{ item }}" dest="/home/rtorrent/.pyroscope/{{ item }}" owner=rtorrent group=rtorrent mode=0640 force=no
+  with_items:
+    - config.ini
+
 - name: git clone 'pyrocore'
   shell: su -c 'git clone https://github.com/pyroscope/pyrocore.git pyroscope' rtorrent
   args:
