@@ -358,7 +358,7 @@ you can move back that backup.
 
 ### Using the System Python Interpreter
 
-By default, Python 2.7.10 is installed because that version handles SSL connections
+By default, Python 2.7.13 is installed because that version handles SSL connections
 according to current security standards; the version installed in your system often
 does not. This has an impact on e.g. FlexGet's handling of ``https`` feeds.
 
