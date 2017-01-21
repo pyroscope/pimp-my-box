@@ -1,4 +1,12 @@
 ---
+# ansible_architecture: "x86_64" or "armv7l"
+- name: Load distro-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "os_{{ ansible_lsb.codename }}_{{ ansible_architecture }}.yml"
+    - "os_{{ ansible_distribution_release }}.yml"
+    - "os_default.yml"
+
 - name: Create rutorrent group
   group: name=rutorrent state=present
 
@@ -37,7 +45,7 @@
     - {name: 'profileMask', value: '0770' }
     - {name: 'profilePath', value: "'/home/rutorrent/profile'" }
   notify:
-    - Restart php5-fpm
+    - Restart php-fpm
 
 - name: Set ruTorrent permissions
   file: dest=/home/rutorrent/ruTorrent-master owner=rutorrent group=www-data mode=g+rX,o= recurse=yes

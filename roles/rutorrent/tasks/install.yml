@@ -2,9 +2,9 @@
 - name: Install PHP packages
   apt: name={{ item }} state=latest
   with_items:
-    - php5-cli
-    - php5-fpm
-    - php-apc
+    - "php{{ php_version }}-cli"
+    - "php{{ php_version }}-fpm"
+    - "{{ php_apcu }}"
 
 - name: Download ruTorrent release archive
   get_url:

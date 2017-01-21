@@ -449,7 +449,7 @@ export ANSIBLE_HOST_KEY_CHECKING=False
  * ``/home/rtorrent/.config/flexget/config.yml`` – FlexGet configuration.
  * ``/home/rutorrent/ruTorrent-master/conf/config.php`` – ruTorrent configuration.
  * ``/etc/nginx/sites-available/rutorrent`` – NginX configuration for the ruTorrent site.
- * ``/etc/php5/fpm/pool.d/rutorrent.conf`` – PHP worker pool for ruTorrent.
+ * ``/etc/php5/fpm/pool.d/rutorrent.conf`` or ``/etc/php/7.0/fpm/pool.d/rutorrent.conf`` – PHP worker pool for ruTorrent.
 
 
 ### Secure Communications

@@ -1,0 +1,3 @@
+php_version: 5
+php_etc_dir: php5
+php_apcu: php-apc
