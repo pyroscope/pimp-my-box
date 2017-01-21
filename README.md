@@ -195,7 +195,7 @@ If anything goes wrong, add ``-vvvv`` to the ``ansible`` command for more diagno
 and also check your `~/.ssh/config` and the Ansible connection settings in your `host_vars`.
 If it's a connection problem, try to directly call ``ssh -vvvv my-box`` and if that succeeds,
 also make sure you can become ``root`` via ``sudo su -``.
-If not, read the resources linked at the start of this section, and especially the
+If not, read the resources linked at the start of the “How to Use This?” section, and especially the
 [SSH Essentials](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys).
 
 
