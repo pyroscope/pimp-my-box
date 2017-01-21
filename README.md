@@ -229,13 +229,11 @@ If not, read the resources linked at the start of this section, and especially t
 ### Running the Playbook
 
 To execute the playbook, call ``ansible-playbook -i hosts site.yml``.
-If you added more than one host into the ``box`` group and want to only address one of them,
-use ``ansible-playbook -i hosts -l ‹hostname› site.yml``.
-Add (multiple) ``-v`` to get more detailed information on what each task does.
 
 Note that at the moment, you still need to additionally install (`dpkg -i /root/rt-ps.deb`)
 the `rtorrent-ps` Debian package that was downloaded from
 [Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
+This must ne done in a ``root`` shell, after the first playbook run.
 
 If your Linux release isn't supported, you'll see a message like the following:
 
@@ -245,10 +243,14 @@ If your Linux release isn't supported, you'll see a message like the following:
 In that case,
 [compile a binary yourself](https://github.com/pyroscope/rtorrent-ps/blob/master/docs/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source).
 
+If you added more than one host into the ``box`` group and want to only address one of them,
+use ``ansible-playbook -i hosts -l ‹hostname› site.yml``.
+Add (multiple) ``-v`` to get more detailed information on what each task does.
+
 
 ### Starting rTorrent
 
-As mentione before, after successfully running the Ansible playbook, a fully configured
+As mentioned before, after successfully running the Ansible playbook, a fully configured
 setup is found on the target. So to start rTorrent, call this command as the `rtorrent` user:
 
 ```sh
