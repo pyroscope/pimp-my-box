@@ -257,7 +257,7 @@ physical access to the machine.
 So to activate the firewall rules, use this in a `root` shell on the *target host*:
 
 ```sh
-egrep 'ssh|22' /lib/ufw/user.rules
+egrep 'ssh|22' /lib/ufw/user.rules /etc/ufw/user.rules
 # Make sure the output contains
 #   ### tuple ### limit tcp 22 0.0.0.0/0 any 0.0.0.0/0 in
 # followed by 3 lines starting with '-A'.
