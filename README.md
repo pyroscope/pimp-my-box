@@ -177,9 +177,10 @@ mkdir -p "host_vars/my-box"
 cp --no-clobber "host_vars/rpi/main.yml" "host_vars/my-box/main.yml"
 ${EDITOR:-vi} "host_vars/my-box/main.yml"
 
-# insert the actual password instead of 'YOUR_OWN_SUDO_PASSWORD_ON_TARGET',
-# for the 'ansible_ssh_user' account you provided in 'main.yml'
-echo >"host_vars/my-box/secrets.yml" "ansible_sudo_pass: YOUR_OWN_SUDO_PASSWORD_ON_TARGET"
+# enter the password for the 'ansible_ssh_user' account you provided in 'main.yml'
+read -sp "Enter target's sudo password: " PWD \
+    && echo >"host_vars/my-box/secrets.yml" "ansible_sudo_pass: $PWD" \
+    && echo && unset PWD
 ```
 
 If you don't understand what is done here, read the Ansible documentation again,
