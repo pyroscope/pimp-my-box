@@ -127,8 +127,9 @@ cd; ansible --version
 
 The last command should print ``ansible 1.9.6`` when all went well.
 
-To get it running on Windows is also possible,
-by [using CygWin](https://servercheck.in/blog/running-ansible-within-windows)
+To get it running on Windows is also possible, by using
+[Bash for Windows 10](http://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux)
+or [CygWin](https://servercheck.in/blog/running-ansible-within-windows) on older systems
 (this is untested, success stories welcome).
 
 
