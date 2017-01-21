@@ -30,19 +30,19 @@
 - name: Install pyenv activation
   copy: src=pyenv.sh dest=/home/rtorrent/.local/profile.d/pyenv.sh owner=rtorrent group=rtorrent mode=0640
 
-- name: Install Python 2.7.10
-  shell: su -c '. .bash_aliases; TMPDIR=$PWD/tmp pyenv install 2.7.10' rtorrent
+- name: Install Python 2.7.13
+  shell: su -c '. .bash_aliases; TMPDIR=$PWD/tmp pyenv install 2.7.13' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/.local/pyenv/versions/2.7.10/bin/python
+    creates: /home/rtorrent/.local/pyenv/versions/2.7.13/bin/python
 
 - name: Define global pyenv version
-  copy: content="2.7.10" dest=/home/rtorrent/.local/pyenv/version owner=rtorrent group=rtorrent mode=0640 force=no
+  copy: content="2.7.13" dest=/home/rtorrent/.local/pyenv/version owner=rtorrent group=rtorrent mode=0640 force=no
 
 - name: Install virtualenv and update pip
-  shell: su -c '.local/pyenv/versions/2.7.10/bin/pip install -U pip virtualenv' rtorrent
+  shell: su -c '.local/pyenv/versions/2.7.13/bin/pip install -U pip virtualenv' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/.local/pyenv/versions/2.7.10/bin/virtualenv
+    creates: /home/rtorrent/.local/pyenv/versions/2.7.13/bin/virtualenv

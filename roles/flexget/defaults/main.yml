@@ -1,2 +1,2 @@
 flexget_enabled: false
-venv_bin: /home/rtorrent/.local/pyenv/versions/2.7.10/bin/virtualenv
+venv_bin: /home/rtorrent/.local/pyenv/versions/2.7.13/bin/virtualenv
