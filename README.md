@@ -42,8 +42,12 @@ on one or any number of *target hosts*,
 from the comfort of your own workstation.
 The setup is described in so called *playbooks*,
 before executing them you just have to add a few values like the name of your target host.
+This is in many ways superior to the usual
+*“call a bash script to set up things once and never be able to update them again”*,
+since you can run this setup repeatedly to either fix problems,
+or to install upgrades and new features added to this repository.
 
-The playbooks contained in this repository install the following components:
+The playbooks contained in here install the following components:
 
 * Security hardening of your server.
 * [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps#rtorrent-ps) with UI enhancements, colorization, and some added features.
@@ -56,8 +60,8 @@ Optionally:
 
 Each includes a default configuration, so you end up with a fully working system.
 
-The Ansible playbooks and related commands have been tested on Debian Jessie, Ubuntu Trusty, and Ubuntu Lucid
-– the recommended distribution is Ubuntu Server LTS 64bit (i.e. release 14.04 at the time of this writing).
+The Ansible playbooks and related commands have been tested on Debian Jessie, Ubuntu Xenial, and Ubuntu Trusty
+– the recommended distribution is Ubuntu Server LTS 64bit (i.e. release 16.04 at the time of this writing).
 They should work on other platforms too, especially when they're Debian derivatives, but you might have to make some modifications.
 Files are mostly installed into the user accounts `rtorrent` and `rutorrent`,
 and only a few global configuration files are affected. If you run this against a host
@@ -214,14 +218,10 @@ rpi | success >> {
 
 If anything goes wrong, add ``-vvvv`` to the ``ansible`` command for more diagnostics,
 and also check your `~/.ssh/config` and the Ansible connection settings in your `host_vars`.
-
-To give you an idea why doing all this is way superior to the usual
-*“call a bash script to set up things once and never be able to update them again”*,
-you can now also easily call commands over a fleet of machines, *in parallel*:
-
-```sh
-ansible all -i hosts -f 9 -a "apt-get -qq update"
-```
+If it's a connection problem, try to directly call ``ssh -vvvv my-box`` and if that succeeds,
+also make sure you can become ``root`` via ``sudo su -``.
+If not, read the resources linked at the start of this section, and especially the
+[SSH Essentials](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys).
 
 
 ### Running the Playbook
