@@ -153,41 +153,33 @@ cd "pimp-my-box"
 ### Setting Up Your Environment
 
 Now with Ansible installed and having a local working directory,
-you next need to configure the target host
-via a ``hosts`` file in your working directory (the so-called *inventory*).
-The ``hosts-example`` file shows how this has to look like,
-we add a ``my-box`` target to the ``box`` group using this echo command:
-
-```sh
-echo -e >hosts '[box]\nmy-box'
-```
-
-You also need to create a new file with the specifics of your box in ``host_vars/my-box/main.yml``,
-the so-called host variables. There is an example in
+you next need to configure the target host (by default named ``my-box``)
+and its specific attributes (the so-called *host vars*).
+There is an example in
 [host_vars/rpi/main.yml](https://github.com/pyroscope/pimp-my-box/blob/master/host_vars/rpi/main.yml)
-which works with a default *Raspberry Pi* setup that comes with a password-less sudo account.
-For a normal dedicated server, you must also add an `ansible_sudo_pass` in `host_vars/my-box/secrets.yml`,
-like so:
+for a default *Raspberry Pi* setup which is used a template.
+
+To create the necessary files, call this command:
 
 ```sh
-mkdir -p "host_vars/my-box"
-
-# now add the values into 'main.yml' as they apply to *your* target host,
-# using the "host_vars/rpi/main.yml" example as a template
-cp --no-clobber "host_vars/rpi/main.yml" "host_vars/my-box/main.yml"
-${EDITOR:-vi} "host_vars/my-box/main.yml"
-
-# enter the password for the 'ansible_ssh_user' account you provided in 'main.yml'
-read -sp "Enter target's sudo password: " PWD \
-    && echo >"host_vars/my-box/secrets.yml" "ansible_sudo_pass: $PWD" \
-    && echo && unset PWD
+./scripts/add_host.sh
 ```
 
+If you already have an Ansible inventory (i.e. ``hosts`` file),
+your configured editor will open it
+– make sure you add your target's name to the ``[box]`` group.
+Else a suitable default is created.
+Next the editor will open with ``main.yml``,
+fill in the values as described in the first few lines of the file.
+In a final step, you need to enter the ``sudo`` password of your target server.
+
+Afterwards, you have these files in your working directory: ``hosts``,
+``host_vars/my-box/main.yml``, and ``host_vars/my-box/secrets.yml``.
 If you don't understand what is done here, read the Ansible documentation again,
 specifically the “Getting Started” page.
 
 Finally, the last snippet of configuration goes into ``~/.ssh/config``,
-add these lines providing details on how to connect to your target host
+add these lines providing details on how to connect to your target host via SSH
 (and replace the text in ``ALL_CAPS`` by the correct values):
 
 ```ini
@@ -199,7 +191,7 @@ Host my-box
 ```
 
 See [here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
-for establishing working SSH access based on a pubkey login, if you never done that before.
+for establishing working SSH access based on a pubkey login, if you've never done that before.
 The account with the name you provided after ``ansible_ssh_user:`` in ``main.yml`` must allow
 login using the ``id_rsa`` key, and have ``sudo`` priviledges.
 
