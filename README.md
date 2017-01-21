@@ -171,7 +171,8 @@ like so:
 mkdir -p "host_vars/my-box"
 
 # now add the values into 'main.yml' as they apply to *your* target host,
-# use the "host_vars/rpi/main.yml" example as a template
+# using the "host_vars/rpi/main.yml" example as a template
+cp --no-clobber "host_vars/rpi/main.yml" "host_vars/my-box/main.yml"
 ${EDITOR:-vi} "host_vars/my-box/main.yml"
 
 # insert the actual password instead of 'YOUR_OWN_SUDO_PASSWORD_ON_TARGET',
