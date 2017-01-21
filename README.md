@@ -95,7 +95,7 @@ for how to install it using the package manager of your platform.
 Make sure you get the right version that way, the playbooks are tested using Ansible *1.9.6*,
 and Ansible 2 might not work (yet).
 
-Another way to install Ansible is to put it into your home directory.
+The *recommended* way to install Ansible is to put it into your home directory.
 The following commands just require Python to be installed to your system,
 and the installation is easy to get rid of (everything is contained within a single directory).
 When you have no ``~/.ansible.cfg`` yet (which you very likely do not),
