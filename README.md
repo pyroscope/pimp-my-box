@@ -22,7 +22,7 @@ Automated install of rTorrent-PS etc. via
     * [Installing and Updating ruTorrent](#installing-and-updating-rutorrent)
   * [Advanced Configuration](#advanced-configuration)
     * [Using the System Python Interpreter](#using-the-system-python-interpreter)
-    * [Using the bash Completion Handler](#using-the-bash-completion-handler)
+    * [Using the bash Download Completion Handler](#using-the-bash-completion-handler)
     * [Extending the Nginx Site](#extending-the-nginx-site)
   * [Trouble-Shooting](#trouble-shooting)
     * [SSH Error: Host key verification failed](#ssh-error-host-key-verification-failed)
@@ -346,7 +346,7 @@ venv_bin: /usr/bin/virtualenv
 ```
 
 
-### Using the bash Completion Handler
+### Using the bash Download Completion Handler
 
 The default configuration adds a *finished* event handler that calls the `~rtorrent/bin/_event.download.finished` script.
 That script in turn just calls any existing `_event.download.finished-*.sh` script,
