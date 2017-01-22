@@ -21,6 +21,9 @@ base="$HOME/.local/venvs"
 mkdir -p "$base"
 /usr/bin/virtualenv "$base/ansible"
 cd "$base/ansible"
+for pypkg in pip setuptools wheel "requests[security]"; do
+    bin/pip install -U "$pypkg"
+done
 bin/pip install "ansible==$ansible_version"
 
 # create a configuration file
