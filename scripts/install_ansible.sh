@@ -36,16 +36,24 @@ if test '!' -f ~/.ansible.cfg; then
 fi
 
 # make Ansible commands available by default
-test -d "$HOME/bin" || { mkdir -p "$HOME/bin"; exec -l $SHELL; }
+fix_path=''
+if test ! -d "$HOME/bin"; then
+    mkdir -p "$HOME/bin"
+    PATH="$HOME/bin:$PATH"
+    fix_path='\n\n!!!!! IMPORTANT !!!!!'
+    fix_path="$fix_path"'\nYou had no ~/bin! Call this command to add it to your PATH:'
+    fix_path="$fix_path"'\n\n    exec $SHELL -l\n'
+fi
 ln -nfs "$PWD/bin"/ansible* "$HOME/bin"
 
 # check success
 cd
-echo
+echo; echo
 if ansible --version 2>&1 | grep >/dev/null "$ansible_version"; then
     echo "*** ALL OK: Ansible was installed"
 else
     echo "*** ERROR: Something went wrong, calling 'ansible --version' results in:"
 fi
 ansible --version
-which ansible
+echo -n "Ansible is found at "; which ansible | sed -re "s#$HOME/#~/#"
+test -z "$fix_path" || echo -e "$fix_path"
