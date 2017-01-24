@@ -10,11 +10,21 @@ echo "*** Checking build essentials"
 test -f "/usr/share/build-essential/essential-packages-list" \
     || sudo apt-get install build-essential
 
+echo "*** Checking curl"
+which curl >/dev/null 2>&1 || sudo apt-get install curl
+
 echo "*** Checking virtualenv"
 which virtualenv >/dev/null 2>&1 || sudo apt-get install python-virtualenv
 
 echo "*** Checking Python development support"
 test -f "/usr/bin/python-config" || sudo apt-get install python-dev
+
+echo "*** Checking ffi-dev"
+test -f "/usr/share/man/man3/ffi.3.gz" || sudo apt-get install libffi-dev
+
+echo "*** Checking openssl-dev"
+test -f "/usr/include/openssl/opensslconf.h" || sudo apt-get install libssl-dev
+
 
 # install Ansible
 base="$HOME/.local/venvs"
