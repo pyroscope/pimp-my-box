@@ -63,7 +63,8 @@ Optionally:
 Each includes a default configuration, so you end up with a fully working system.
 
 The Ansible playbooks and related commands have been tested on Debian Jessie, Ubuntu Xenial, and Ubuntu Trusty
-– the recommended distribution is Ubuntu Server LTS 64bit (i.e. release 16.04 at the time of this writing).
+– the recommended distribution is Ubuntu Server LTS 64bit (i.e. release 16.04 at the time of this writing,
+unless you want to use rutorrent, then for now go back to 14.04 or use Debian Jessie).
 They should work on other platforms too, especially when they're Debian derivatives, but you might have to make some modifications.
 Files are mostly installed into the user accounts `rtorrent` and `rutorrent`,
 and only a few global configuration files are affected. If you run this against a host
