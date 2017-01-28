@@ -19,9 +19,11 @@ mkdir -p "host_vars/${target}"
 if test ! -f "host_vars/${target}/main.yml"; then
     echo >>"host_vars/${target}/main.yml" "# Edit the values as they apply to *your* '$target' target host."
     echo >>"host_vars/${target}/main.yml" "# Do NOT use the provided template unchanged!"
-    echo >>"host_vars/${target}/main.yml" "# You MUST at least change the 'box_ipv4' and 'ansible_ssh_user' values!"
+    echo >>"host_vars/${target}/main.yml" "# You MUST at least change the 'box_ipv4' value!"
     echo >>"host_vars/${target}/main.yml" ""
-    cat >>"host_vars/${target}/main.yml" "host_vars/rpi/main.yml"
+    sed >>"host_vars/${target}/main.yml" <"host_vars/rpi/main.yml" \
+        -e 's/ansible_ssh_/; ansible_ssh_/' \
+        -e "s/; ansible_ssh_host: .*/ansible_ssh_host: $target/"
 fi
 ${EDITOR:-vi} "host_vars/${target}/main.yml"
 

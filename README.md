@@ -11,8 +11,9 @@ Automated install of rTorrent-PS etc. via
 
   * [Introduction](#introduction)
   * [How to Use This?](#how-to-use-this)
-    * [Installing Ansible](#installing-ansible)
     * [Checking Out the Code](#checking-out-the-code)
+    * [Installing Ansible](#installing-ansible)
+    * [Providing SSH Access for Ansible](#providing-ssh-access-for-ansible)
     * [Setting Up Your Environment](#setting-up-your-environment)
     * [Running the Playbook](#running-the-playbook)
     * [Starting rTorrent](#starting-rtorrent)
@@ -129,9 +130,60 @@ or [CygWin](https://servercheck.in/blog/running-ansible-within-windows) on older
 (this is untested, success stories welcome).
 
 
+### Providing SSH Access for Ansible
+
+For a dedicated server, the first step is to create an account *Ansible* can use to perform its work.
+Log into your server as ``root`` and call these commands:
+
+```sh
+groupadd setup
+useradd -g setup -G setup,users -c "Ansible remote user" -s /bin/bash --create-home setup
+chmod 750 ~setup
+passwd -l setup
+```
+
+Calling the following command as ``root`` on the *target host* will grant password-less sudo to the new account:
+
+```sh
+# Give password-less sudo permissions to the "setup" user
+echo >/etc/sudoers.d/setup "setup ALL=(ALL) NOPASSWD:ALL"
+```
+
+In case you prefer password-protected sudo, leave out the ``NOPASSWD:``,
+and also set a password using ``passwd setup``.
+
+The ``setup`` account must allow login using the ``id_rsa`` key, or another key you create on your *workstation*.
+See [here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
+for establishing working SSH access based on a pubkey login, if you've never done that before.
+
+Finally, the last snippet of SSH configuration goes into ``~/.ssh/config`` of your *workstation* account,
+add these lines providing details on how to connect to your target host via SSH
+(and replace the text in ``ALL_CAPS`` by the correct value):
+
+```ini
+Host my-box
+    HostName IP_ADDRESS_OR_DOMAIN_OF_TARGET
+    Port 22
+    User setup
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+```
+
+Now to test that you did everything right,
+call the below ``ssh`` command on your *workstation*,
+and verify that you get the output as shown:
+
+```sh
+$ ssh my-box "sudo id"
+uid=0(root) gid=0(root) groups=0(root)
+```
+
+In case you're asked for a password, enter the one you've set on the ``setup`` account.
+
+
 ### Setting Up Your Environment
 
-Now with Ansible installed and having a local working directory,
+Now with Ansible installed and able to connect via SSH,
 you next need to configure the target host (by default named ``my-box``)
 and its specific attributes (the so-called *host vars*).
 There is an example in
@@ -145,9 +197,9 @@ To create the necessary files, call this command:
 ```
 
 If you already have an Ansible inventory (i.e. ``hosts`` file),
-your configured editor will open it
-– make sure you add your target's name to the ``[box]`` group.
-Else a suitable default is created.
+your configured editor will open it – else a suitable default is created.
+Make sure you add your target's name to the ``[box]`` group, if it's missing.
+
 Next the editor will open with ``main.yml``,
 fill in the values as described in the first few lines of the file.
 In a final step, you need to enter the ``sudo`` password of your target server.
@@ -157,23 +209,6 @@ Afterwards, you have these files in your working directory: ``hosts``,
 If you don't understand what is done here, read the Ansible documentation again,
 specifically the “Getting Started” page.
 
-Finally, the last snippet of configuration goes into ``~/.ssh/config``,
-add these lines providing details on how to connect to your target host via SSH
-(and replace the text in ``ALL_CAPS`` by the correct values):
-
-```ini
-Host my-box
-    HostName IP_ADDRESS_OR_DOMAIN_OF_TARGET
-    User ANSIBLE_SSH_USER
-    IdentityFile ~/.ssh/id_rsa
-    IdentitiesOnly yes
-```
-
-See [here](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
-for establishing working SSH access based on a pubkey login, if you've never done that before.
-The account with the name you provided after ``ansible_ssh_user:`` in ``main.yml`` must allow
-login using the ``id_rsa`` key, and have ``sudo`` priviledges.
-
 Now we can check your setup and that Ansible is able to connect to the target and do its job there.
 For this, call the command as shown after the ``$``,
 and it should print what OS you have installed on the target(s),
@@ -181,12 +216,12 @@ like shown in the example.
 
 ```sh
 $ ansible box -i hosts -m setup -a "filter=*distribution*"
-rpi | success >> {
+my-box | success >> {
     "ansible_facts": {
-        "ansible_distribution": "Debian",
-        "ansible_distribution_major_version": "7",
-        "ansible_distribution_release": "wheezy",
-        "ansible_distribution_version": "7.8"
+        "ansible_distribution": "Ubuntu",
+        "ansible_distribution_major_version": "14",
+        "ansible_distribution_release": "trusty",
+        "ansible_distribution_version": "14.04"
     },
     "changed": false
 }
