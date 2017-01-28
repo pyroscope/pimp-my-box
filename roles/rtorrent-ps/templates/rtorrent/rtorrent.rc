@@ -47,11 +47,9 @@ throttle.global_up.max_rate.set_kb = {{ rt_global_up_rate_kb }}
 throttle.global_down.max_rate.set_kb = {{ rt_global_down_rate_kb }}
 throttle.max_uploads.set = 100
 throttle.max_uploads.global.set = 250
-trackers.numwant.set = 80
 network.http.max_open.set = 64
 network.max_open_files.set = 600
 network.max_open_sockets.set = 300
-protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
 system.umask.set = {{ '%04o' | format(rt_system_umask) }}
 keys.layout.set = {{ rt_keys_layout }}
 pieces.hash.on_completion.set = no
@@ -71,6 +69,8 @@ throttle.min_peers.normal.set = 20
 throttle.max_peers.normal.set = 60
 throttle.min_peers.seed.set = 30
 throttle.max_peers.seed.set = 80
+trackers.numwant.set = 80
+protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
 
 # resource usage
 pieces.memory.max.set = {{ rt_pieces_memory }}
