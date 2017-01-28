@@ -6,7 +6,37 @@
 #
 #       /home/rtorrent/rtorrent (a/k/a /var/torrent)
 #
+# It is installed by Ansible, but only gets overwritten when you provide the
+# option "-e force_cfg=yes" to the "ansible-playbook" command, after the
+# initial playbook run.
+#
 #############################################################################
+
+# CONFIG: Manifest constants (base layout)
+method.insert = cfg.basedir,    private|const|string, (cat,"/var/torrent/")
+method.insert = cfg.watch,      private|const|string, (cat,(cfg.basedir),"watch/")
+method.insert = cfg.logs,       private|const|string, (cat,(cfg.basedir),"log/")
+method.insert = cfg.logfile,    private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
+
+# Set "pyro.extended" to 1 to activate rTorrent-PS features!
+method.insert = pyro.extended, const|value, 1
+
+# Set "pyro.bin_dir" to the "bin" directory where you installed the pyrocore tools!
+# Make sure you end it with a "/"; if this is left empty, then the shell's path is searched.
+method.insert = pyro.bin_dir, const|string, ~/bin/
+
+# Set fundamental system paths
+network.http.capath.set = "/etc/ssl/certs"
+session.path.set = (cat,(cfg.basedir),".session")
+directory.default.set = (cat,(cfg.basedir),"work")
+log.execute = (cat,(cfg.logs),"execute.log")
+branch=pyro.extended=,"log.messages = (cat, (cfg.logs), messages.log)"
+
+# Report major config values
+print = (cat,"CFG base=",(cfg.basedir))
+print = (cat,"CFG session=",(session.path))
+print = (cat,"CFG logfile=",(cfg.logfile))
+
 
 #
 # Environment & personal preferences (check & adapt these)
@@ -25,6 +55,7 @@ protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
 system.umask.set = {{ '%04o' | format(rt_system_umask) }}
 keys.layout.set = {{ rt_keys_layout }}
 pieces.hash.on_completion.set = no
+encoding.add = utf8
 
 # range for listening port
 network.port_range.set = 64333-64666
@@ -49,21 +80,12 @@ network.xmlrpc.size_limit.set = {{ rt_xmlrpc_size_limit }}
 #
 # CORE settings (mostly keep these, but still check them)
 #
-network.http.capath.set = /etc/ssl/certs
-encoding.add = utf8
 
-directory.default.set = /var/torrent/work
-session.path.set = /var/torrent/.session
+# since "network.scgi.open_local" is parsed by "rtcontrol", this must be a literal value!
 network.scgi.open_local = /var/torrent/.scgi_local
-##network.scgi.open_port = localhost:5099
-log.execute = /var/torrent/log/execute.log
 
 # SCHEDULE: Make SCGI socket group-writable and secure
 schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/var/torrent/.scgi_local"
-
-# SCHEDULE: Watch directories
-schedule = watch_start_directory,120,10,load.start=/var/torrent/watch/start/*.torrent
-schedule = watch_load_directory,125,20,load.normal=/var/torrent/watch/load/*.torrent
 
 # SCHEDULE: Watch disk space
 schedule = low_diskspace,15,60,close_low_diskspace=1000M
@@ -73,20 +95,23 @@ method.set_key = event.download.inserted_new,log,"print=\"LOADED \",$d.name=,\" 
 method.set_key = event.download.finished,log,"print=\"COMPLETED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
 method.set_key = event.download.closed,log,"print=\"CLOSED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
 
+# EVENT: Call bash completion handlers
+method.set_key = event.download.finished, bash_handlers, "d.save_full_session= ; execute=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
+
 # UI/VIEW: Sort "seeding" by ratio
 view.sort_current = seeding,greater=d.ratio=
 
+# HELPER: Categorized watches
+#   Use the "category" custom attribute in your completion handler.
+#   See "_rtlocal.rc" for an example schedule.
+method.insert = d.category.set, private|simple, "d.custom.set=category,(argument.0) ; d.custom1.set=(argument.0)"
+method.insert = load.category.normal, private|simple, "load.normal=(cat,(cfg.watch),(argument.0),/*.torrent),(cat,d.category.set=,(argument.0))"
+method.insert = load.category.start, private|simple, "load.start=(cat,(cfg.watch),(argument.0),/*.torrent),(cat,d.category.set=,(argument.0))"
+
 
 #
-# PyroScope Settings
+# PyroScope settings
 #
-
-# Set "pyro.extended" to 1 to activate rTorrent-PS features!
-method.insert = pyro.extended, value|const, 1
-
-# Set "pyro.bin_dir" to the "bin" directory where you installed the pyrocore tools!
-# Make sure you end it with a "/"; if this is left empty, then the shell's path is searched.
-method.insert = pyro.bin_dir, string|const, ~/bin/
 
 # Remove the ".default" if you want to change something (else your
 # changes get over-written on update).
@@ -127,8 +152,10 @@ branch=pyro.extended=,"schedule = bind_end, 0,0,\"ui.bind_key=download_list,0550
 branch=pyro.extended=,"schedule = bind_pgup,0,0,\"ui.bind_key=download_list,0523,ui.focus.pgup=\""
 branch=pyro.extended=,"schedule = bind_pgdn,0,0,\"ui.bind_key=download_list,0522,ui.focus.pgdn=\""
 
-# EVENT: Call bash completion handlers
-method.set_key = event.download.finished, bash_handlers, "d.save_full_session= ; execute=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
+
+#
+# Include custom / optional settings
+#
 
 # INCLUDE: Local settings
 import = /var/torrent/_rtlocal.rc

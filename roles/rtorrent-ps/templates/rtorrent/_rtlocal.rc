@@ -5,6 +5,11 @@
 #
 # Add anything of your own here...
 
+# SCHEDULE: Watch directories (if you use "pyrotorque", you can/should comment out the watches)
+schedule = watch_start,121,10,((load.start,(cat,(cfg.watch),"start/*.torrent")))
+schedule = watch_load,122,10,((load.normal,(cat,(cfg.watch),"load/*.torrent")))
+schedule = watch_tv,123,10,((load.category.normal,tv))
+
 # Throttles
 throttle.up = kb500, 500
 throttle.up = onemb, 1024
