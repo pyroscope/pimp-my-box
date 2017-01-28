@@ -138,10 +138,11 @@ For a dedicated server, the first step is to create an account *Ansible* can use
 Log into your server as ``root`` and call these commands:
 
 ```sh
-groupadd setup
-useradd -g setup -G setup,users -c "Ansible remote user" -s /bin/bash --create-home setup
-chmod 750 ~setup
-passwd -l setup
+account=setup
+groupadd $account
+useradd -g $account -G $account,users -c "Ansible remote user" -s /bin/bash --create-home $account
+eval chmod 0750 ~$account
+passwd -l $account
 ```
 
 Calling the following command as ``root`` on the *target host* will grant password-less sudo to the new account:
