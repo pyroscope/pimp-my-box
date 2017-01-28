@@ -106,6 +106,13 @@ cd "pimp-my-box"
 
 Ansible **must** be installed on the workstation from where you control your target hosts.
 This can also be the target host itself, if you don't have a Linux or Mac OSX desktop at hand.
+In that case, use a personal account on that machine, or create an ``ansible`` one
+– any part of the documentation that refers to ‘the workstation’ then means that account.
+
+To get it running on Windows is also possible, by using
+[Bash for Windows 10](http://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux)
+or [CygWin](https://servercheck.in/blog/running-ansible-within-windows) on older systems
+(this is untested, success stories welcome).
 
 See the [Ansible Documentation](http://docs.ansible.com/intro_installation.html)
 for how to install it using the package manager of your platform.
@@ -123,11 +130,6 @@ one is added.
 ```sh
 ./scripts/install_ansible.sh
 ```
-
-To get it running on Windows is also possible, by using
-[Bash for Windows 10](http://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux)
-or [CygWin](https://servercheck.in/blog/running-ansible-within-windows) on older systems
-(this is untested, success stories welcome).
 
 
 ### Providing SSH Access for Ansible
