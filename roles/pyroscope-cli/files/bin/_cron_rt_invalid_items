@@ -1,0 +1,22 @@
+#! /bin/bash
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# rTorrent: List invalid items
+#
+# Used in cron to stop these, the script takes additional parameters for rtcontrol
+#
+
+set -e
+export PATH="$HOME/bin:$PATH"
+
+# Select any torrent that isn't known by the tracker anymore,
+# or has other authorization problems, or lost its data
+rtcontrol --from-view started prio=-3 [ 'message=!*hammer*' [ \
+        'message=*peers?query?failure*,*pass*not?found*,*Invalid?peer_id*,*Invalid?info_hash*,*Invalid?passkey*' \
+        OR 'message=*not?registered*,*unregistered*,*not?authorized*,*torrent?cannot?be?found*,*unknown?torrent*' \
+        OR 'message=*torrent?unknown*,*not?found?on?this?tracker*,*gibt?es?bei?uns?nicht*' \
+    ] OR is_complete=yes is_ghost=yes ] "$@" \
+    && echo $(date +"%Y-%m-%d %H:%M:%S") $(basename "$0")":" "Found some invalid items" || :
