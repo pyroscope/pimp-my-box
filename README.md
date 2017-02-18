@@ -387,6 +387,30 @@ Finally, rerun the playbook to install the new version. In case anything goes wr
 you can move back that backup you made initially.
 
 
+## Using Ansible for Remote Management
+
+The setup work to get *Ansible* controlling your machines is not just for installing things,
+you can also simplify daily management tasks.
+
+Consider this example, which prints the number of items loaded into rTorrent,
+for all hosts in your inventory:
+
+```sh
+$ ansible box -f4 --become-user=rtorrent -a "~/bin/rtxmlrpc view.size=,main" -o
+my-box | success | rc=0 | (stdout) 42
+my-box2 | success | rc=0 | (stdout) 123
+```
+
+Another example is updating the ``pyrocore`` installation from git, like this:
+
+```sh
+ansible box -f4 -a "sudo -i -u rtorrent -- ~rtorrent/lib/pyroscope/update-to-head.sh"
+ansible box -f4 --become-user=rtorrent -a "~/bin/pyroadmin --version" -o
+```
+
+This is especially useful if you control more than one host.
+
+
 ## Advanced Configuration
 
 ### Using the System Python Interpreter
