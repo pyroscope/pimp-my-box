@@ -308,13 +308,25 @@ ufw status verbose  # show all the settings
 
 ### Changing Configuration Defaults
 
+A good way to provide customizations is writing your own playbooks.
+Create a separate project in your own git repository.
+In that project, you can provide your versions of existing files,
+add your own helper scripts, and so on.
+Model it after this repository, and consult the *Ansible* documentation.
+You can reuse your inventory, by passing ``-i ../pimp-by-box/hosts``
+to the playbook calls.
+
+As described in this and the following sections, some key config
+files are designed to be replaced in this way.
+Just be aware that once you copy them, you also have to manage them yourself,
+and merge with changes made to the master in this repo!
+
 Once created, the file `rtorrent.rc` is only overwritten when you provide
 `-e force_cfg=yes` on the Ansible command line, and `_rtlocal.rc` is never
 overwritten.
-This gives you the opportunity to easily refresh the main configuration from
-this repository, while still being able to provide your own version from
-a custom playbook (which you then have to merge with changes made to the master
-in this repo).
+This gives you the opportunity to easily refresh the main configuration
+in ``rtorrent.rc`` from this repository, while still being able to safely provide
+your own version of ``_rtlocal.rc`` from a custom playbook.
 Or apply customizations manually, by editing ``~rtorrent/rtorrent/_rtlocal.rc``.
 
 
@@ -323,9 +335,32 @@ Or apply customizations manually, by editing ``~rtorrent/rtorrent/_rtlocal.rc``.
 To activate the optional applications, add these settings to your `host_vars`:
 
  * `flexget_enabled: yes` for FlexGet.
- * `rutorrent_enabled: yes` for ruTorrent (see below for details).
+ * `rutorrent_enabled: yes` for ruTorrent.
 
+Read the following sections for details.
+
+
+### Installing FlexGet
+
+After setting `flexget_enabled: yes`, run the playbook again.
+
+FlexGet is just installed ready to be used, for full operation a configuration file
+located in `~/.config/flexget/config.yml` must be added
+(see the [FlexGet cookbook](http://flexget.com/wiki/Cookbook)).
+A cronjob is provided too (called every 11 minutes),
+but only starts to actually call FlexGet
+*after* you add that configuration file.
+Look into the files `~/.config/flexget/flexget.log` and `~/.config/flexget/flexget-cron.log`
+to diagnose any problems.
+
+
+### Installing and Updating ruTorrent
+
+The ruTorrent web UI is an optional add-on, and you have to activate it by setting
+`rutorrent_enabled` to `yes` and providing a `rutorrent_www_pass` value, usually in
+your `host_vars/my-box/main.yml` and `host_vars/my-box/secrets.yml` files, respectively.
 Then run the playbook again.
+
 The SSL certificate generation is not fully automatic yet, run the command shown in
 the error message you'll get while running the playbook, as `root` in the `/etc/nginx/ssl` directory – once the
 certificate is created, re-run the playbook and it should progress beyond that point.
@@ -334,26 +369,10 @@ Alternatively, you can also copy a certificate you got from other sources to the
 See [this blog post](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)
 if you want *excessive* detail on secure HTTPS setups.
 
-FlexGet is just installed ready to be used, for full operation a configuration file
-located in `~/.config/flexget/config.yml` must be added
-(see the [cookbook](http://flexget.com/wiki/Cookbook)).
-A cronjob is provided too (called every 11 minutes),
-but only starts to actually call FlexGet
-*after* you add that configuration file.
-Look into the files `~/.config/flexget/flexget.log` and `~/.config/flexget/flexget-cron.log`
-to diagnose any problems.
-
-ruTorrent, if enabled, is available at `https://my-box.example.com/rutorrent/`
+After the second run, ruTorrent is available at `https://my-box.example.com/rutorrent/`
 (use you own domain or IP in that URL).
 
-
-### Installing and Updating ruTorrent
-
-The ruTorrent web UI is an optional add-on, and you have to activate it by setting
-`rutorrent_enabled` to `yes` and providing a `rutorrent_www_pass` value, usually in
-your `host_vars/my-box/main.yml` and `host_vars/my-box/secrets.yml` files, respectively.
-
-To update to a new version of ruTorrent, first add the desired version as
+To *update to a new version* of ruTorrent, first add the desired version as
 `rutorrent_version` to your variables – that version has to be available on
 [Bintray](https://bintray.com/novik65/generic/ruTorrent#files).
 Then move the old installation tree away:
@@ -365,7 +384,7 @@ tar cfz _profile-$(date "+%Y-%m-%d-%H%M").bak profile
 ```
 
 Finally, rerun the playbook to install the new version. In case anything goes wrong,
-you can move back that backup.
+you can move back that backup you made initially.
 
 
 ## Advanced Configuration
@@ -390,12 +409,22 @@ venv_bin: /usr/bin/virtualenv
 The default configuration adds a *finished* event handler that calls the `~rtorrent/bin/_event.download.finished` script.
 That script in turn just calls any existing `_event.download.finished-*.sh` script,
 which allows you to easily add custom completion behaviour via your own playbooks.
+
 The passed parameters are `hash`, `name`, and `base_path`;
 the completion handler ensures the session state is flushed,
 so you can confidently read the session files associated with the provided hash.
 
-Here is an example `~/bin/_event.download.finished-jenkins.sh`
-that triggers a Jenkins job for any completed item:
+Be aware that you cannot call back into rTorrent via XML-RPC within an event handler,
+because that leads to a deadlock.
+If you need to do that, call your script directly using ``execute.bg``
+or one of its variants.
+Alternatively detach yourself from the process that rTorrent created for the event,
+so the event handler finishes as far as rTorrent is concerned.
+In any of these cases, be aware that things run concurrently and can go horribly wrong,
+if you don't care take of race conditions and such.
+
+Here is a non-trivial example that goes to `~/bin/_event.download.finished-jenkins.sh`,
+and triggers a [Jenkins](https://jenkins.io/) job for any completed item:
 
 ```sh
 #! /bin/bash
@@ -422,9 +451,13 @@ machine localhost
 ```
 
 Make sure to call `chmod 0600 ~/.netrc` after creating the file.
+
 To check that everything is working, download something
 and check the build history of your Jenkins job
 – if nothing seems to happen, look into `~/rtorrent/log/execute.log` to debug.
+
+The fact that *Jenkins* runs in its own separate process means your job can make
+free use of ``rtxmlrpc`` and ``rtcontrol`` to change things in *rTorrent*.
 
 
 ### Extending the Nginx Site
