@@ -161,6 +161,6 @@ branch=pyro.extended=,"schedule = bind_pgdn,0,0,\"ui.bind_key=download_list,0522
 import = /var/torrent/_rtlocal.rc
 
 # INCLUDE: ruTorrent (optional)
-import = /var/torrent/_rutorrent.rc
+try_import = /var/torrent/_rutorrent.rc
 
 ### END rtorrent.rc #########################################################
