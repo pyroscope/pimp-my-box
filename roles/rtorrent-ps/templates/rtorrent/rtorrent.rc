@@ -115,8 +115,7 @@ method.insert = load.category.start, private|simple, "load.start=(cat,(cfg.watch
 
 # Remove the ".default" if you want to change something (else your
 # changes get over-written on update).
-method.insert = pyro.rtorrent_rc, string|const|private, "$cat=~/.pyroscope/rtorrent-0.8.9.rc.default"
-import = $pyro.rtorrent_rc=
+import = ~/.pyroscope/rtorrent-pyro.rc.default
 
 # TORQUE: Daemon watchdog schedule
 # Must be activated by touching the "~/.pyroscope/run/pyrotorque" file!
