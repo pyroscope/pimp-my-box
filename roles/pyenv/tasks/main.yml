@@ -47,19 +47,25 @@
 - name: Install pyenv activation
   copy: src=pyenv.sh dest=/home/rtorrent/.local/profile.d/pyenv.sh owner=rtorrent group=rtorrent mode=0640
 
-- name: Install Python 2.7.13
-  shell: su -c '. .bash_aliases; TMPDIR=$PWD/tmp pyenv install 2.7.13' rtorrent
+- name: Probe Python installation
+  stat: path=/home/rtorrent/.local/pyenv/version
+  register: pyenv_py_flagfile
+
+- name: Install Python
+  shell: su -c '. .bash_aliases; TMPDIR=$PWD/tmp pyenv install {{ pyenv_python_version }}' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/.local/pyenv/versions/2.7.13/bin/python
-
-- name: Define global pyenv version
-  copy: content="2.7.13" dest=/home/rtorrent/.local/pyenv/version owner=rtorrent group=rtorrent mode=0640 force=no
+    creates: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/python"
+  when: not pyenv_py_flagfile.stat.exists
 
 - name: Install virtualenv and update pip
-  shell: su -c '.local/pyenv/versions/2.7.13/bin/pip install -U pip virtualenv' rtorrent
+  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U pip virtualenv' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/.local/pyenv/versions/2.7.13/bin/virtualenv
+    creates: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/virtualenv"
+  when: not pyenv_py_flagfile.stat.exists
+
+- name: Define global pyenv version
+  copy: content="{{ pyenv_python_version }}" dest=/home/rtorrent/.local/pyenv/version owner=rtorrent group=rtorrent mode=0640 force=no

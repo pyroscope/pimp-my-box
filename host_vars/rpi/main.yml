@@ -9,6 +9,9 @@ rt_global_up_rate_kb: 50
 rt_global_down_rate_kb: 500
 rt_pieces_memory: 500M
 
+pyenv_enabled: true
+pyenv_python_version: 2.7.13
+
 flexget_enabled: yes
 rutorrent_enabled: yes
 # Set a 'rutorrent_www_pass' in 'secrets.yml'!

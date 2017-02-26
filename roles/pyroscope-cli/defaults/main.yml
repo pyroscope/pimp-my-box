@@ -1,1 +1,2 @@
-python_bin: /home/rtorrent/.local/pyenv/versions/2.7.13/bin/python
+pyenv_python_version: 2.7.13
+python_bin: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/python"
