@@ -511,14 +511,24 @@ export ANSIBLE_HOST_KEY_CHECKING=False
 
 ### Location of Configuration Files
 
- * ``/home/rtorrent/rtorrent/rtorrent.rc`` – Main rTorrent configuration file; to update it from this repository use ``-e force_cfg=yes``, see above for details.
- * ``/home/rtorrent/rtorrent/_rtlocal.rc`` – rTorrent configuration include for custom modifications, this is *never* overwritten once it exists.
+ * ``/home/rtorrent/rtorrent/rtorrent.rc`` – Main *rTorrent* configuration file; to update it from this repository use ``-e force_cfg=yes``, see above for details.
+ * ``/home/rtorrent/rtorrent/_rtlocal.rc`` – *rTorrent* configuration include for custom modifications, this is *never* overwritten once it exists.
  * ``/home/rtorrent/.pyroscope/config.ini`` – ``pyrocore`` main configuration.
  * ``/home/rtorrent/.pyroscope/config.py`` – ``pyrocore`` custom field configuration.
- * ``/home/rtorrent/.config/flexget/config.yml`` – FlexGet configuration.
- * ``/home/rutorrent/ruTorrent-master/conf/config.php`` – ruTorrent configuration.
- * ``/etc/nginx/sites-available/rutorrent`` – NginX configuration for the ruTorrent site.
- * ``/etc/php5/fpm/pool.d/rutorrent.conf`` or ``/etc/php/7.0/fpm/pool.d/rutorrent.conf`` – PHP worker pool for ruTorrent.
+ * ``/home/rtorrent/.config/flexget/config.yml`` – *FlexGet* configuration.
+ * ``/home/rutorrent/ruTorrent-master/conf/config.php`` – *ruTorrent* configuration.
+ * ``/home/rutorrent/profile/`` – Dynamic data written by *ruTorrent*.
+ * ``/etc/nginx/sites-available/rutorrent`` – *NginX* configuration for the *ruTorrent* site.
+ * ``/etc/php5/fpm/pool.d/rutorrent.conf`` or ``/etc/php/7.0/fpm/pool.d/rutorrent.conf`` – PHP worker pool for *ruTorrent*.
+
+
+### Location of Installed Software
+
+ * ``/home/rtorrent/.local/profile.d/`` — Directory with shell scripts that get sourced in ``~rtorrrent/.bash_aliases``.
+ * ``/home/rtorrent/.local/pyenv/`` — Unless you chose to use the system's *Python*, the interpreter used to run ``pyrocore`` and ``flexget`` is installed here.
+ * ``/home/rtorrent/lib/pyroscope`` — Virtualenv for ``pyrocore``.
+ * ``/home/rtorrent/lib/flexget`` — Virtualenv for ``flexget``.
+ * ``/home/rutorrent/ruTorrent-master`` — *ruTorrent* code base.
 
 
 ### Secure Communications
