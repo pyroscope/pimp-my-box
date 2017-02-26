@@ -495,6 +495,28 @@ The main configuration file is located at `/etc/nginx/sites-available/rutorrent`
 Use a `/etc/nginx/conf.d/upstream-*.conf` file in case you need to add your own `upstream` definitions.
 
 
+### Upgrading to a Newer Python Version
+
+When you installed *Python* via *pyenv* (i.e. ``pyenv_enabled`` is still set to ``true``),
+you can update to a new *Python* release by reinstalling the related software.
+If you want to select a specific Python version,
+set the ``pyenv_python_version`` variable in your ``host_vars`` or ``group_vars``.
+
+You first have to remove the old install directory, and all virtualenvs based on it:
+
+```sh
+ansible box -i hosts -a "rm -rf ~rtorrent/.local/pyenv ~rtorrent/lib/pyroscope ~rtorrent/lib/flexget"
+```
+
+Then execute the relevant roles again:
+
+```sh
+ansible-playbook site.yml -i hosts -t pyenv,cli,fg
+```
+
+As given, these commands affect all hosts in the ``box`` group of your inventory.
+
+
 ## Trouble-Shooting
 
 ### SSH Error: Host key verification failed
