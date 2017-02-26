@@ -2,6 +2,23 @@
 - name: Create .local directory
   file: path=/home/rtorrent/.local state=directory owner=rtorrent group=rtorrent mode=0750
 
+- name: Install build dependencies for pyenv
+  apt: name={{ item }} state=latest
+  with_items:
+    - build-essential
+    - curl
+    - llvm
+    - make
+    - wget
+    - xz-utils
+    - zlib1g-dev
+    - libbz2-dev
+    - libssl-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - libncurses5-dev
+    - libncursesw5-dev
+
 - name: Probe pyenv checkout
   stat: path=/home/rtorrent/.local/pyenv/plugins/pyenv-installer/.gitignore
   register: pyenv_flagfile
