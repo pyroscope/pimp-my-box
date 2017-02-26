@@ -452,6 +452,7 @@ ansible-playbook site.yml -i hosts -t pyenv,cli,fg
 ```
 
 As given, these commands affect all hosts in the ``box`` group of your inventory.
+Also, both ``pyrocore`` and ``flexget`` get upgraded to the newest available version.
 
 
 ### Using the bash Download Completion Handler
