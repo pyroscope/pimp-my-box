@@ -141,9 +141,9 @@ view.filter_on = main,event.download.finished
 # UI/VIEW: Show active and incomplete torrents (in view #0) and update every 20 seconds
 #   Items are grouped into complete, incomplete, and queued, in that order (rT-PS only).
 #   Within each group, they're sorted by download and then upload speed.
-branch=pyro.extended=,false=,"view_sort_current = active,greater=d.get_up_rate="
-branch=pyro.extended=,"view_sort_current = active,\"compare=----,d.is_open=,d.get_complete=,d.get_down_rate=,d.get_up_rate=\""
-schedule = filter_active,12,20,"view_filter = active,\"or={d.get_up_rate=,d.get_down_rate=,not=$d.get_complete=}\" ;view_sort=active"
+branch=pyro.extended=,false=,"view.sort_current = active,greater=d.up.rate="
+branch=pyro.extended=,"view.sort_current = active,\"compare=----,d.is_open=,d.complete=,d.down.rate=,d.up.rate=\""
+schedule = filter_active,12,20,"view.filter = active,\"or={d.up.rate=,d.down.rate=,not=$d.complete=}\" ;view.sort=active"
 
 # UI: PgUp/Dn, Home, End
 branch=pyro.extended=,"schedule = bind_home,0,0,\"ui.bind_key=download_list,0406,ui.focus.home=\""
