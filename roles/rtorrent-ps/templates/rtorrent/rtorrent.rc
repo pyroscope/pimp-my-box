@@ -90,23 +90,11 @@ schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/var/torrent/.s
 # SCHEDULE: Watch disk space
 schedule = low_diskspace,15,60,close_low_diskspace=1000M
 
-# EVENTS: Logging (don't log "opened", or you get swamped at startup)
-method.set_key = event.download.inserted_new,log,"print=\"LOADED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
-method.set_key = event.download.finished,log,"print=\"COMPLETED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
-method.set_key = event.download.closed,log,"print=\"CLOSED \",$d.name=,\" [\",$convert.date=$system.time=,\"]\""
-
 # EVENT: Call bash completion handlers
 method.set_key = event.download.finished, bash_handlers, "d.save_full_session= ; execute=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
 
 # UI/VIEW: Sort "seeding" by ratio
 view.sort_current = seeding,greater=d.ratio=
-
-# HELPER: Categorized watches
-#   Use the "category" custom attribute in your completion handler.
-#   See "_rtlocal.rc" for an example schedule.
-method.insert = d.category.set, private|simple, "d.custom.set=category,(argument.0) ; d.custom1.set=(argument.0)"
-method.insert = load.category.normal, private|simple, "load.normal=(cat,(cfg.watch),(argument.0),/*.torrent),(cat,d.category.set=,(argument.0))"
-method.insert = load.category.start, private|simple, "load.start=(cat,(cfg.watch),(argument.0),/*.torrent),(cat,d.category.set=,(argument.0))"
 
 
 #
@@ -144,12 +132,6 @@ view.filter_on = main,event.download.finished
 branch=pyro.extended=,false=,"view.sort_current = active,greater=d.up.rate="
 branch=pyro.extended=,"view.sort_current = active,\"compare=----,d.is_open=,d.complete=,d.down.rate=,d.up.rate=\""
 schedule = filter_active,12,20,"view.filter = active,\"or={d.up.rate=,d.down.rate=,not=$d.complete=}\" ;view.sort=active"
-
-# UI: PgUp/Dn, Home, End
-branch=pyro.extended=,"schedule = bind_home,0,0,\"ui.bind_key=download_list,0406,ui.focus.home=\""
-branch=pyro.extended=,"schedule = bind_end, 0,0,\"ui.bind_key=download_list,0550,ui.focus.end=\""
-branch=pyro.extended=,"schedule = bind_pgup,0,0,\"ui.bind_key=download_list,0523,ui.focus.pgup=\""
-branch=pyro.extended=,"schedule = bind_pgdn,0,0,\"ui.bind_key=download_list,0522,ui.focus.pgdn=\""
 
 
 #

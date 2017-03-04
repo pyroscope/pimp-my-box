@@ -30,9 +30,6 @@ branch=pyro.extended=,"schedule = bind_no_quit,0,0,\"ui.bind_key=download_list,^
 schedule = bind_hashing,0,0,"ui.bind_key=download_list,#,ui.current_view.set=hashing"
 ##schedule = bind_active,0,0,"ui.bind_key=download_list,0,ui.current_view.set=active"
 
-# UI: Add day break to log
-schedule = log_new_day,00:00:00,24:00:00,"print=\"New day \",$to_date=$system.time="
-
 # UI: Show traffic of the last hour
 branch=pyro.extended=,"network.history.depth.set = 112"
 schedule = network_history_sampling,1,32, network.history.sample=
