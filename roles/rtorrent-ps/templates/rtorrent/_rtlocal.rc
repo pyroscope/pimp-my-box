@@ -3,12 +3,14 @@
 # This is installed by Ansible, but gets never overwritten,
 # unless you do so in a custom playbook.
 #
-# Add anything of your own here...
+# Add anything of your own here, or remove the examples you don't need.
+# A better way to add your own *additional* settings is to create new
+# files in the "rtorrent.d" directory.
 
 # SCHEDULE: Watch directories (if you use "pyrotorque", you can/should comment out the watches)
 schedule = watch_start,121,10,((load.start,(cat,(cfg.watch),"start/*.torrent")))
 schedule = watch_load,122,10,((load.normal,(cat,(cfg.watch),"load/*.torrent")))
-schedule = watch_tv,123,10,((load.category.normal,tv))
+schedule = watch_hdtv,123,10,((load.category.normal,hdtv))
 
 # Throttles
 throttle.up = kb500, 500
@@ -28,3 +30,5 @@ print=(cat,"Logging to ",(log.filename))
 log.open_file = "log", (log.filename)
 log.add_output = "info", "log"
 ##log.add_output = "tracker_debug", "log"
+
+### END of local settings ###################################################

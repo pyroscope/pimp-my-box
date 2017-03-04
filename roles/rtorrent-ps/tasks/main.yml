@@ -65,6 +65,7 @@
     - rtorrent/watch
     - rtorrent/watch/load
     - rtorrent/watch/start
+    - rtorrent/watch/hdtv
     - rtorrent/work
     - src
     - tmp
