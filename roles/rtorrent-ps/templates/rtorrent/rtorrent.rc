@@ -1,10 +1,7 @@
 ### rtorrent settings #######################################################
 #
 # This is the standard configuration that supports both PyroScope and
-# (optionally) rTorrent-PS features. This file is configured for a
-# rTorrent instance located in
-#
-#   /home/rtorrent/rtorrent (a/k/a "/var/torrent" or "(cfg.basedir)")
+# (optionally) rTorrent-PS features.
 #
 # It is installed by Ansible, but only gets overwritten when you provide the
 # option "-e force_cfg=yes" to the "ansible-playbook" command, after the
@@ -15,6 +12,18 @@
 #   https://github.com/pyroscope/pimp-my-box#changing-configuration-defaults
 #
 #############################################################################
+
+# Root directory of this instance (RT_HOME is set in the "start" script).
+# With vanilla rTorrent, must be changed to something like…
+#   … string, (cat,"/var/torrent/")
+method.insert = cfg.basedir, private|const|string, (cat,(system.env,"RT_HOME"),"/")
+
+# Set "pyro.extended" to 1 to activate rTorrent-PS features!
+method.insert = pyro.extended, const|value, 1
+
+# Set "pyro.bin_dir" to the "bin" directory where you installed the pyrocore tools!
+# Make sure you end it with a "/"; if this is left empty, then the shell's path is searched.
+method.insert = pyro.bin_dir, const|string, ~/bin/
 
 # Since "network.scgi.open_local" is parsed by "rtcontrol", this must be a literal value,
 # and also not moved out of the main configuration file!

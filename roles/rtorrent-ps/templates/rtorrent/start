@@ -12,6 +12,7 @@ fi
 export LANG=en_US.UTF-8
 umask 0027
 cd $(dirname $0)
+export RT_HOME=$PWD
 export RT_SOCKET=$PWD/.scgi_local
 test -S $RT_SOCKET && lsof $RT_SOCKET >/dev/null && { echo "rTorrent already running"; exit 1; }
 test ! -e $RT_SOCKET || rm $RT_SOCKET

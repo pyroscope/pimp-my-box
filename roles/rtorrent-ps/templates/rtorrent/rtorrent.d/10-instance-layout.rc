@@ -5,7 +5,6 @@
 # Layout of paths in the filesystem
 
 # CONFIG: Manifest constants (base layout)
-method.insert = cfg.basedir,    private|const|string, (cat,"/var/torrent/")
 method.insert = cfg.watch,      private|const|string, (cat,(cfg.basedir),"watch/")
 method.insert = cfg.logs,       private|const|string, (cat,(cfg.basedir),"log/")
 method.insert = cfg.logfile,    private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
