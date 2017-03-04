@@ -2,6 +2,10 @@
 #
 # rTorrent startup script
 #
+# It is installed by Ansible, but only gets overwritten when you provide the
+# option "-e force_cfg=yes" to the "ansible-playbook" command, after the
+# initial playbook run.
+
 if [ "$TERM" = "${TERM%-256color}" ]; then
     export TERM="$TERM-256color"
 fi
