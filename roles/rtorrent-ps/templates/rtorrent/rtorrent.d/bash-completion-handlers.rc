@@ -1,0 +1,12 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# To disable these settings, execute this command as the 'rtorrent' user:
+#
+#   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
+#
+# Then restart rTorrent.
+
+# EVENT: Call bash completion handlers
+method.set_key = event.download.finished, bash_handlers, "d.save_full_session= ; execute=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="

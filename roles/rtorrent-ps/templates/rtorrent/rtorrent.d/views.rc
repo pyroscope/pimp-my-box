@@ -1,0 +1,30 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Most of the following view changes rely on additional fields available with PyroScope added,
+# but are a matter of preference, so you may choose to disable them.
+#
+# To do that, execute this command as the 'rtorrent' user:
+#
+#   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
+#
+# Then restart rTorrent.
+
+# UI/VIEW: Sort "seeding" by ratio
+view.sort_current = seeding,greater=d.ratio=
+
+# UI/VIEW: Sort incomplete by date added
+view.sort_current = incomplete,greater=d.custom=tm_loaded
+view.sort_new     = incomplete,greater=d.custom=tm_loaded
+
+# UI/VIEW: Show recently completed top-most in "main"
+view.sort_current = main,"compare=-+,d.custom=tm_completed,d.custom=tm_loaded"
+view.filter_on = main,event.download.finished
+
+# UI/VIEW: Show active and incomplete torrents (in view #0) and update every 20 seconds
+#   Items are grouped into complete, incomplete, and queued, in that order (rT-PS only).
+#   Within each group, they're sorted by download and then upload speed.
+branch=pyro.extended=,false=,"view.sort_current = active,greater=d.up.rate="
+branch=pyro.extended=,"view.sort_current = active,\"compare=----,d.is_open=,d.complete=,d.down.rate=,d.up.rate=\""
+schedule = filter_active,12,20,"view.filter = active,\"or={d.up.rate=,d.down.rate=,not=$d.complete=}\" ;view.sort=active"

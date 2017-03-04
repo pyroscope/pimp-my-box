@@ -4,11 +4,15 @@
 # (optionally) rTorrent-PS features. This file is configured for a
 # rTorrent instance located in
 #
-#       /home/rtorrent/rtorrent (a/k/a /var/torrent)
+#   /home/rtorrent/rtorrent (a/k/a "/var/torrent" or "(cfg.basedir)")
 #
 # It is installed by Ansible, but only gets overwritten when you provide the
 # option "-e force_cfg=yes" to the "ansible-playbook" command, after the
 # initial playbook run.
+#
+# For more info regarding changing configuration defaults, see the README:
+#
+#   https://github.com/pyroscope/pimp-my-box#changing-configuration-defaults
 #
 #############################################################################
 
@@ -76,71 +80,24 @@ protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
 pieces.memory.max.set = {{ rt_pieces_memory }}
 network.xmlrpc.size_limit.set = {{ rt_xmlrpc_size_limit }}
 
-
-#
-# CORE settings (mostly keep these, but still check them)
-#
-
 # since "network.scgi.open_local" is parsed by "rtcontrol", this must be a literal value!
 network.scgi.open_local = /var/torrent/.scgi_local
 
 # SCHEDULE: Make SCGI socket group-writable and secure
 schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/var/torrent/.scgi_local"
 
-# SCHEDULE: Watch disk space
-schedule = low_diskspace,15,60,close_low_diskspace=1000M
-
-# EVENT: Call bash completion handlers
-method.set_key = event.download.finished, bash_handlers, "d.save_full_session= ; execute=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
-
-# UI/VIEW: Sort "seeding" by ratio
-view.sort_current = seeding,greater=d.ratio=
-
 
 #
-# PyroScope settings
+# Import settings from "~/rtorrent/rtorrent.d"
 #
 
-# Remove the ".default" if you want to change something (else your
-# changes get over-written on update).
-import = ~/.pyroscope/rtorrent-pyro.rc.default
-
-# TORQUE: Daemon watchdog schedule
-# Must be activated by touching the "~/.pyroscope/run/pyrotorque" file!
-# Set the second argument to "-v" or "-q" to change log verbosity.
-schedule = pyro_watchdog,30,300,"pyro.watchdog=~/.pyroscope,"
-
-# CURL options
-branch=pyro.extended=,"network.http.ssl_verify_peer.set=0"
-branch=pyro.extended=,"network.http.ssl_verify_host.set=0"
-branch=pyro.extended=,"network.http.dns_cache_timeout.set=25"
-
-# The following view changes rely on additional fields available with PyroScope added,
-# but are a matter of preference, so you may comment them out
-
-# UI/VIEW: Sort incomplete by date added
-view.sort_current = incomplete,greater=d.custom=tm_loaded
-view.sort_new     = incomplete,greater=d.custom=tm_loaded
-
-# UI/VIEW: Show recently completed top-most in "main"
-view.sort_current = main,"compare=-+,d.custom=tm_completed,d.custom=tm_loaded"
-view.filter_on = main,event.download.finished
-
-# UI/VIEW: Show active and incomplete torrents (in view #0) and update every 20 seconds
-#   Items are grouped into complete, incomplete, and queued, in that order (rT-PS only).
-#   Within each group, they're sorted by download and then upload speed.
-branch=pyro.extended=,false=,"view.sort_current = active,greater=d.up.rate="
-branch=pyro.extended=,"view.sort_current = active,\"compare=----,d.is_open=,d.complete=,d.down.rate=,d.up.rate=\""
-schedule = filter_active,12,20,"view.filter = active,\"or={d.up.rate=,d.down.rate=,not=$d.complete=}\" ;view.sort=active"
+execute = (cat,(pyro.bin_dir),pyroadmin),-q,--create-import,(cat,(cfg.basedir),"rtorrent.d/*.rc")
+import = (cat,(cfg.basedir),"rtorrent.d/.import.rc")
 
 
 #
 # Include custom / optional settings
 #
-
-# Import settings from "~/rtorrent/rtorrent.d"
-execute = (cat,(pyro.bin_dir),pyroadmin),-q,--create-import,(cat,(cfg.basedir),"rtorrent.d/*.rc")
-import = (cat,(cfg.basedir),"rtorrent.d/.import.rc")
 
 # INCLUDE: Local settings
 import = (cat,(cfg.basedir),"_rtlocal.rc")
