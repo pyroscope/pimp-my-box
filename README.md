@@ -370,10 +370,8 @@ The ruTorrent web UI is an optional add-on, and you have to activate it by setti
 your `host_vars/my-box/main.yml` and `host_vars/my-box/secrets.yml` files, respectively.
 Then run the playbook again.
 
-The SSL certificate generation is not fully automatic yet, run the command shown in
-the error message you'll get while running the playbook, as `root` in the `/etc/nginx/ssl` directory – once the
-certificate is created, re-run the playbook and it should progress beyond that point.
-Alternatively, you can also copy a certificate you got from other sources to the paths
+Alternatively to the self-signed certificate that is created for Nginx,
+you can also copy a certificate you got from other sources to the paths
 `/etc/nginx/ssl/cert.key` and `/etc/nginx/ssl/cert.pem`.
 See [this blog post](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)
 if you want *excessive* detail on secure HTTPS setups.
