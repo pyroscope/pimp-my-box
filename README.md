@@ -83,6 +83,19 @@ or the inofficial ``##rtorrent`` channel on ``irc.freenode.net``.
 ## How to Use This?
 
 Here's the steps you need to follow to get a working installation on your target host.
+This might seem like an arduous process, but if you're accustomed to a *Linux* command prompt
+and ideally also *Ansbile*, it boils down to these steps:
+
+ * Create your working directory.
+ * Call Ansible installer script, if you don't have it available yet.
+ * Enable a SSH sudo account on your deployment target.
+ * Create and edit two Ansible config files.
+ * Run the playbook and wait a bit.
+ * Enjoy your working and secure seedbox.
+
+And once you got it working, moving to or adding another machine is easy and almost no work,
+just add that host and run the playbooks for it.
+
 Note that this cannot be an Ansible or Linux shell 101, so if these topics are new for you
 refer to the usual sources like
 [The Debian Administrator's Handbook](http://debian-handbook.info/browse/stable/),
