@@ -138,10 +138,14 @@ schedule = filter_active,12,20,"view.filter = active,\"or={d.up.rate=,d.down.rat
 # Include custom / optional settings
 #
 
+# Import settings from "~/rtorrent/rtorrent.d"
+execute = (cat,(pyro.bin_dir),pyroadmin),-q,--create-import,(cat,(cfg.basedir),"rtorrent.d/*.rc")
+import = (cat,(cfg.basedir),"rtorrent.d/.import.rc")
+
 # INCLUDE: Local settings
-import = /var/torrent/_rtlocal.rc
+import = (cat,(cfg.basedir),"_rtlocal.rc")
 
 # INCLUDE: ruTorrent (optional)
-try_import = /var/torrent/_rutorrent.rc
+try_import = (cat,(cfg.basedir),"_rutorrent.rc")
 
 ### END rtorrent.rc #########################################################

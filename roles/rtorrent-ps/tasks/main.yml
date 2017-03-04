@@ -58,6 +58,7 @@
     - lib
     - rtorrent
     - rtorrent/.session
+    - rtorrent/rtorrent.d
     - rtorrent/backups
     - rtorrent/done
     - rtorrent/log

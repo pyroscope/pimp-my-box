@@ -333,6 +333,11 @@ in ``rtorrent.rc`` from this repository, while still being able to safely provid
 your own version of ``_rtlocal.rc`` from a custom playbook.
 Or apply customizations manually, by editing ``~rtorrent/rtorrent/_rtlocal.rc``.
 
+Another way to customize rTorrent is to use the ``~/rtorrent/rtorrent.d`` directory.
+Just place any file with a ``.rc`` extension there, and it will be loaded on the next restart.
+This is ideally suited for custom playbooks, which can just add new files
+to extend the default configuration.
+
 
 ### Enabling Optional Applications
 
