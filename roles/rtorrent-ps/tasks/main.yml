@@ -112,6 +112,8 @@
     - 00-pyrocore.rc
     - bash-completion-handlers.rc
     - curl-options.rc
+    - disable-control-q.rc
+    - network-history.rc
     - views.rc
     - watch-disk-space.rc
 

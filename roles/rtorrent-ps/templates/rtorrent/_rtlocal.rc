@@ -20,23 +20,6 @@ throttle.up = lo_up, 2048
 # Set your own session name
 ## session.name.set = "$cat=MY_ID,:,$system.pid="
 
-# Stupid ^Q be gone!
-method.insert = quit, simple, "execute=kill,-INT,$system.pid="
-method.insert = q, simple|private, quit=
-method.insert = print_noquit, simple|private, "print=\"^Q is disabled, use '^X quit='\""
-branch=pyro.extended=,"schedule = bind_no_quit,0,0,\"ui.bind_key=download_list,^q,print_noquit=\""
-
-# VIEWs
-schedule = bind_hashing,0,0,"ui.bind_key=download_list,#,ui.current_view.set=hashing"
-##schedule = bind_active,0,0,"ui.bind_key=download_list,0,ui.current_view.set=active"
-
-# UI: Show traffic of the last hour
-branch=pyro.extended=,"network.history.depth.set = 112"
-schedule = network_history_sampling,1,32, network.history.sample=
-method.insert = network.history.auto_scale.toggle, simple|private, "branch=network.history.auto_scale=,\"network.history.auto_scale.set=0\",\"network.history.auto_scale.set=1\""
-method.insert = network.history.auto_scale.ui_toggle, simple|private, "network.history.auto_scale.toggle= ;network.history.refresh="
-branch=pyro.extended=,"schedule = bind_auto_scale,0,0,\"ui.bind_key=download_list,=,network.history.auto_scale.ui_toggle=\""
-
 # NETWORK: Unwanted peers
 ##ipv4_filter.add_address = 1.2.3.666, unwanted
 
