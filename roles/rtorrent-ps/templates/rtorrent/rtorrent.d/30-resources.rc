@@ -1,0 +1,15 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# resource usage and processing modes
+
+network.http.max_open.set = 64
+network.max_open_files.set = 600
+network.max_open_sockets.set = 300
+
+throttle.max_uploads.set = 100
+throttle.max_uploads.global.set = 250
+
+pieces.hash.on_completion.set = no
+encoding.add = utf8

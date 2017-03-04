@@ -1,0 +1,23 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Layout of paths in the filesystem
+
+# CONFIG: Manifest constants (base layout)
+method.insert = cfg.basedir,    private|const|string, (cat,"/var/torrent/")
+method.insert = cfg.watch,      private|const|string, (cat,(cfg.basedir),"watch/")
+method.insert = cfg.logs,       private|const|string, (cat,(cfg.basedir),"log/")
+method.insert = cfg.logfile,    private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
+
+# Set fundamental system paths
+network.http.capath.set = "/etc/ssl/certs"
+session.path.set = (cat,(cfg.basedir),".session")
+directory.default.set = (cat,(cfg.basedir),"work")
+log.execute = (cat,(cfg.logs),"execute.log")
+branch=(pyro.extended),((log.messages, (cat, (cfg.logs), messages.log)))
+
+# Report major config values on startup
+print = (cat,"CFG base=",(cfg.basedir))
+print = (cat,"CFG session=",(session.path))
+print = (cat,"CFG logfile=",(cfg.logfile))

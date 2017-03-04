@@ -16,71 +16,8 @@
 #
 #############################################################################
 
-# CONFIG: Manifest constants (base layout)
-method.insert = cfg.basedir,    private|const|string, (cat,"/var/torrent/")
-method.insert = cfg.watch,      private|const|string, (cat,(cfg.basedir),"watch/")
-method.insert = cfg.logs,       private|const|string, (cat,(cfg.basedir),"log/")
-method.insert = cfg.logfile,    private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
-
-# Set "pyro.extended" to 1 to activate rTorrent-PS features!
-method.insert = pyro.extended, const|value, 1
-
-# Set "pyro.bin_dir" to the "bin" directory where you installed the pyrocore tools!
-# Make sure you end it with a "/"; if this is left empty, then the shell's path is searched.
-method.insert = pyro.bin_dir, const|string, ~/bin/
-
-# Set fundamental system paths
-network.http.capath.set = "/etc/ssl/certs"
-session.path.set = (cat,(cfg.basedir),".session")
-directory.default.set = (cat,(cfg.basedir),"work")
-log.execute = (cat,(cfg.logs),"execute.log")
-branch=(pyro.extended),((log.messages, (cat, (cfg.logs), messages.log)))
-
-# Report major config values
-print = (cat,"CFG base=",(cfg.basedir))
-print = (cat,"CFG session=",(session.path))
-print = (cat,"CFG logfile=",(cfg.logfile))
-
-
-#
-# Environment & personal preferences (check & adapt these)
-#
-
-# general
-throttle.global_up.max_rate.set_kb = {{ rt_global_up_rate_kb }}
-throttle.global_down.max_rate.set_kb = {{ rt_global_down_rate_kb }}
-throttle.max_uploads.set = 100
-throttle.max_uploads.global.set = 250
-network.http.max_open.set = 64
-network.max_open_files.set = 600
-network.max_open_sockets.set = 300
-system.umask.set = {{ '%04o' | format(rt_system_umask) }}
-keys.layout.set = {{ rt_keys_layout }}
-pieces.hash.on_completion.set = no
-encoding.add = utf8
-
-# range for listening port
-network.port_range.set = 64333-64666
-network.port_random.set = no
-
-# tracker-less torrent support
-dht.mode.set = disable
-protocol.pex.set = no
-trackers.use_udp.set = no
-
-# peer settings
-throttle.min_peers.normal.set = 20
-throttle.max_peers.normal.set = 60
-throttle.min_peers.seed.set = 30
-throttle.max_peers.seed.set = 80
-trackers.numwant.set = 80
-protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
-
-# resource usage
-pieces.memory.max.set = {{ rt_pieces_memory }}
-network.xmlrpc.size_limit.set = {{ rt_xmlrpc_size_limit }}
-
-# since "network.scgi.open_local" is parsed by "rtcontrol", this must be a literal value!
+# Since "network.scgi.open_local" is parsed by "rtcontrol", this must be a literal value,
+# and also not moved out of the main configuration file!
 network.scgi.open_local = /var/torrent/.scgi_local
 
 # SCHEDULE: Make SCGI socket group-writable and secure

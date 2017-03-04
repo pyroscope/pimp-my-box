@@ -1,0 +1,14 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# General settings that can be changed via Ansible
+
+pieces.memory.max.set = {{ rt_pieces_memory }}
+network.xmlrpc.size_limit.set = {{ rt_xmlrpc_size_limit }}
+
+throttle.global_up.max_rate.set_kb = {{ rt_global_up_rate_kb }}
+throttle.global_down.max_rate.set_kb = {{ rt_global_down_rate_kb }}
+
+system.umask.set = {{ '%04o' | format(rt_system_umask) }}
+keys.layout.set = {{ rt_keys_layout }}

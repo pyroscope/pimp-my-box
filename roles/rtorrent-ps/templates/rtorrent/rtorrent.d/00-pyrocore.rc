@@ -8,7 +8,15 @@
 # see the comments in the files located in this directory:
 #
 #   ~/.pyroscope/rtorrent/rtorrent.d
-#
+
+# Set "pyro.extended" to 1 to activate rTorrent-PS features!
+method.insert = pyro.extended, const|value, 1
+
+# Set "pyro.bin_dir" to the "bin" directory where you installed the pyrocore tools!
+# Make sure you end it with a "/"; if this is left empty, then the shell's path is searched.
+method.insert = pyro.bin_dir, const|string, ~/bin/
+
+# Import "pyrocore" defaults
 import = ~/.pyroscope/rtorrent-pyro.rc.default
 
 # TORQUE: Daemon watchdog schedule

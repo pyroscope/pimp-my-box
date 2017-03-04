@@ -1,0 +1,14 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# peer settings
+
+throttle.min_peers.normal.set = 20
+throttle.max_peers.normal.set = 60
+
+throttle.min_peers.seed.set = 30
+throttle.max_peers.seed.set = 80
+
+trackers.numwant.set = 80
+protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
