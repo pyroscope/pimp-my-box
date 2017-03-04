@@ -318,7 +318,7 @@ In that project, you can provide your versions of existing files,
 add your own helper scripts, and so on.
 Model it after this repository, and consult the *Ansible* documentation.
 You can reuse your inventory, by passing ``-i ../pimp-by-box/hosts``
-to the playbook calls.
+to the playbook calls, or by setting the ``ANSIBLE_INVENTORY`` environment variable.
 
 As described in this and the following sections, some key config
 files are designed to be replaced in this way.
@@ -337,6 +337,19 @@ Another way to customize rTorrent is to use the ``~/rtorrent/rtorrent.d`` direct
 Just place any file with a ``.rc`` extension there, and it will be loaded on the next restart.
 This is ideally suited for custom playbooks, which can just add new files
 to extend the default configuration.
+
+That directory also contains most of the extra rTorrent configuration that comes with ``pimp-my-box``.
+For example, by default terminating rTorrent via ``^Q`` gets disabled in the ``disable-control-q.rc`` file,
+replacing it by ``^X q=``, which you won't type by accident.
+
+To restore the rTorrent default, run this command as the ``rtorrent`` user
+(or put the line into that file via *Ansible*):
+
+```sh
+echo >>~/rtorrent/rtorrent.d/.rcignore "disable-control-q.rc"
+```
+
+Then restart rTorrent.
 
 
 ### Enabling Optional Applications
