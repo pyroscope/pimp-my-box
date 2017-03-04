@@ -112,6 +112,7 @@
     - 00-pyrocore.rc
     - 10-instance-layout.rc
     - 20-host-var-settings.rc
+    - 20-session-name.rc
     - 30-resources.rc
     - 50-peers.rc
     - 50-port-binding.rc

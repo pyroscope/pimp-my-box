@@ -17,9 +17,6 @@ throttle.up = lo_up, 2048
 # throttle.ip = lo_up, some.domain.name
 # or rtxmlrpc throttle.ip=,lo_up,some.domain.name
 
-# Set your own session name
-## session.name.set = "$cat=MY_ID,:,$system.pid="
-
 # NETWORK: Unwanted peers
 ##ipv4_filter.add_address = 1.2.3.666, unwanted
 
