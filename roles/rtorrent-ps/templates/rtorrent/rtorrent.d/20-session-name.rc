@@ -4,4 +4,4 @@
 #
 # Set session name using the hostname from the Ansible inventory
 
-session.name.set = "$cat={{ inventory_hostname }},:,$system.pid="
+session.name.set = (cat,"{{ inventory_hostname }}",":",(system.pid))

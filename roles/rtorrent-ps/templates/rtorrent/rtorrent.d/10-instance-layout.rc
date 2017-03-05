@@ -14,7 +14,7 @@ network.http.capath.set = "/etc/ssl/certs"
 session.path.set = (cat,(cfg.basedir),".session")
 directory.default.set = (cat,(cfg.basedir),"work")
 log.execute = (cat,(cfg.logs),"execute.log")
-branch=(pyro.extended),((log.messages, (cat, (cfg.logs), messages.log)))
+branch=(pyro.extended),((log.messages, (cat, (cfg.logs), "messages.log")))
 
 # Report major config values on startup
 print = (cat,"CFG base=",(cfg.basedir))
