@@ -1,0 +1,44 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Category Definitions for:
+#
+#   BluRay Books Movie Music Packs TV Video WEB_DL
+#
+# These names are the same as in "~/etc/autolabel_rules".
+#
+# To disable these settings and define your own categories in the "categories.rc" file,
+# execute this command as the 'rtorrent' user:
+#
+#   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
+#
+# Then restart rTorrent.
+
+
+# "Other" category for empty labels
+pyro.category.add = (false)
+
+pyro.category.add = BluRay
+schedule = category_watch_01, 11, 10, ((load.category.normal, BluRay))
+
+pyro.category.add = Books
+schedule = category_watch_02, 12, 10, ((load.category.normal, Books))
+
+pyro.category.add = Movie
+schedule = category_watch_03, 13, 10, ((load.category.normal, Movie))
+
+pyro.category.add = Music
+schedule = category_watch_04, 14, 10, ((load.category.normal, Music))
+
+pyro.category.add = Packs
+schedule = category_watch_05, 15, 10, ((load.category.normal, Packs))
+
+pyro.category.add = TV
+schedule = category_watch_06, 16, 10, ((load.category.normal, TV))
+
+pyro.category.add = Video
+schedule = category_watch_07, 17, 10, ((load.category.normal, Video))
+
+pyro.category.add = WEB_DL
+schedule = category_watch_08, 18, 10, ((load.category.normal, WEB_DL))
