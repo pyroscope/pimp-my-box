@@ -17,7 +17,7 @@
 
 
 # "Other" category for empty labels
-pyro.category.add = (false)
+pyro.category.add = (cat,)
 
 pyro.category.add = BluRay
 schedule = category_watch_01, 11, 10, ((load.category.normal, BluRay))
