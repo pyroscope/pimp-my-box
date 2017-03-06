@@ -13,7 +13,7 @@ rule BluRay     /COMPLETE.BLURAY/,/Full.BluRay/,/BD25/,/BD50/
 rule Music      kind=flac,mp3,aac '!/ebook/'
 rule Books      kind=pdf,epub,mobi OR /ebook/
 rule Movie      traits=movie
-rule WEB-DL     /WEB-DL/
+rule WEB_DL     /WEB-DL/
 rule Video      traits=video
 rule Packs      traits=tv size=+1.5G "!/S[0-9][0-9]E[0-9][0-9]/"
 rule TV         traits=tv
