@@ -18,6 +18,7 @@
     - 50-peers.rc
     - 50-port-binding.rc
     - 50-trackers.rc
+    - autolabel-categories.rc
     - bash-completion-handlers.rc
     - curl-options.rc
     - disable-control-q.rc
