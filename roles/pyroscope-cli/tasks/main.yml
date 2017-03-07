@@ -1,4 +1,14 @@
 ---
+- name: Copy profile scripts
+  copy: src=profile.d/{{ item }} dest=/home/rtorrent/.local/profile.d/{{ item }} owner=rtorrent group=rtorrent mode=0640
+  with_items:
+    - rt-alias.sh
+
+- name: Copy helper scripts
+  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0750
+  with_items:
+    - rt-throttle
+
 - name: Install tools + build dependencies for PyroScope
   apt: name={{ item }} state=latest
   with_items:
@@ -50,10 +60,5 @@
   changed_when: False
   register: pyro_versions
 - debug: var=pyro_versions.stdout_lines
-
-- name: Copy helper scripts
-  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0750
-  with_items:
-    - rt-throttle
 
 - include: cron.yml
