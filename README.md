@@ -460,6 +460,8 @@ python_bin: /usr/bin/python2
 venv_bin: /usr/bin/virtualenv
 ```
 
+:thumbsup: Doing so is recommended on both *Xenial* (has 2.7.12) and *Jessie* (has 2.7.9).
+
 
 ### Upgrading to a Newer Python Version
 
