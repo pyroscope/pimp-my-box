@@ -13,6 +13,7 @@ method.insert = cfg.logfile,    private|const|string, (cat,(cfg.logs),"rtorrent-
 network.http.capath.set = "/etc/ssl/certs"
 session.path.set = (cat,(cfg.basedir),".session")
 directory.default.set = (cat,(cfg.basedir),"work")
+system.cwd.set = (directory.default)
 log.execute = (cat,(cfg.logs),"execute.log")
 branch=(pyro.extended),((log.messages, (cat, (cfg.logs), "messages.log")))
 
