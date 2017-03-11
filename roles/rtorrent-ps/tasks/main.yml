@@ -8,13 +8,13 @@
     - "os_default.yml"
 
 - name: Download rTorrent-PS Debian package
-  get_url: dest="/root/{{ rtps_deb_url.split('/')[-1] }}.deb" url="{{ rtps_deb_url }}" validate_certs=no
+  get_url: dest="/root/{{ rtps_deb_url.split('/')[-1] }}" url="{{ rtps_deb_url }}" validate_certs=no
   # 2.0 only - checksum="{{ rtps_deb_SHA }}"
   when: 'not(rtps_deb_url == "")'
 
 - name: Install rTorrent-PS Debian package
   command: >
-    dpkg -i "{{ rtps_deb_url.split('/')[-1] }}.deb"
+    dpkg -i "{{ rtps_deb_url.split('/')[-1] }}"
   args:
     chdir: /root
     creates: /opt/rtorrent/version-info.sh
