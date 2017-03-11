@@ -259,12 +259,8 @@ If not, read the resources linked at the start of the “How to Use This?” sec
 
 To execute the playbook, call ``ansible-playbook -i hosts site.yml``.
 
-Note that at the moment, you still need to additionally install (`dpkg -i /root/rt-ps.deb`)
-the `rtorrent-ps` Debian package that was downloaded from
-[Bintray](https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files).
-This must be done in a ``root`` shell, after the first playbook run.
-
-If your Linux release isn't supported, you'll see a message like the following:
+If your Linux release isn't supported with a pre-built package,
+you'll see a message like the following:
 
     WARNING - No DEB package URL defined for '‹platform›',
     you need to install /opt/rtorrent manually!
@@ -486,7 +482,23 @@ As given, these commands affect all hosts in the ``box`` group of your inventory
 Also, both ``pyrocore`` and ``flexget`` get upgraded to the newest available version.
 
 
+### Upgrading to a Newer rTorrent-PS Version
+
+To upgrade the installed ``rtorrent-ps`` package, execute this command on your workstation:
+
+```sh
+ansible box -a "rm /opt/rtorrent/version-info.sh" -i hosts
+```
+
+Then run the playbook to install the new version:
+
+```sh
+ansible-playbook site.yml -t rtps -i hosts
+```
+
+
 ### Using the bash Download Completion Handler
+
 
 The default configuration adds a *finished* event handler that calls the `~rtorrent/bin/_event.download.finished` script.
 That script in turn just calls any existing `_event.download.finished-*.sh` script,
