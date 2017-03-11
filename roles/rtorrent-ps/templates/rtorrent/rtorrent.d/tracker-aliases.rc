@@ -1,0 +1,15 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Tracker domain display aliases.
+#
+# Note that you need a rTorrent-PS version compiled on or after 2017-03-11 for this!
+#
+# To disable these settings, execute this command as the 'rtorrent' user:
+#
+#   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
+#
+# Then restart rTorrent.
+
+trackers.alias.set_key = linuxtracker.org, LinuxTracker
