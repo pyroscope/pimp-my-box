@@ -1,2 +1,2 @@
-rtps_deb_url: https://bintray.com/artifact/download/pyroscope/rtorrent-ps/rtorrent-ps_0.9.6-20170304-3370149%7Ejessie_amd64.deb
-rtps_deb_SHA1: 30ec2824661b9605c8d60aa7cb1fc862e14f101a
+rtps_deb_url: "{{ rtps_bintray_url }}/rtorrent-ps_0.9.6-20170311-3ca9579~jessie_amd64.deb"
+rtps_deb_SHA: "sha256:606806e3d96321c22bf9575fd724ebaa14295fd04a0fc918590b570a5525cc0a"

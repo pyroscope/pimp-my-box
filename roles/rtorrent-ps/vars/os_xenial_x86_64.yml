@@ -1,1 +1,2 @@
-rtps_deb_url: https://bintray.com/artifact/download/pyroscope/rtorrent-ps/rtorrent-ps_0.9.6-20170120-fbdff5a%7Exenial_amd64.deb
+rtps_deb_url: "{{ rtps_bintray_url }}/rtorrent-ps_0.9.6-20170311-3ca9579~xenial_amd64.deb"
+rtps_deb_SHA: "sha256:55ff71fe64e5aefe6814249690483397b659225fe97c8bcf972c01be230b4f75"
