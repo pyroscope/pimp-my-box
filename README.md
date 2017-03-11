@@ -497,6 +497,8 @@ Then run the playbook to install the new version:
 ansible-playbook site.yml -t rtps -i hosts
 ```
 
+Finally connect to your ``tmux`` session, and stop & restart rTorrent.
+
 
 ### Using the bash Download Completion Handler
 
