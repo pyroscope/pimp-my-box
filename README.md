@@ -26,6 +26,7 @@ Automated install of rTorrent-PS etc. via
   * [Advanced Configuration](#advanced-configuration)
     * [Using the System Python Interpreter](#using-the-system-python-interpreter)
     * [Upgrading to a Newer Python Version](#upgrading-to-a-newer-python-version)
+    * [Upgrading to a Newer rTorrent-PS Version](#upgrading-to-a-newer-rtorrent-ps-version)
     * [Using the bash Download Completion Handler](#using-the-bash-download-completion-handler)
     * [Extending the Nginx Site](#extending-the-nginx-site)
   * [Trouble-Shooting](#trouble-shooting)
