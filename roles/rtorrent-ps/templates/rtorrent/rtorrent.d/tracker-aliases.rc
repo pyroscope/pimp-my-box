@@ -12,4 +12,6 @@
 #
 # Then restart rTorrent.
 
+trackers.alias.set_key = bt1.archive.org, "Internet Archive"
 trackers.alias.set_key = linuxtracker.org, LinuxTracker
+trackers.alias.set_key = files2.publicdomaintorrents.com, "PD Torrents"
