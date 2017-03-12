@@ -488,7 +488,7 @@ Also, both ``pyrocore`` and ``flexget`` get upgraded to the newest available ver
 To upgrade the installed ``rtorrent-ps`` package, execute this command on your workstation:
 
 ```sh
-ansible box -a "rm /opt/rtorrent/version-info.sh" -i hosts
+ansible box -a "rm /opt/rtorrent/pmb-installed" -i hosts
 ```
 
 Then run the playbook to install the new version:

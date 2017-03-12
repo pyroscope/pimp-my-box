@@ -13,11 +13,11 @@
   when: 'not(rtps_deb_url == "")'
 
 - name: Install rTorrent-PS Debian package
-  command: >
-    dpkg -i "{{ rtps_deb_url.split('/')[-1] }}"
+  shell: >
+    dpkg -i "{{ rtps_deb_url.split('/')[-1] }}" && touch /opt/rtorrent/pmb-installed
   args:
     chdir: /root
-    creates: /opt/rtorrent/version-info.sh
+    creates: /opt/rtorrent/pmb-installed
   when: 'not(rtps_deb_url == "")'
 
 - name: Unavailable rTorrent-PS Debian package?
