@@ -1,23 +1,23 @@
 ---
 - name: Create FlexGet virtualenv
-  shell: su -c '{{ venv_bin }} lib/flexget' rtorrent
+  shell: su -c '{{ venv_bin }} .local/flexget' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/lib/flexget/bin/pip
+    creates: /home/rtorrent/.local/flexget/bin/pip
 
 - name: Install FlexGet
-  shell: su -c 'lib/flexget/bin/pip install flexget' rtorrent
+  shell: su -c '.local/flexget/bin/pip install flexget' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/lib/flexget/bin/flexget
+    creates: /home/rtorrent/.local/flexget/bin/flexget
 
 - name: Create flexget ~/bin symlink
-  file: src=../lib/flexget/bin/flexget path=/home/rtorrent/bin/flexget state=link owner=rtorrent group=rtorrent
+  file: src=../.local/flexget/bin/flexget path=/home/rtorrent/bin/flexget state=link owner=rtorrent group=rtorrent
 
 - name: Create default FlexGet config (so --help works)
-  copy: content="" dest=/home/rtorrent/lib/flexget/config.yml owner=rtorrent group=rtorrent mode=0640 force=no
+  copy: content="" dest=/home/rtorrent/.local/flexget/config.yml owner=rtorrent group=rtorrent mode=0640 force=no
 
 - name: Create FlexGet config dir
   file: path=/home/rtorrent/.config/flexget state=directory owner=rtorrent group=rtorrent mode=0750

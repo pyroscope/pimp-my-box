@@ -5,7 +5,7 @@
 # "pimp-my-box" default shell aliases
 
 # Activate 'pyrocore' virtualenv
-test ! -f ~/lib/pyroscope/bin/activate || . ~/lib/pyroscope/bin/activate
+test ! -f ~/.local/pyroscope/bin/activate || . ~/.local/pyroscope/bin/activate
 
 # rTorrent aliases
 alias rtlistmethods='rtxmlrpc system.listMethods | egrep'

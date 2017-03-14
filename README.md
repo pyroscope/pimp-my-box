@@ -434,7 +434,7 @@ my-box2 | success | rc=0 | (stdout) 123
 Another example is updating the ``pyrocore`` installation from git, like this:
 
 ```sh
-ansible box -f4 -a "sudo -i -u rtorrent -- ~rtorrent/lib/pyroscope/update-to-head.sh"
+ansible box -f4 -a "sudo -i -u rtorrent -- ~rtorrent/.local/pyroscope/update-to-head.sh"
 ansible box -f4 --become-user=rtorrent -a "~/bin/pyroadmin --version" -o
 ```
 
@@ -470,7 +470,7 @@ set the ``pyenv_python_version`` variable in your ``host_vars`` or ``group_vars`
 You first have to remove the old install directory, and all virtualenvs based on it:
 
 ```sh
-ansible box -i hosts -a "rm -rf ~rtorrent/.local/pyenv ~rtorrent/lib/pyroscope ~rtorrent/lib/flexget"
+ansible box -i hosts -a "rm -rf ~rtorrent/.local/pyenv ~rtorrent/.local/pyroscope ~rtorrent/.local/flexget"
 ```
 
 Then execute the relevant roles again:
@@ -597,8 +597,8 @@ export ANSIBLE_HOST_KEY_CHECKING=False
 
  * ``/home/rtorrent/.local/profile.d/`` — Directory with shell scripts that get sourced in ``~rtorrrent/.bash_aliases``.
  * ``/home/rtorrent/.local/pyenv/`` — Unless you chose to use the system's *Python*, the interpreter used to run ``pyrocore`` and ``flexget`` is installed here.
- * ``/home/rtorrent/lib/pyroscope`` — Virtualenv for ``pyrocore``.
- * ``/home/rtorrent/lib/flexget`` — Virtualenv for ``flexget``.
+ * ``/home/rtorrent/.local/pyroscope`` — Virtualenv for ``pyrocore``.
+ * ``/home/rtorrent/.local/flexget`` — Virtualenv for ``flexget``.
  * ``/home/rutorrent/ruTorrent-master`` — *ruTorrent* code base.
 
 

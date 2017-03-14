@@ -79,6 +79,7 @@
     - tmp
     - .config
     - .local
+    - .local/lib
     - .local/profile.d
 
 - name: Copy rtorrent dot files
