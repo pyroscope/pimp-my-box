@@ -25,6 +25,9 @@ method.insert = pyro.extended, const|value, 1
 # Make sure you end it with a "/"; if this is left empty, then the shell's path is searched.
 method.insert = pyro.bin_dir, const|string, ~/bin/
 
+# Set this to '0' to prevent logging of existing key bindings being replaced
+## branch=(pyro.extended), ((ui.bind_key.verbose.set, 0))
+
 # Since "network.scgi.open_local" is parsed by "rtcontrol", this must be a literal value,
 # and also not moved out of the main configuration file!
 network.scgi.open_local = /var/torrent/.scgi_local
