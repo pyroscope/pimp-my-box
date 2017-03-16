@@ -15,4 +15,4 @@ import = ~/.pyroscope/rtorrent-pyro.rc.default
 # TORQUE: Daemon watchdog schedule
 # Must be activated by touching the "~/.pyroscope/run/pyrotorque" file!
 # Set the second argument to "-v" or "-q" to change log verbosity.
-schedule = pyro_watchdog,30,300,"pyro.watchdog=~/.pyroscope,"
+schedule2 = pyro_watchdog, 30, 300, "pyro.watchdog=~/.pyroscope,"

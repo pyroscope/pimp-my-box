@@ -9,4 +9,4 @@
 # Then restart rTorrent.
 
 # SCHEDULE: Monitor disk space
-schedule = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))
+schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))

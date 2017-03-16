@@ -20,25 +20,25 @@
 pyro.category.add = (cat,)
 
 pyro.category.add = BluRay
-schedule = category_watch_01, 11, 10, ((load.category.start, BluRay))
+schedule2 = category_watch_01, 11, 10, ((load.category.start, BluRay))
 
 pyro.category.add = Books
-schedule = category_watch_02, 12, 10, ((load.category.start, Books))
+schedule2 = category_watch_02, 12, 10, ((load.category.start, Books))
 
 pyro.category.add = Movie
-schedule = category_watch_03, 13, 10, ((load.category.start, Movie))
+schedule2 = category_watch_03, 13, 10, ((load.category.start, Movie))
 
 pyro.category.add = Music
-schedule = category_watch_04, 14, 10, ((load.category.start, Music))
+schedule2 = category_watch_04, 14, 10, ((load.category.start, Music))
 
 pyro.category.add = Packs
-schedule = category_watch_05, 15, 10, ((load.category.start, Packs))
+schedule2 = category_watch_05, 15, 10, ((load.category.start, Packs))
 
 pyro.category.add = TV
-schedule = category_watch_06, 16, 10, ((load.category.start, TV))
+schedule2 = category_watch_06, 16, 10, ((load.category.start, TV))
 
 pyro.category.add = Video
-schedule = category_watch_07, 17, 10, ((load.category.start, Video))
+schedule2 = category_watch_07, 17, 10, ((load.category.start, Video))
 
 pyro.category.add = WEB_DL
-schedule = category_watch_08, 18, 10, ((load.category.start, WEB_DL))
+schedule2 = category_watch_08, 18, 10, ((load.category.start, WEB_DL))

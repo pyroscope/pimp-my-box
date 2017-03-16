@@ -4,4 +4,6 @@
 #
 # This file is included by the main "rtorrent.rc" and initializes ruTorrent!
 
-execute = {sh,-c,export PATH=/home/rtorrent/bin:/home/rutorrent/bin:/usr/local/bin:/usr/bin:/bin ; /usr/bin/php /usr/share/nginx/htdocs/rutorrent/php/initplugins.php {{ rutorrent_www_user }} &}
+execute2 = {sh, -c,\
+    export PATH=/home/rtorrent/bin:/home/rutorrent/bin:/usr/local/bin:/usr/bin:/bin ;\
+    /usr/bin/php /usr/share/nginx/htdocs/rutorrent/php/initplugins.php {{ rutorrent_www_user }} &}

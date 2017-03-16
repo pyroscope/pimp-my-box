@@ -9,7 +9,7 @@
 # Then restart rTorrent.
 
 # Stupid ^Q be gone!
-method.insert = quit, simple, "execute=kill,-INT,(system.pid)"
+method.insert = quit, simple, "execute2=kill,-INT,(system.pid)"
 method.insert = q, simple|private, "quit="
 method.insert = print_noquit, simple|private, "print=\"^Q is disabled, use '^X quit='\""
 

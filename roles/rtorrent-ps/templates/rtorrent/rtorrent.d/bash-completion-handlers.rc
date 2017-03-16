@@ -9,4 +9,5 @@
 # Then restart rTorrent.
 
 # EVENT: Call bash completion handlers
-method.set_key = event.download.finished, bash_handlers, "d.save_full_session= ; execute=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
+method.set_key = event.download.finished, bash_handlers,\
+    "d.save_full_session= ; execute2=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
