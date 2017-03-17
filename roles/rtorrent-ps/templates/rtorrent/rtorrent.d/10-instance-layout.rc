@@ -4,10 +4,14 @@
 #
 # Layout of paths in the filesystem
 
+method.insert = pyro.date_iso.log_stamp, private|simple,\
+    "execute.capture_nothrow = bash, -c, \"echo -n $(date +%Y-%m-%d-%H%M%S)\""
+
 # CONFIG: Manifest constants (base layout)
-method.insert = cfg.watch,      private|const|string, (cat,(cfg.basedir),"watch/")
-method.insert = cfg.logs,       private|const|string, (cat,(cfg.basedir),"log/")
-method.insert = cfg.logfile,    private|const|string, (cat,(cfg.logs),"rtorrent-",(system.time),".log")
+method.insert = cfg.watch,      private|const|string, (cat, (cfg.basedir), "watch/")
+method.insert = cfg.logs,       private|const|string, (cat, (cfg.basedir), "log/")
+method.insert = cfg.logfile,    private|const|string,\
+    (cat, (cfg.logs), "rtorrent-", (pyro.date_iso.log_stamp), ".log")
 
 # Set fundamental system paths
 network.http.capath.set = "/etc/ssl/certs"
@@ -20,4 +24,4 @@ branch=(pyro.extended),((log.messages, (cat, (cfg.logs), "messages.log")))
 # Report major config values on startup
 print = (cat,"CFG base=",(cfg.basedir))
 print = (cat,"CFG session=",(session.path))
-print = (cat,"CFG logfile=",(cfg.logfile))
+##print = (cat,"CFG logfile=",(cfg.logfile))
