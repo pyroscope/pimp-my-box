@@ -12,7 +12,7 @@
 # Then restart rTorrent.
 
 # UI/VIEW: Bind 'hashing' also to the '#' key
-branch=(pyro.extended), ((schedule, bind_hashing, 0, 0, "ui.bind_key=download_list,#,ui.current_view.set=hashing"))
+branch=(pyro.extended), ((schedule2, bind_hashing, 0, 0, "ui.bind_key=download_list,#,ui.current_view.set=hashing"))
 
 # UI/VIEW: Sort "seeding" by ratio
 view.sort_current = seeding, greater=d.ratio=
