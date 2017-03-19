@@ -21,6 +21,9 @@ system.cwd.set = (directory.default)
 log.execute = (cat,(cfg.logs),"execute.log")
 branch=(pyro.extended),((log.messages, (cat, (cfg.logs), "messages.log")))
 
+# Write a PID file into the session directory
+execute.nothrow = bash, -c, (cat, "echo >", (session.path), "rtorrent.pid", " ", (system.pid))
+
 # Report major config values on startup
 print = (cat,"CFG base=",(cfg.basedir))
 print = (cat,"CFG session=",(session.path))
