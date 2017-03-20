@@ -40,7 +40,7 @@ schedule2 = scgi_permission, 0, 0, "execute.nothrow=chmod,\"g+w,o=\",/var/torren
 # Import settings from "~/rtorrent/rtorrent.d"
 #
 
-execute2 = (cat,(pyro.bin_dir),pyroadmin),-q,--create-import,(cat,(cfg.basedir),"rtorrent.d/*.rc")
+execute.throw = (cat,(pyro.bin_dir),pyroadmin),-q,--create-import,(cat,(cfg.basedir),"rtorrent.d/*.rc")
 import = (cat,(cfg.basedir),"rtorrent.d/.import.rc")
 
 
