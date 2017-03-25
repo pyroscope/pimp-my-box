@@ -4,6 +4,10 @@
 #
 # Logging, and rotating logs
 
+# Settings for archival delay, and retention [days]
+method.insert.value = pyro.log_retention.days, 7
+method.insert.value = pyro.log_archival.days,  2
+
 # Create a "YYYY-mm-dd-HHMMSS" time stamp
 method.insert = pyro.date_iso.log_stamp, simple|private,\
     "execute.capture_nothrow = bash, -c, \"echo -n $(date +%Y-%m-%d-%H%M%S)\""
@@ -34,9 +38,22 @@ method.set_key = pyro.log_rotate, xmlrpc,\
 # are taken care of, and rotation is always near the next day's begin)
 schedule2 = pyro_daily_log_rotate, 01:05:00, 24:00:00, ((pyro.log_rotate))
 
-# TODO: Log file archival and pruning
+# Log file archival and pruning
+method.insert = pyro._logfile_find_cmd, simple|private,\
+     "cat = \"find \", (cfg.logs),\
+            \" -type f -name '*.\", (argument.0),\"'\",\
+            \" -mtime +\", (argument.1),\
+            \" -exec nice \", (argument.2), \" '{}' ';'\""
+
+schedule2 = pyro_logfile_archival, 02:00:00, 24:00:00,\
+    "execute.nothrow = bash, -c, (pyro._logfile_find_cmd, log, (pyro.log_archival.days), gzip)"
+
+schedule2 = pyro_logfile_pruning, 02:10:00, 24:00:00,\
+    "execute.nothrow = bash, -c, (pyro._logfile_find_cmd, log.gz, (pyro.log_retention.days), rm)"
 
 # Open logs initially on startup
 pyro.log_rotate=
 log.open_file = log, (pyro.logfile_path, rtorrent)
 print = (cat, "Logging to ", (pyro.logfile_path, "rtorrent"))
+
+# END logging
