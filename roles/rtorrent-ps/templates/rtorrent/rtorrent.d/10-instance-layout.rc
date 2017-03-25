@@ -4,28 +4,20 @@
 #
 # Layout of paths in the filesystem
 
-method.insert = pyro.date_iso.log_stamp, private|simple,\
-    "execute.capture_nothrow = bash, -c, \"echo -n $(date +%Y-%m-%d-%H%M%S)\""
-
 # CONFIG: Manifest constants (base layout)
-method.insert = cfg.watch,      private|const|string, (cat, (cfg.basedir), "watch/")
-method.insert = cfg.logs,       private|const|string, (cat, (cfg.basedir), "log/")
-method.insert = cfg.logfile,    private|const|string,\
-    (cat, (cfg.logs), "rtorrent-", (pyro.date_iso.log_stamp), ".log")
+method.insert = cfg.watch, string|private|const, (cat, (cfg.basedir), "watch/")
+method.insert = cfg.logs,  string|private|const, (cat, (cfg.basedir), "log/")
 
 # Set fundamental system paths
 network.http.capath.set = "/etc/ssl/certs"
-session.path.set = (cat,(cfg.basedir),".session")
-directory.default.set = (cat,(cfg.basedir),"work")
-system.cwd.set = (directory.default)
-log.execute = (cat, (cfg.logs), "execute.log")
-log.xmlrpc = (cat, (cfg.logs), "xmlrpc.log")
-branch=(pyro.extended),((log.messages, (cat, (cfg.logs), "messages.log")))
+session.path.set        = (cat, (cfg.basedir), ".session")
+directory.default.set   = (cat, (cfg.basedir), "work")
+system.cwd.set          = (directory.default)
 
 # Write a PID file into the session directory
-execute.nothrow = bash, -c, (cat, "echo >", (session.path), "rtorrent.pid", " ", (system.pid))
+execute.nothrow = bash, -c, (cat, "echo >",\
+    (session.path), "rtorrent.pid", " ", (system.pid))
 
 # Report major config values on startup
-print = (cat,"CFG base=",(cfg.basedir))
-print = (cat,"CFG session=",(session.path))
-##print = (cat,"CFG logfile=",(cfg.logfile))
+print = (cat, "CFG base:    ", (cfg.basedir))
+print = (cat, "CFG session: ", (session.path))

@@ -1,0 +1,42 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Logging, and rotating logs
+
+# Create a "YYYY-mm-dd-HHMMSS" time stamp
+method.insert = pyro.date_iso.log_stamp, simple|private,\
+    "execute.capture_nothrow = bash, -c, \"echo -n $(date +%Y-%m-%d-%H%M%S)\""
+
+# String value for the currently used time stamp, changed on rotation
+method.insert = pyro.log_stamp.current, string
+
+# Create a full logfile path using the current stamp
+method.insert = pyro.logfile_path, simple|private,\
+    "cat = (cfg.logs), (argument.0), \"-\", (pyro.log_stamp.current), .log"
+
+# (Re-)open all logs with a current time stamp; the main log file
+# is just opened, you need to add some logging scopes yourself!
+method.insert = pyro.log_rotate, multi|rlookup|static
+method.set_key = pyro.log_rotate, !stamp,\
+    "pyro.log_stamp.current.set = (cat, (pyro.date_iso.log_stamp))"
+method.set_key = pyro.log_rotate, execute,\
+    "log.execute = (pyro.logfile_path, execute)"
+method.set_key = pyro.log_rotate, messages,\
+    "branch = (pyro.extended), ((log.messages, (pyro.logfile_path, messages) ))"
+method.set_key = pyro.log_rotate, xmlrpc,\
+    "log.xmlrpc = (pyro.logfile_path, xmlrpc)"
+# XXX: log.open_file is just too stupid and can't reopen!
+#method.set_key = pyro.log_rotate, main,\
+#    "log.open_file = log, (pyro.logfile_path, rtorrent)"
+
+# Logrotate schedule (rotating shortly after 1AM, so DST shenanigans
+# are taken care of, and rotation is always near the next day's begin)
+schedule2 = pyro_daily_log_rotate, 01:05:00, 24:00:00, ((pyro.log_rotate))
+
+# TODO: Log file archival and pruning
+
+# Open logs initially on startup
+pyro.log_rotate=
+log.open_file = log, (pyro.logfile_path, rtorrent)
+print = (cat, "Logging to ", (pyro.logfile_path, "rtorrent"))
