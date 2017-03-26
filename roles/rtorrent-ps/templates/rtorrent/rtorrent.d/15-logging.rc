@@ -35,7 +35,7 @@ method.set_key = pyro.log_rotate, messages,\
     "branch = (pyro.extended), ((log.messages, (pyro.logfile_path, messages) ))"
 method.set_key = pyro.log_rotate, xmlrpc,\
     "log.xmlrpc = (pyro.logfile_path, xmlrpc)"
-method.set_key = pyro.log_rotate, main,\
+method.set_key = pyro.log_rotate, ~main,\
     "log.open_file = log, (pyro.logfile_path, rtorrent)"
 
 # Logrotate schedule (rotating shortly after 1AM, so DST shenanigans
