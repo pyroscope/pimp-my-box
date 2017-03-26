@@ -49,10 +49,10 @@ method.insert = pyro._logfile_find_cmd, simple|private,\
             \" -mtime +\", (argument.1),\
             \" -exec nice \", (argument.2), \" '{}' ';'\""
 
-schedule2 = pyro_logfile_archival, 02:00:00, 24:00:00,\
+schedule2 = pyro_logfile_archival, 01:10:00, 24:00:00,\
     "execute.nothrow = bash, -c, (pyro._logfile_find_cmd, log, (pyro.log_archival.days), gzip)"
 
-schedule2 = pyro_logfile_pruning, 02:10:00, 24:00:00,\
+schedule2 = pyro_logfile_pruning, 01:20:00, 24:00:00,\
     "execute.nothrow = bash, -c, (pyro._logfile_find_cmd, log.gz, (pyro.log_retention.days), rm)"
 
 # Open logs initially on startup
