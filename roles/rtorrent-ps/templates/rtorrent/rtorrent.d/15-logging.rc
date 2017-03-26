@@ -3,6 +3,10 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
 # Logging, and rotating logs
+#
+# Note that the "main" log is only rotated when using rTorrent-PS 1.1+ (after 2017-03-26),
+# since 'log.open_file' needed to learn how to re-open first. Otherwise, you'll get a daily
+# console warning.
 
 # Settings for archival delay, and retention [days]
 method.insert.value = pyro.log_retention.days, 7
@@ -30,9 +34,8 @@ method.set_key = pyro.log_rotate, messages,\
     "branch = (pyro.extended), ((log.messages, (pyro.logfile_path, messages) ))"
 method.set_key = pyro.log_rotate, xmlrpc,\
     "log.xmlrpc = (pyro.logfile_path, xmlrpc)"
-# XXX: log.open_file is just too stupid and can't reopen!
-#method.set_key = pyro.log_rotate, main,\
-#    "log.open_file = log, (pyro.logfile_path, rtorrent)"
+method.set_key = pyro.log_rotate, main,\
+    "log.open_file = log, (pyro.logfile_path, rtorrent)"
 
 # Logrotate schedule (rotating shortly after 1AM, so DST shenanigans
 # are taken care of, and rotation is always near the next day's begin)
@@ -53,7 +56,5 @@ schedule2 = pyro_logfile_pruning, 02:10:00, 24:00:00,\
 
 # Open logs initially on startup
 pyro.log_rotate=
-log.open_file = log, (pyro.logfile_path, rtorrent)
-print = (cat, "Logging to ", (pyro.logfile_path, "rtorrent"))
 
 # END logging
