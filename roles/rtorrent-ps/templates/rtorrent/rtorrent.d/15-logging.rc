@@ -2,8 +2,9 @@
 # ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
-# Logging, and rotating logs
-#
+# Log Rotation, Archival, and Pruning
+# -----------------------------------
+
 # Note that the "main" log is only rotated when using rTorrent-PS 1.1+ (after 2017-03-26),
 # since 'log.open_file' needed to learn how to re-open first. Otherwise, you'll get a daily
 # console warning.
