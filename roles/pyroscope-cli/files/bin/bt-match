@@ -1,0 +1,154 @@
+#! /usr/bin/env python-pyrocore
+# -*- coding: utf-8 -*-
+# pylint: disable=
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+"""
+    Match data with a torrent file listing.
+
+    Read and follow this page to get the necessary basic libraries up and running:
+
+        https://pyrocore.readthedocs.io/en/latest/installation.html#installing-from-source
+
+    Copyright © 2017 PyroScope Project
+    Licensed under the GNU GPLv2, see LICENSE for details.
+"""
+import sys
+import difflib
+import logging
+from collections import defaultdict
+
+try:
+    from pyrocore.util import os, metafile, traits
+    from pyrocore.scripts import base
+except ImportError, _exc:
+    raise ImportError("""Please 'pip install "pyrocore>=0.4.2"' (%s)""" % (_exc,))
+
+try:
+    from pyrobase import bencode, fmt, parts
+except ImportError, _exc:
+    raise ImportError("""Please 'pip install "pyrobase>=0.3"' (%s)""" % (_exc,))
+
+assert sys.version_info >= (2, 7), "Use Python 2.7!"
+assert sys.version_info < (3,), "Use Python 2.7!"
+
+
+# Fine tune mapping sensitivity for same size file names
+MATCH_THRESHOLD = 0.8
+
+# Placeholder for bootstrap
+LOG = None
+
+
+class TorrentMatcher(base.ScriptBase):
+    """
+        Match data with a torrent file listing.
+
+        Creates the directory contained in the given metafile, and
+        symlinks to any data files that match the size / name in
+        its list of contained files.
+
+        Or put another way: create a shadow of an existing data dir that
+        allows to seed that data for a torrent with different names.
+
+    """
+
+    REQUIRED_ARGS = 2
+    ARGS_HELP = "<datapath> <metafile.torrent>"
+    VERSION   = "1.0"
+    COPYRIGHT = "(c) 2017 PyroScope Project (GPLv2)"
+
+
+    def add_options(self):
+        """ Add program options.
+        """
+        super(TorrentMatcher, self).add_options()
+
+        # basic options
+        self.add_bool_option("-n", "--dry-run",
+            help="don't do anything, just tell what would happen")
+
+
+    def mainloop(self):
+        """ The main loop.
+        """
+        # Get and check required arguments
+        try:
+            datapath, metafilepath = self.args[:self.REQUIRED_ARGS]
+        except ValueError:
+            self.parser.error("At least two arguments are expected")
+
+        datapath = datapath.rstrip(os.sep)
+        if not os.path.isdir(datapath):
+            self.fatal("Data path %r does not exist or is not a directory!" % (datapath,))
+
+        # Load metafile
+        metainfo = metafile.sanitize(bencode.bread(metafilepath))
+        info = metainfo['info']
+
+        if info.has_key('length'):
+            self.fatal("%r is a single-file torrent, use 'ln'!" % (metafilepath,))
+
+        metapaths = {}
+        for entry in info['files']:
+            metapaths[os.sep.join(entry['path'])] = long(entry['length'])
+
+        # Load directory data
+        LOG.info("Scanning %r..." % (datapath,))
+        files = defaultdict(list)
+        for dirpath, dirnames, filenames in os.walk(datapath): #, followlinks=True):
+            for filename in filenames:
+                if filename.startswith('.'):
+                    continue
+
+                path = os.path.abspath(os.path.join(dirpath, filename))
+                files[os.path.getsize(path)].append(path)
+
+        created = set()
+        for path, size in metapaths.items():
+            match = files[size]
+            linkpath = os.path.join(info['name'], path)
+
+            if os.path.exists(linkpath):
+                LOG.warn("File %r already exists!" % (linkpath,))
+                continue
+
+            if not match:
+                LOG.warn("No match for %r with size %d" % (path, size))
+                continue
+
+            if len(match) > 1:
+                candidates = [os.path.basename(i) for i in match]
+                close_matches = difflib.get_close_matches(os.path.basename(path), candidates, 10, MATCH_THRESHOLD)
+                LOG.debug("Matched %r to %r out of %r" % (path, close_matches, candidates))
+
+                if not close_matches:
+                    LOG.warn("NO matches for %r with size %d:\n    %s" % (path, size, "\n    ".join(match)))
+                    continue
+                if len(close_matches) > 1:
+                    LOG.warn("Multiple matches for %r with size %d:\n    %s" % (path, size, "\n    ".join(match)))
+                    continue
+
+                match = [i for i in match if os.path.basename(i) in close_matches]
+                LOG.info("Matched %r to %r out of %d possibilities" % (path, close_matches[0], len(candidates)))
+
+            match = match[0]
+            linkdir = os.path.dirname(linkpath)
+
+            if not os.path.exists(linkdir) and linkdir not in created:
+                LOG.info("Creating directory %r" % (linkdir,))
+                created.add(linkdir)
+                if not self.options.dry_run:
+                    os.makedirs(linkdir)
+
+            LOG.info("Linking %s to %s" % (linkpath, match))
+            if not self.options.dry_run:
+                os.symlink(match, linkpath)
+
+
+if __name__ == "__main__":
+    base.ScriptBase.setup()
+    LOG = logging.getLogger(os.path.basename(sys.argv[0]))
+    TorrentMatcher().run()
