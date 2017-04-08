@@ -14,5 +14,6 @@
 # Provide dummy multi-methods for plain rTorrent
 branch=(not, (pyro.extended)), ((method.insert, ui.column.render, multi|rlookup|static))
 
-# Throttle name
-method.set_key = ui.column.render, "~100:2:⋉ ", ((d.throttle_name))
+# Throttle name (note that the length must be 3, since currently the code is not UTF8-aware!)
+method.set_key = ui.column.render, "~100:3:⋉ ",\
+    ((string.map, ((d.throttle_name)), {NULL, "∞"}, {kb500, 5K}, {onemb, 1M}, {lo_up, "⌅"}))
