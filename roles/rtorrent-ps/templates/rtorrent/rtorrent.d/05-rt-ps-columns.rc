@@ -1,0 +1,18 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# rTorrent-PS Extended Canvas Configuration
+#
+# To disable these settings and define your own columns in another file,
+# execute this command as the 'rtorrent' user:
+#
+#   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
+#
+# Then restart rTorrent.
+
+# Provide dummy multi-methods for plain rTorrent
+branch=(not, (pyro.extended)), ((method.insert, ui.column.render, multi|rlookup|static))
+
+# Throttle name
+method.set_key = ui.column.render, "~100:2:⋉ ", ((d.throttle_name))
