@@ -9,11 +9,20 @@
 #
 #   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
 #
-# Then restart rTorrent.
+# You can also disable specific columns, by calling 'method.set_key'
+# with just the key, *after* this include in your main config, like so:
+#
+#   method.set_key = ui.column.render, "800:3:⋉ "
+#
+# Afterwards, restart rTorrent.
 
 # Provide dummy multi-methods for plain rTorrent
 branch=(not, (pyro.extended)), ((method.insert, ui.column.render, multi|rlookup|static))
 
 # Throttle name (see "_rtlocal.rc" for matching throttle definitions)
-method.set_key = ui.column.render, "~100:3:⋉ ",\
+method.set_key = ui.column.render, "800:3:⋉ ",\
     ((string.map, ((d.throttle_name)), {NULL, "∞"}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅"}))
+
+# Data size
+method.set_key = ui.column.render, "900:4: ✇  ",\
+    ((convert.human_size, ((d.size_bytes)) ))
