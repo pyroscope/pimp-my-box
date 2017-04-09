@@ -34,5 +34,7 @@ method.set_key = ui.column.render, "800:3:⋉ ",\
     ((string.map, ((d.throttle_name)), {NULL, "∞"}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅"}))
 
 # Data size
-method.set_key = ui.column.render, "900:4: ✇  ",\
+method.set_key = ui.column.render, "900:4: Σ⇈ ",\
+    ((convert.human_size, ((d.up.total)), (value, 10) ))
+method.set_key = ui.column.render, "910:4: ✇  ",\
     ((convert.human_size, ((d.size_bytes)) ))
