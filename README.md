@@ -117,7 +117,7 @@ Executing these commands *on your workstation* takes care of that:
 
 ```sh
 which git || sudo apt-get install git
-mkdir ~/src; cd ~/src
+mkdir -p ~/src; cd $_
 git clone "https://github.com/pyroscope/pimp-my-box.git"
 cd "pimp-my-box"
 ```
@@ -132,7 +132,8 @@ In that case, use a personal account on that machine, or create an ``ansible`` o
 
 To get it running on Windows is also possible, by using
 [Bash for Windows 10](http://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux)
-or [CygWin](https://servercheck.in/blog/running-ansible-within-windows) on older systems
+or [CygWin](https://servercheck.in/blog/running-ansible-within-windows)
+/ [Babun](https://babun.github.io/) on older systems
 (this is untested, success stories welcome).
 
 See the [Ansible Documentation](http://docs.ansible.com/intro_installation.html)
