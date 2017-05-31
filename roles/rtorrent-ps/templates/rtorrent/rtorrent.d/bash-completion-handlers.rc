@@ -10,4 +10,4 @@
 
 # EVENT: Call bash completion handlers
 method.set_key = event.download.finished, bash_handlers,\
-    "d.save_full_session= ; execute.nothrow=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
+    "d.save_resume= ; execute.nothrow=~/bin/_event.download.finished,$d.hash=,$d.name=,$d.base_path="
