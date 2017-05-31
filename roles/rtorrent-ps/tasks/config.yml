@@ -11,7 +11,9 @@
   template: src="rtorrent/rtorrent.d/{{ item }}" dest="/home/rtorrent/rtorrent/rtorrent.d/{{ item }}" owner=rtorrent group=rtorrent mode=0640
   with_items:
     - 00-pyrocore.rc
+    - 05-rt-ps-columns.rc
     - 10-instance-layout.rc
+    - 15-logging.rc
     - 20-host-var-settings.rc
     - 20-session-name.rc
     - 30-resources.rc
