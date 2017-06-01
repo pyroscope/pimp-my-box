@@ -31,7 +31,10 @@ method.set_key = ui.column.render, "130:1:✰ ",\
 
 # Throttle name (see "_rtlocal.rc" for matching throttle definitions)
 method.set_key = ui.column.render, "800:3:⋉ ",\
-    ((string.map, ((d.throttle_name)), {NULL, "∞"}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅"}))
+    ((string.map, ((d.throttle_name)),\
+        {"", "  "}, {NULL, "∞ "}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅ "},\
+        {thr_0, "⓪ "}, {thr_1, "① "}, {thr_2, "② "}, {thr_3, "③ "}, {thr_4, "④ "},\
+        {thr_5, "⑤ "}, {thr_6, "⑥ "}, {thr_7, "⑦ "}, {thr_8, "⑧ "}, {thr_9, "⑨ "}))
 
 # Data size
 method.set_key = ui.column.render, "900:4: Σ⇈ ",\
