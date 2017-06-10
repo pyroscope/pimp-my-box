@@ -273,6 +273,7 @@ you'll see a message like the following:
 
 In that case,
 [compile a binary yourself](https://github.com/pyroscope/rtorrent-ps/blob/master/docs/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source).
+If you want to run a *rTorrent-PS* version that is not yet released to *Bintray*, do the same.
 
 If you added more than one host into the ``box`` group and want to only address one of them,
 use ``ansible-playbook -i hosts -l ‹hostname› site.yml``.
