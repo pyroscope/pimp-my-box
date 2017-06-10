@@ -445,6 +445,33 @@ ansible box -f4 --become-user=rtorrent -a "~/bin/pyroadmin --version" -o
 This is especially useful if you control more than one host.
 
 
+## Updating Your System with Changes in This Repository
+
+You have full control over when your system is upgraded with new features and fixes,
+which implies you are also responsible for that.
+
+[Read the commit log](https://github.com/pyroscope/pimp-my-box/commits/master)
+from the top to the date / commit SHA you last updated your working directory,
+to actually know what you're installing.
+You can also use ``git log`` or ``gitk`` on your machine for that, *after* a pull.
+
+Call these commands *in your working directory of this repository* for updating:
+
+```sh
+git pull --ff-only
+ansible-playbook -i hosts site.yml
+```
+
+Before you start, make sure to read any warnings that might be at the top of this page.
+
+Also re-read the explanation of adding `-e force_cfg=yes` and the consequences
+that has, namely overwriting some configuration files that are normally created only
+once and then left untouched.
+
+Don't ask *“Should I add this option?”* in support,
+that is entirely dependendent on how *you* manage your system. See above.
+
+
 ## Advanced Configuration
 
 ### Using the System Python Interpreter
@@ -505,7 +532,6 @@ Finally connect to your ``tmux`` session, and stop & restart rTorrent.
 
 
 ### Using the bash Download Completion Handler
-
 
 The default configuration adds a *finished* event handler that calls the `~rtorrent/bin/_event.download.finished` script.
 That script in turn just calls any existing `_event.download.finished-*.sh` script,
