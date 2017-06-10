@@ -26,6 +26,7 @@ Automated install of rTorrent-PS etc. via
     * [Installing FlexGet](#installing-flexget)
     * [Installing and Updating ruTorrent](#installing-and-updating-rutorrent)
   * [Using Ansible for Remote Management](#using-ansible-for-remote-management)
+  * [Updating Your System with Changes in This Repository](#updating-your-system-with-changes-in-this-repository)
   * [Advanced Configuration](#advanced-configuration)
     * [Using the System Python Interpreter](#using-the-system-python-interpreter)
     * [Upgrading to a Newer Python Version](#upgrading-to-a-newer-python-version)
