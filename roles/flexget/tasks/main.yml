@@ -23,4 +23,4 @@
   file: path=/home/rtorrent/.config/flexget state=directory owner=rtorrent group=rtorrent mode=0750
 
 - name: Add FlexGet cron job
-  cron: user=rtorrent minute=*/11 name=flexget job="test -f ~/.config/flexget/config.yml && sleep 11 && nice ~/bin/flexget -c ~/.config/flexget/config.yml execute --cron >~/.config/flexget/flexget-cron.log 2>&1"
+  cron: user=rtorrent minute=*/11 name=flexget job="test -f ~/.config/flexget/config.yml && sleep 11 && nice ~/bin/flexget -c ~/.config/flexget/config.yml --cron execute >~/.config/flexget/flexget-cron.log 2>&1"
