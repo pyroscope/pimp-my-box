@@ -6,11 +6,13 @@
 Welcome to the “pimp-my-box” Manual!
 ====================================
 
-The software in the ``pimp-my-box`` repository will install ``rTorrent-PS``, ``pyrocore``, and related software
+The playbooks in the ``pimp-my-box`` repository will install ``rTorrent-PS``, ``pyrocore``, and related software
 onto any remote dedicated server or VPS with ``root`` access, running Debian or a Debian-like OS.
 Read :doc:`overview` to learn more.
 
-.. include:: include-contacts.rst
+.. note::
+
+    .. include:: include-contacts.rst
 
 
 Full Contents
