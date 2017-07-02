@@ -7,7 +7,7 @@
 Automated install of rTorrent-PS etc. via
 [Ansible](http://docs.ansible.com/).
 
-:warning: | Right now, you need a *rTorrent-PS 1.1* version (git head) for the contained configuration to work. If you use a packaged version, call ``echo >>~rtorrent/rtorrent/rtorrent.d/.rcignore 05-rt-ps-columns.rc`` when you get errors about ``ui.column.render`` on startup.
+:warning: | Right now, you need a *rTorrent-PS 1.1* version (git head) for the contained configuration to work. If you use an older installation, call ``echo >>~rtorrent/rtorrent/rtorrent.d/.rcignore 05-rt-ps-columns.rc`` when you get errors about ``ui.column.render`` on startup.
 ---: | :---
 
 **Contents**
