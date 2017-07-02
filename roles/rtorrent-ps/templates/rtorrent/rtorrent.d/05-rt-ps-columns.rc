@@ -21,13 +21,13 @@ branch=(not, (pyro.extended)), ((method.insert, ui.column.render, multi|rlookup|
 
 # Status flags (☢ ☍ ⌘ ✰)
 method.set_key = ui.column.render, "100:1:☢ ",\
-    ((string.map, ((cat, ((d.is_open)), ((d.is_active)))), {00, "▪"}, {01, "▪"}, {10, "╍"}, {11, "▹"}))
+    ((string.map, ((cat, ((d.is_open)), ((d.is_active)))), {00, "▪ "}, {01, "▪ "}, {10, "╍ "}, {11, "▹ "}))
 method.set_key = ui.column.render, "110:1:☍ ",\
-    ((if, ((d.tied_to_file)), ((cat, "⚯")), ((cat, " "))))
+    ((if, ((d.tied_to_file)), ((cat, "⚯ ")), ((cat, "  "))))
 method.set_key = ui.column.render, "120:1:⌘ ",\
-    ((if, ((d.ignore_commands)), ((cat, "◌")), ((cat, "⚒"))))
+    ((if, ((d.ignore_commands)), ((cat, "◌ ")), ((cat, "⚒ "))))
 method.set_key = ui.column.render, "130:1:✰ ",\
-    ((string.map, ((cat, ((d.priority)))), {0, "✖"}, {1, "⇣"}, {2, " "}, {3, "⇡"}))
+    ((string.map, ((cat, ((d.priority)))), {0, "✖ "}, {1, "⇣ "}, {2, "  "}, {3, "⇡ "}))
 
 # Throttle name (see "_rtlocal.rc" for matching throttle definitions)
 method.set_key = ui.column.render, "800:3:⋉ ",\
