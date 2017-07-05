@@ -22,23 +22,10 @@ Automated install of rTorrent-PS etc. via
     * [Starting rTorrent](#starting-rtorrent)
     * [Activating Firewall Rules](#activating-firewall-rules)
     * [Changing Configuration Defaults](#changing-configuration-defaults)
-    * [Enabling Optional Applications](#enabling-optional-applications)
-    * [Installing FlexGet](#installing-flexget)
-    * [Installing and Updating ruTorrent](#installing-and-updating-rutorrent)
-  * [Using Ansible for Remote Management](#using-ansible-for-remote-management)
-  * [Updating Your System with Changes in This Repository](#updating-your-system-with-changes-in-this-repository)
   * [Advanced Configuration](#advanced-configuration)
     * [Using the System Python Interpreter](#using-the-system-python-interpreter)
-    * [Upgrading to a Newer Python Version](#upgrading-to-a-newer-python-version)
-    * [Upgrading to a Newer rTorrent-PS Version](#upgrading-to-a-newer-rtorrent-ps-version)
     * [Using the bash Download Completion Handler](#using-the-bash-download-completion-handler)
     * [Extending the Nginx Site](#extending-the-nginx-site)
-  * [Trouble-Shooting](#trouble-shooting)
-    * [SSH Error: Host key verification failed](#ssh-error-host-key-verification-failed)
-  * [Implementation Details](#implementation-details)
-    * [Location of Configuration Files](#location-of-configuration-files)
-    * [Location of Installed Software](#location-of-installed-software)
-    * [Secure Communications](#secure-communications)
   * [References](#references)
     * [Server Hardening](#server-hardening)
 
@@ -368,112 +355,6 @@ echo >>~/rtorrent/rtorrent.d/.rcignore "disable-control-q.rc"
 Then restart rTorrent.
 
 
-### Enabling Optional Applications
-
-To activate the optional applications, add these settings to your `host_vars`:
-
- * `flexget_enabled: yes` for FlexGet.
- * `rutorrent_enabled: yes` for ruTorrent.
-
-Read the following sections for details.
-
-
-### Installing FlexGet
-
-After setting `flexget_enabled: yes`, run the playbook again.
-
-FlexGet is just installed ready to be used, for full operation a configuration file
-located in `~/.config/flexget/config.yml` must be added
-(see the [FlexGet cookbook](http://flexget.com/wiki/Cookbook)).
-A cronjob is provided too (called every 11 minutes),
-but only starts to actually call FlexGet
-*after* you add that configuration file.
-Look into the files `~/.config/flexget/flexget.log` and `~/.config/flexget/flexget-cron.log`
-to diagnose any problems.
-
-
-### Installing and Updating ruTorrent
-
-The ruTorrent web UI is an optional add-on, and you have to activate it by setting
-`rutorrent_enabled` to `yes` and providing a `rutorrent_www_pass` value, usually in
-your `host_vars/my-box/main.yml` and `host_vars/my-box/secrets.yml` files, respectively.
-Then run the playbook again.
-
-Alternatively to the self-signed certificate that is created for Nginx,
-you can also copy a certificate you got from other sources to the paths
-`/etc/nginx/ssl/cert.key` and `/etc/nginx/ssl/cert.pem`.
-See [this blog post](https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html)
-if you want *excessive* detail on secure HTTPS setups.
-
-After the second run, ruTorrent is available at `https://my-box.example.com/rutorrent/`
-(use you own domain or IP in that URL).
-
-To *update to a new version* of ruTorrent, first add the desired version as
-`rutorrent_version` to your variables – that version has to be available on
-[Bintray](https://bintray.com/novik65/generic/ruTorrent#files).
-Then move the old installation tree away:
-
-```sh
-cd ~rutorrent
-mv ruTorrent-master _ruTorrent-master-$(date "+%Y-%m-%d-%H%M").bak
-tar cfz _profile-$(date "+%Y-%m-%d-%H%M").bak profile
-```
-
-Finally, rerun the playbook to install the new version. In case anything goes wrong,
-you can move back that backup you made initially.
-
-
-## Using Ansible for Remote Management
-
-The setup work to get *Ansible* controlling your machines is not just for installing things,
-you can also simplify daily management tasks.
-
-Consider this example, which prints the number of items loaded into rTorrent,
-for all hosts in your inventory:
-
-```sh
-$ ansible box -f4 --become-user=rtorrent -a "~/bin/rtxmlrpc view.size=,main" -o
-my-box | success | rc=0 | (stdout) 42
-my-box2 | success | rc=0 | (stdout) 123
-```
-
-Another example is updating the ``pyrocore`` installation from git, like this:
-
-```sh
-ansible box -f4 -a "sudo -i -u rtorrent -- ~rtorrent/.local/pyroscope/update-to-head.sh"
-ansible box -f4 --become-user=rtorrent -a "~/bin/pyroadmin --version" -o
-```
-
-This is especially useful if you control more than one host.
-
-
-## Updating Your System with Changes in This Repository
-
-You have full control over when your system is upgraded with new features and fixes,
-which implies you are also responsible for that.
-
-[Read the commit log](https://github.com/pyroscope/pimp-my-box/commits/master)
-from the top to the date / commit SHA you last updated your working directory,
-to actually know what you're installing.
-You can also use ``git log`` or ``gitk`` on your machine for that, *after* a pull.
-
-Call these commands *in your working directory of this repository* for updating:
-
-```sh
-git pull --ff-only
-ansible-playbook -i hosts site.yml
-```
-
-Before you start, make sure to read any warnings that might be at the top of this page.
-
-Also re-read the explanation of adding `-e force_cfg=yes` and the consequences
-that has, namely overwriting some configuration files that are normally created only
-once and then left untouched.
-
-Don't ask *“Should I add this option?”* in support,
-that is entirely dependendent on how *you* manage your system. See above.
-
-
 ## Advanced Configuration
 
 ### Using the System Python Interpreter
@@ -492,45 +373,6 @@ venv_bin: /usr/bin/virtualenv
 
 :thumbsup: Doing so is recommended on both *Xenial* (has 2.7.12) and *Jessie* (has 2.7.9).
 
-
-### Upgrading to a Newer Python Version
-
-When you installed *Python* via *pyenv* (i.e. ``pyenv_enabled`` is still set to ``true``),
-you can update to a new *Python* release by reinstalling the related software.
-If you want to select a specific Python version,
-set the ``pyenv_python_version`` variable in your ``host_vars`` or ``group_vars``.
-
-You first have to remove the old install directory, and all virtualenvs based on it:
-
-```sh
-ansible box -i hosts -a "rm -rf ~rtorrent/.local/pyenv ~rtorrent/.local/pyroscope ~rtorrent/.local/flexget"
-```
-
-Then execute the relevant roles again:
-
-```sh
-ansible-playbook site.yml -i hosts -t pyenv,cli,fg
-```
-
-As given, these commands affect all hosts in the ``box`` group of your inventory.
-Also, both ``pyrocore`` and ``flexget`` get upgraded to the newest available version.
-
-
-### Upgrading to a Newer rTorrent-PS Version
-
-To upgrade the installed ``rtorrent-ps`` package, execute this command on your workstation:
-
-```sh
-ansible box -a "rm /opt/rtorrent/pmb-installed" -i hosts
-```
-
-Then run the playbook to install the new version:
-
-```sh
-ansible-playbook site.yml -t rtps -i hosts
-```
-
-Finally connect to your ``tmux`` session, and stop & restart rTorrent.
 
 
 ### Using the bash Download Completion Handler
@@ -597,49 +439,6 @@ The main configuration file is located at `/etc/nginx/sites-available/rutorrent`
 
 Use a `/etc/nginx/conf.d/upstream-*.conf` file in case you need to add your own `upstream` definitions.
 
-
-## Trouble-Shooting
-
-### SSH Error: Host key verification failed
-
-If you get this error, one easy way out is to first enter the following command
-and then repeat your failing Ansible command:
-
-```sh
-export ANSIBLE_HOST_KEY_CHECKING=False
-```
-
-
-## Implementation Details
-
-### Location of Configuration Files
-
- * ``/home/rtorrent/rtorrent/rtorrent.rc`` – Main *rTorrent* configuration file; to update it from this repository use ``-e force_cfg=yes``, see above for details.
- * ``/home/rtorrent/rtorrent/_rtlocal.rc`` – *rTorrent* configuration include for custom modifications, this is *never* overwritten once it exists.
- * ``/home/rtorrent/.pyroscope/config.ini`` – ``pyrocore`` main configuration.
- * ``/home/rtorrent/.pyroscope/config.py`` – ``pyrocore`` custom field configuration.
- * ``/home/rtorrent/.config/flexget/config.yml`` – *FlexGet* configuration.
- * ``/home/rutorrent/ruTorrent-master/conf/config.php`` – *ruTorrent* configuration.
- * ``/home/rutorrent/profile/`` – Dynamic data written by *ruTorrent*.
- * ``/etc/nginx/sites-available/rutorrent`` – *NginX* configuration for the *ruTorrent* site.
- * ``/etc/php5/fpm/pool.d/rutorrent.conf`` or ``/etc/php/7.0/fpm/pool.d/rutorrent.conf`` – PHP worker pool for *ruTorrent*.
-
-
-### Location of Installed Software
-
- * ``/home/rtorrent/.local/profile.d/`` — Directory with shell scripts that get sourced in ``~rtorrrent/.bash_aliases``.
- * ``/home/rtorrent/.local/pyenv/`` — Unless you chose to use the system's *Python*, the interpreter used to run ``pyrocore`` and ``flexget`` is installed here.
- * ``/home/rtorrent/.local/pyroscope`` — Virtualenv for ``pyrocore``.
- * ``/home/rtorrent/.local/flexget`` — Virtualenv for ``flexget``.
- * ``/home/rutorrent/ruTorrent-master`` — *ruTorrent* code base.
-
-
-### Secure Communications
-
-All internal RPC is done via Unix domain sockets.
-
- * `/var/run/php-fpm-rutorrent.sock` — *NginX* sends requests to PHP using the *php-fpm* pool `rutorrent` via this socket; it's owned by `rutorrent` and belongs to the `www-data` group.
- * `/var/torrent/.scgi_local` — The XMLRPC socket of rTorrent. It's group-writable and owned by `rtorrent.rtorrent`; ruTorrent talks directly to that socket (see issue #9 for problems with using /RPC2).
 
 
 ## References

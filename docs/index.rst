@@ -23,6 +23,7 @@ Full Contents
 
    overview
    setup
+   options
    advanced
    troubleshooting
    updates

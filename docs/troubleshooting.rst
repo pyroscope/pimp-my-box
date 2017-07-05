@@ -41,5 +41,12 @@ use the mailing list or IRC for that.
 Common Problems & Solutions
 ---------------------------
 
-Some problem…
-^^^^^^^^^^^^^
+SSH Error: Host key verification failed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you get this error, one easy way out is to first enter the following
+command and then repeat your failing Ansible command:
+
+.. code-block:: shell
+
+    export ANSIBLE_HOST_KEY_CHECKING=False
