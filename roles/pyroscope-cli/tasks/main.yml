@@ -54,8 +54,7 @@
     chdir: /home/rtorrent/.local/pyroscope
     creates: /home/rtorrent/.local/pyroscope/bin/pyroadmin
 
-- name: Installed versions
-  name: Get PyroScope & Python version
+- name: Get PyroScope & Python version
   shell: "/home/rtorrent/bin/pyroadmin --version ; /home/rtorrent/.local/pyroscope/bin/python --version 2>&1"
   changed_when: False
   register: pyro_versions
