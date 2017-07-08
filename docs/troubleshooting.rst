@@ -50,3 +50,12 @@ command and then repeat your failing Ansible command:
 .. code-block:: shell
 
     export ANSIBLE_HOST_KEY_CHECKING=False
+
+
+rtorrent: command not found
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When you get this error using the ``tmux`` start command as shown in :ref:`tmux-start`,
+then neither a package nor an explicitly compiled binary of rTorrent is installed on your machine.
+
+See :ref:`run-ansible` on how to solve this.

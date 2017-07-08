@@ -193,7 +193,7 @@ more diagnostics, and also check your ``~/.ssh/config`` and the Ansible
 connection settings in your ``host_vars``. If it's a connection problem,
 try to directly call ``ssh -vvvv my-box`` and if that succeeds, also
 make sure you can become ``root`` via ``sudo su -``. If not, read the
-resources linked at the start of the “How to Use This?” section, and
+resources linked at :doc:`the start of this chapter <setup>`, and
 especially the `SSH Essentials`_.
 
 .. _host\_vars/rpi/main.yml: https://github.com/pyroscope/pimp-my-box/blob/master/host_vars/rpi/main.yml
@@ -221,21 +221,23 @@ Doing so is recommended on *Xenial* (has 2.7.12),
 *Jessie* (2.7.9), or *Stretch* (2.7.13).
 
 
+.. _run-ansible:
+
 Running the Playbook
 --------------------
 
 To execute the playbook, call ``ansible-playbook -i hosts site.yml``.
+The initial installation will take a while, so be patient.
 
 If your Linux release isn't supported with a pre-built package, you'll
 see a message like the following:
 
 ::
 
-    WARNING - No DEB package URL defined for '‹platform›',
-    you need to install /opt/rtorrent manually!
+    WARNING - No DEB package URL defined for '‹platform›', you need to install /opt/rtorrent manually!
 
 In that case, `compile a binary yourself`_. If you want to run a
-*rTorrent-PS* version that is not yet released to *Bintray*, do the
+*rTorrent-PS* version that is not yet released to `Bintray`_, do the
 same.
 
 If you added more than one host into the ``box`` group and want to only
@@ -244,14 +246,17 @@ address one of them, use
 ``-v`` to get more detailed information on what each task does.
 
 .. _compile a binary yourself: https://github.com/pyroscope/rtorrent-ps/blob/master/docs/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source
+.. _Bintray: https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files
 
+
+.. _tmux-start:
 
 Starting rTorrent
 -----------------
 
 As mentioned before, after successfully running the Ansible playbook, a
 fully configured setup is found on the target. So to start rTorrent,
-call this command as the ``rtorrent`` user:
+log in as the ``rtorrent`` user and start this command:
 
 .. code-block:: shell
 
@@ -263,6 +268,12 @@ To detach from this session (meaning rTorrent continues to run), press
 If you get ``rtorrent: command not found`` when calling above ``tmux``
 command, then a pre-built Debian package is not available for your OS
 distribution and you need to build from source (see previous section).
+You can check explicitly with the following command:
+
+.. code-block:: console
+
+    $ dpkg -l rtorrent-ps
+    dpkg-query: no packages found matching rtorrent-ps
 
 
 Activating Firewall Rules
@@ -342,3 +353,8 @@ user (or put the line into that file via *Ansible*):
     echo >>~/rtorrent/rtorrent.d/.rcignore "disable-control-q.rc"
 
 Then restart rTorrent.
+
+
+See :doc:`options` on how to activate add-ons like ruTorrent,
+and  :doc:`advanced` for more details about the box installation
+and its features.
