@@ -1,6 +1,40 @@
 Advanced Topics
 ===============
 
+Activating Firewall Rules
+-------------------------
+
+If you want to set up firewall rules using the `Uncomplicated Firewall`_
+(UFW) tool, then call the playbook using this command:
+
+.. code-block:: shell
+
+    # See above regarding adding the '-l' option to select a single host
+    ansible-playbook -i hosts site.yml -t ufw -e ufw=true
+
+This will install the ``ufw`` package if missing, and set up all rules
+needed by apps installed using this project. Note that activating the
+firewall is left as a manual task, since you can make a remote server
+pretty much unusable when SSH connections get disabled by accident –
+only a rescue mode or virtual console can help to avoid a full reinstall
+then, if you have no physical access to the machine.
+
+So to activate the firewall rules, use this in a ``root`` shell on the
+*target host*:
+
+.. code-block:: shell
+
+    egrep 'ssh|22' /lib/ufw/user.rules /etc/ufw/user.rules
+    # Make sure the output contains
+    #   ### tuple ### limit tcp 22 0.0.0.0/0 any 0.0.0.0/0 in
+    # followed by 3 lines starting with '-A'.
+
+    ufw enable  # activate the firewall
+    ufw status verbose  # show all the settings
+
+.. _Uncomplicated Firewall: https://en.wikipedia.org/wiki/Uncomplicated_Firewall
+
+
 Using Ansible for Remote Management
 -----------------------------------
 
