@@ -6,7 +6,7 @@
 #
 # Note that you need a rTorrent-PS version compiled on or after 2017-03-11 for this!
 #
-# To disable these settings, execute this command as the 'rtorrent' user:
+# To disable / override these settings, execute this command as the 'rtorrent' user:
 #
 #   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
 #
