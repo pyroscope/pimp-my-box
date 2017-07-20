@@ -7,9 +7,9 @@
 # option "-e force_cfg=yes" to the "ansible-playbook" command, after the
 # initial playbook run.
 #
-# For more info regarding changing configuration defaults, see the README:
+# For more info regarding changing configuration defaults, see the docs:
 #
-#   https://github.com/pyroscope/pimp-my-box#changing-configuration-defaults
+#   https://pimp-my-box.readthedocs.io/en/latest/setup.html#change-cfg-defaults
 #
 #############################################################################
 

@@ -276,6 +276,8 @@ You can check explicitly with the following command:
     dpkg-query: no packages found matching rtorrent-ps
 
 
+.. _change-cfg-defaults:
+
 Changing Configuration Defaults
 -------------------------------
 

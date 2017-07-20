@@ -61,6 +61,8 @@ this:
 This is especially useful if you control more than one host.
 
 
+.. _bash-finished:
+
 Using the bash Download Completion Handler
 ------------------------------------------
 

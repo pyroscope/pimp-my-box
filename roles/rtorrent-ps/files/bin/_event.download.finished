@@ -2,9 +2,9 @@
 #
 # Called in rTorrent event handler
 #
-# For details, see the README:
+# For details, see the docs:
 #
-#   https://github.com/pyroscope/pimp-my-box#using-the-bash-download-completion-handler
+#   https://pimp-my-box.readthedocs.io/en/latest/advanced.html#bash-finished
 
 infohash="${1:?You MUST provide the infohash of the completed item!}"
 name="${2:?You MUST provide the name of the completed item!}"
