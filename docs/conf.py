@@ -75,6 +75,7 @@ release = '0.1'
 exclude_patterns = [
     '_build', 'build', '*~',
     'include-*.rst',
+    'SUPPORT.rst',
 ]
 
 # The reST default role (used for this markup: `text`) to use for all documents.
