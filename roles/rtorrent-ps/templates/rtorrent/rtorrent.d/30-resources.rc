@@ -19,3 +19,8 @@ throttle.max_uploads.global.set = 250
 
 pieces.hash.on_completion.set = no
 encoding.add = utf8
+
+# Limit pre-load bandwidth (see rTorrent issue #443)
+pieces.preload.type.set = 1
+pieces.preload.min_size.set = 1
+pieces.preload.min_rate.set = 1
