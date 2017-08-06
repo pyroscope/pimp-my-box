@@ -45,7 +45,7 @@ schedule2 = pyro_daily_log_rotate, 01:05:00, 24:00:00, ((pyro.log_rotate))
 # Log file archival and pruning
 method.insert = pyro._logfile_find_cmd, simple|private,\
      "cat = \"find \", (cfg.logs),\
-            \" -type f -name '*.\", (argument.0),\"'\",\
+            \" -daystart -type f -name '*.\", (argument.0),\"'\",\
             \" -mtime +\", (argument.1),\
             \" -exec nice \", (argument.2), \" '{}' ';'\""
 
