@@ -28,6 +28,7 @@
     - tracker-aliases.rc
     - views.rc
     - watch-disk-space.rc
+    - watch-dirs.rc
 
 - name: Create rutorrent include placeholder
   copy: content="" dest=/var/torrent/_rutorrent.rc owner=rtorrent group=rtorrent mode=0640 force=no
