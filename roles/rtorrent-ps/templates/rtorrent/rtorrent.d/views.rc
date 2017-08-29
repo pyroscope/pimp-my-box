@@ -23,7 +23,7 @@ view.sort_new     = incomplete, greater=d.custom=tm_loaded
 
 # UI/VIEW: Show recently completed top-most in "main"
 branch=pyro.extended=,"view.sort_current = main, \"compare=-+,d.custom=tm_completed,d.custom=tm_loaded\""
-view.filter_on = main, event.download.finished
+view.filter_on = main, event.download.finished, event.download.inserted_new
 
 # UI/VIEW: Show active and incomplete torrents (in view #0) and update every 20 seconds
 #   Items are grouped into complete, incomplete, and queued, in that order (rT-PS only).
