@@ -7,7 +7,7 @@
 # Regarding options to change 'pyrocore' configuration defaults,
 # see the comments in the files located in this directory:
 #
-#   ~/.pyroscope/rtorrent/rtorrent.d
+#   ~/.pyroscope/rtorrent.d
 
 # Import "pyrocore" defaults
 import = ~/.pyroscope/rtorrent-pyro.rc.default
