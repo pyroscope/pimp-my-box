@@ -17,8 +17,8 @@ schedule2 = watch_load,  122, 10, ((load.verbose, (cat, (cfg.watch), "load/*.tor
 
 # Load categorized items (sets the ruTorrent label, and define a view)
 pyro.category.add = hdtv
-schedule2 = watch_hdtv,  123, 10, ((load.category.normal, hdtv))
+schedule2 = watch_hdtv,  123, 10, ((load.category, hdtv))
 
 # Load item and delete the metafile from the watch dir
 schedule2 = watch_cleaned, 129, 10, \
-    ((load.verbose, (cat, (cfg.watch), "cleaned/*.torrent"), "d.delete_tied="))
+    ((load.verbose, (cat, (cfg.watch), "cleaned/*.torrent"), "d.delete_tied=", "d.watch.startable="))
