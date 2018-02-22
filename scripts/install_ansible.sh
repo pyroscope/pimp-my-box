@@ -4,6 +4,7 @@
 
 set -e
 ansible_version="1.9.6"
+python="/usr/bin/python2"
 
 # just to make sure you have the packages you need
 echo "*** Checking build essentials"
@@ -29,7 +30,7 @@ test -f "/usr/include/openssl/opensslconf.h" || sudo apt-get install libssl-dev
 # install Ansible
 base="$HOME/.local/venvs"
 mkdir -p "$base"
-/usr/bin/virtualenv "$base/ansible"
+/usr/bin/virtualenv -p $python "$base/ansible"
 cd "$base/ansible"
 for pypkg in pip setuptools wheel "requests[security]"; do
     bin/pip install -U "$pypkg"
