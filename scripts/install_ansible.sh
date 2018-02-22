@@ -24,7 +24,8 @@ echo "*** Checking ffi-dev"
 test -f "/usr/share/man/man3/ffi.3.gz" || sudo apt-get install libffi-dev
 
 echo "*** Checking openssl-dev"
-test -f "/usr/include/openssl/opensslconf.h" || sudo apt-get install libssl-dev
+test -f "/usr/include/openssl/opensslconf.h" -o -f "/usr/include/openssl/conf.h" \
+    || sudo apt-get install libssl-dev
 
 
 # install Ansible
