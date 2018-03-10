@@ -1,7 +1,8 @@
 ---
-- name: Update apt cache
+- name: Update APT cache
   apt:
     update_cache: yes
+
 - name: Install basic tools
   apt: name={{ item }} state=latest
   with_items:
