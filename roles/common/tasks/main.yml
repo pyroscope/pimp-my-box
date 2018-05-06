@@ -13,6 +13,7 @@
     - bzip2
     - cfv
     - colordiff
+    - coreutils
     - curl
     - gawk
     - genisoimage
@@ -34,7 +35,6 @@
     - p7zip-full
     - psmisc
     - python-virtualenv
-    - realpath
     - sysstat
     - tmux
     - unzip
