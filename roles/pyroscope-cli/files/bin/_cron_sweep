@@ -9,6 +9,8 @@
 # Called from download scripts when space is low.
 # Can also be started directly from a shell prompt or cron job.
 #
+# See "../etc/sweep_rules" for the house-keeping rules, and some more docs.
+#
 
 set -e
 source /usr/local/lib/pmb/common.sh
