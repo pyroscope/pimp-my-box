@@ -44,13 +44,19 @@
     - wget
     - zip
 
+- name: Install newer Ubuntu packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - python-packaging
+  when: ansible_distribution_release in ("xenial", "bionic")
+
 - name: Install ffmpeg
   apt: name=ffmpeg state=latest
-  when: av_tool == 'ffmpeg' or ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "12"
+  when: av_tool == 'ffmpeg' or ansible_distribution_release in ("precise", "bionic")
 
 - name: Install libav
   apt: name=libav-tools state=latest
-  when: av_tool == 'libav' or not(ansible_distribution == "Ubuntu") or ansible_distribution_major_version != "12"
+  when: av_tool == 'libav' or ansible_distribution_release not in ("precise", "bionic")
 
 - name: Install fuseiso9660 + unrar (most distros)
   apt: name={{ item }} state=latest
