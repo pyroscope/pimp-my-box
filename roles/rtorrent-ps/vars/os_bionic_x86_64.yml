@@ -1,0 +1,2 @@
+rtps_deb_url: "{{ rtps_bintray_url }}/rtorrent-ps_0.9.6-PS-1.0-188-g9e05939~bionic_amd64.deb"
+rtps_deb_SHA: "sha256:dfd8eca0cb7468935307561b682fbb75b14344571e440c0942424efd24ee89b7"
