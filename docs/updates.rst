@@ -28,7 +28,7 @@ consequences that has, namely overwriting some configuration files that
 are normally created only once and then left untouched.
 
 Don't ask *“Should I add this option?”* in support, that is entirely
-dependendent on how *you* manage your system. See above.
+dependent on how *you* manage your system. See above.
 
 .. _Read the commit log: https://github.com/pyroscope/pimp-my-box/commits/master
 .. _`README`: https://github.com/pyroscope/pimp-my-box#pimp-my-box
