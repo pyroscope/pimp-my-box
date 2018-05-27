@@ -42,6 +42,9 @@ method.set_key = ui.column.render, "800:3:⋉ ",\
 
 # Data size
 method.set_key = ui.column.render, "900:4: Σ⇈ ",\
-    ((convert.human_size, ((d.up.total)), (value, 10) ))
+    ((if, ((d.up.total)), \
+        ((convert.human_size, ((d.up.total)), (value, 10))), \
+        ((cat, "  · ")) \
+    ))
 method.set_key = ui.column.render, "910:4: ✇  ",\
     ((convert.human_size, ((d.size_bytes)) ))
