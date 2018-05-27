@@ -29,6 +29,10 @@ method.set_key = ui.column.render, "120:1:⌘ ",\
 method.set_key = ui.column.render, "130:1:✰ ",\
     ((string.map, ((cat, ((d.priority)))), {0, "✖ "}, {1, "⇣ "}, {2, "  "}, {3, "⇡ "}))
 
+# Number of connected peers (↻)
+method.set_key = ui.column.render, "180:2: ↻", \
+    ((convert.magnitude, ((d.peers_connected))))
+
 # Throttle name (see "_rtlocal.rc" for matching throttle definitions)
 method.set_key = ui.column.render, "800:3:⋉ ",\
     ((string.map, ((d.throttle_name)),\
