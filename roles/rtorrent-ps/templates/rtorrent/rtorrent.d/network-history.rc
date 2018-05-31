@@ -10,6 +10,7 @@
 
 # UI: Show traffic of the last hour
 branch=(pyro.extended), ((network.history.depth.set, 112))
+branch=(pyro.extended), ((network.history.auto_scale.set, 0))
 
 method.insert = network.history.auto_scale.toggle, simple|private, "branch=(network.history.auto_scale), ((network.history.auto_scale.set, 0)), ((network.history.auto_scale.set, 1))"
 method.insert = network.history.auto_scale.ui_toggle, simple|private, "network.history.auto_scale.toggle= ;network.history.refresh="
