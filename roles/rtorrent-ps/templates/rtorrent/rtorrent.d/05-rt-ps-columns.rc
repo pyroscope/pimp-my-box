@@ -19,19 +19,8 @@
 # Provide dummy multi-methods for plain rTorrent
 branch=(not, (pyro.extended)), ((method.insert, ui.column.render, multi|rlookup|static))
 
-# Status flags (☢ ☍ ⌘ ✰)
-method.set_key = ui.column.render, "100:1:☢ ",\
-    ((string.map, ((cat, ((d.is_open)), ((d.is_active)))), {00, "▪ "}, {01, "▪ "}, {10, "╍ "}, {11, "▹ "}))
-method.set_key = ui.column.render, "110:1:☍ ",\
-    ((if, ((d.tied_to_file)), ((cat, "⚯ ")), ((cat, "  "))))
-method.set_key = ui.column.render, "120:1:⌘ ",\
-    ((if, ((d.ignore_commands)), ((cat, "◌ ")), ((cat, "⚒ "))))
-method.set_key = ui.column.render, "130:1:✰ ",\
-    ((string.map, ((cat, ((d.priority)))), {0, "✖ "}, {1, "⇣ "}, {2, "  "}, {3, "⇡ "}))
-
-# Number of connected peers (↻)
-method.set_key = ui.column.render, "180:2: ↻", \
-    ((convert.magnitude, ((d.peers_connected))))
+# Define default columns for older rTorrent-PS builds
+branch=(not, (system.has, canvas_v2)), ((import, rtorrent.d/05-rt-ps-columns.rc.include))
 
 # Throttle name (see "_rtlocal.rc" for matching throttle definitions)
 method.set_key = ui.column.render, "800:3:⋉ ",\
@@ -39,12 +28,3 @@ method.set_key = ui.column.render, "800:3:⋉ ",\
         {"", "  "}, {NULL, "∞ "}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅ "},\
         {thr_0, "⓪ "}, {thr_1, "① "}, {thr_2, "② "}, {thr_3, "③ "}, {thr_4, "④ "},\
         {thr_5, "⑤ "}, {thr_6, "⑥ "}, {thr_7, "⑦ "}, {thr_8, "⑧ "}, {thr_9, "⑨ "}))
-
-# Data size
-method.set_key = ui.column.render, "900:4: Σ⇈ ",\
-    ((if, ((d.up.total)), \
-        ((convert.human_size, ((d.up.total)), (value, 10))), \
-        ((cat, "  · ")) \
-    ))
-method.set_key = ui.column.render, "910:4: ✇  ",\
-    ((convert.human_size, ((d.size_bytes)) ))

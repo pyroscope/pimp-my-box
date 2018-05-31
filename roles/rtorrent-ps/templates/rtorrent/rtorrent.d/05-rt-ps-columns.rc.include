@@ -1,0 +1,33 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# rTorrent-PS Extended Canvas Configuration: Default Columns
+#
+# This file gets included by the main file only if the "canvas_v2" capability is missing.
+# Otherwise, the columns defined here already have a default in the "rtorrent-ps" executable.
+#
+
+# Status flags (☢ ☍ ⌘ ✰)
+method.set_key = ui.column.render, "105:1:☢ ",\
+    ((string.map, ((cat, ((d.is_open)), ((d.is_active)))), \
+                  {00, "▪ "}, {01, "▪ "}, {10, "╍ "}, {11, "▹ "}))
+method.set_key = ui.column.render, "115:1:☍ ",\
+    ((if, ((d.tied_to_file)), ((cat, "⚯ ")), ((cat, "  "))))
+method.set_key = ui.column.render, "125:1:⌘ ",\
+    ((if, ((d.ignore_commands)), ((cat, "◌ ")), ((cat, "⚒ "))))
+method.set_key = ui.column.render, "135:1:✰ ",\
+    ((string.map, ((cat, ((d.priority)))), {0, "✖ "}, {1, "⇣ "}, {2, "  "}, {3, "⇡ "}))
+
+# Number of connected peers (↻)
+method.set_key = ui.column.render, "185:2: ↻", \
+    ((convert.magnitude, ((d.peers_connected))))
+
+# Data size
+method.set_key = ui.column.render, "905:4: Σ⇈ ",\
+    ((if, ((d.up.total)), \
+        ((convert.human_size, ((d.up.total)), (value, 10))), \
+        ((cat, "  · ")) \
+    ))
+method.set_key = ui.column.render, "915:4: ✇  ",\
+    ((convert.human_size, ((d.size_bytes)) ))

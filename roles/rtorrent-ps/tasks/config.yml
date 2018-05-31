@@ -12,6 +12,7 @@
   with_items:
     - 00-pyrocore.rc
     - 05-rt-ps-columns.rc
+    - 05-rt-ps-columns.rc.include
     - 10-instance-layout.rc
     - 15-logging.rc
     - 20-host-var-settings.rc
