@@ -8,7 +8,8 @@
 test ! -f ~/.local/pyroscope/bin/activate || . ~/.local/pyroscope/bin/activate
 
 # rTorrent aliases
-alias rtlistmethods='rtxmlrpc system.listMethods | egrep'
+alias rtlistmethods="( rtxmlrpc system.listMethods ; rtxmlrpc system.has.private_methods | sed -re 's/$/ \[prv]/' ) | sort | egrep"
+#alias rtlistmethods='rtxmlrpc system.listMethods | egrep'
 alias rtjustnow="rtcontrol loaded=-5i -qofiles"
 alias rt2days="rt-completion completed=-2d"
 alias rt7days="rt-completion completed=-7d"
