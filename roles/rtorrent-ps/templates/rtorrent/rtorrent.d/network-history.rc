@@ -12,8 +12,11 @@
 branch=(pyro.extended), ((network.history.depth.set, 112))
 branch=(pyro.extended), ((network.history.auto_scale.set, 0))
 
-method.insert = network.history.auto_scale.toggle, simple|private, "branch=(network.history.auto_scale), ((network.history.auto_scale.set, 0)), ((network.history.auto_scale.set, 1))"
-method.insert = network.history.auto_scale.ui_toggle, simple|private, "network.history.auto_scale.toggle= ;network.history.refresh="
+method.insert = pyro._network.history.auto_scale.toggle, simple|private, \
+    "branch=(network.history.auto_scale), ((network.history.auto_scale.set, 0)), ((network.history.auto_scale.set, 1))"
+method.insert = pyro._network.history.auto_scale.ui_toggle, simple|private, \
+    "pyro._network.history.auto_scale.toggle= ; network.history.refresh="
 
 branch=(pyro.extended), ((schedule2, network_history_sampling, 1, 32, "network.history.sample="))
-branch=(pyro.extended), ((schedule2, bind_auto_scale, 0, 0, "ui.bind_key=download_list,=,network.history.auto_scale.ui_toggle="))
+branch=(pyro.extended), ((schedule2, bind_auto_scale, 0, 0, \
+    "ui.bind_key = download_list, =, pyro._network.history.auto_scale.ui_toggle="))
