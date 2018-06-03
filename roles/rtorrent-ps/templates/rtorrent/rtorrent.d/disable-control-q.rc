@@ -11,6 +11,6 @@
 # Stupid ^Q be gone!
 method.insert = quit, simple, "execute.throw=kill,-INT,(system.pid)"
 method.insert = q, simple|private, "quit="
-method.insert = pyro._print_noquit, simple|private, "print=\"^Q is disabled, use '^X quit='\""
+method.insert = pmb._print_noquit, simple|private, "print=\"^Q is disabled, use '^X quit='\""
 
-pyro.bind_key = no_quit, ^q, "pyro._print_noquit="
+pyro.bind_key = no_quit, ^q, "pmb._print_noquit="

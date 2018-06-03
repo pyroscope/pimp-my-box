@@ -43,17 +43,17 @@ method.set_key = pyro.log_rotate, ~main,\
 schedule2 = pyro_daily_log_rotate, 01:05:00, 24:00:00, ((pyro.log_rotate))
 
 # Log file archival and pruning
-method.insert = pyro._logfile_find_cmd, simple|private,\
+method.insert = pmb._logfile_find_cmd, simple|private,\
      "cat = \"find \", (cfg.logs),\
             \" -daystart -type f -name '*.\", (argument.0),\"'\",\
             \" -mtime +\", (argument.1),\
             \" -exec nice \", (argument.2), \" '{}' ';'\""
 
 schedule2 = pyro_logfile_archival, 01:10:00, 24:00:00,\
-    "execute.nothrow = bash, -c, (pyro._logfile_find_cmd, log, (pyro.log_archival.days), gzip)"
+    "execute.nothrow = bash, -c, (pmb._logfile_find_cmd, log, (pyro.log_archival.days), gzip)"
 
 schedule2 = pyro_logfile_pruning, 01:20:00, 24:00:00,\
-    "execute.nothrow = bash, -c, (pyro._logfile_find_cmd, log.gz, (pyro.log_retention.days), rm)"
+    "execute.nothrow = bash, -c, (pmb._logfile_find_cmd, log.gz, (pyro.log_retention.days), rm)"
 
 # Open logs initially on startup
 pyro.log_rotate=
