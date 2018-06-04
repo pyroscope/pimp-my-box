@@ -41,6 +41,40 @@ use the mailing list or IRC for that.
 Common Problems & Solutions
 ---------------------------
 
+Error in option file: …/05-rt-ps-columns.rc:…: Invalid key
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You combined a brand-new `pimp-my-box` with an older version of `rTorrent-PS`.
+
+
+.. rubric:: Solution ♯1 (preferred)
+
+:ref:`rt-ps-update` to a recent build.
+
+Also make sure your ``~/rtorrent/rtorrent.rc`` is the newest one with the line…
+
+.. code-block:: ini
+
+    method.insert = pyro.extended, const|value, (system.has, rtorrent-ps)
+
+This auto-detects the presence of `rTorrent-PS`, but only works with builds from June 2018 onwards.
+
+
+.. rubric:: Solution ♯2
+
+Replace this line in ``~/rtorrent/rtorrent.rc``…
+
+.. code-block:: ini
+
+    method.insert = pyro.extended, const|value, (system.has, rtorrent-ps)
+
+with that one…
+
+.. code-block:: ini
+
+    method.insert = pyro.extended, const|value, 1
+
+
 SSH Error: Host key verification failed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

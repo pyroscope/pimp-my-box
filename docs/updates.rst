@@ -61,6 +61,8 @@ inventory. Also, both ``pyrocore`` and ``flexget`` get upgraded to the
 newest available version.
 
 
+.. _rt-ps-update:
+
 Upgrade the rTorrent-PS Version
 -------------------------------
 
