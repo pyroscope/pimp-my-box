@@ -1,2 +1,2 @@
-rtps_deb_url: "{{ rtps_bintray_url }}/rtorrent-ps_0.9.6-PS-1.0-188-g9e05939~trusty_amd64.deb"
-rtps_deb_SHA: "sha256:1cc679b1d2469faf1b1f7ec6c2d9bfc379a1b66ff208cf0c005bdc3d835c4dde"
+rtps_deb_url: "{{ rtps_bintray_url }}/rtorrent-ps_0.9.6-PS-1.0-272-g388cfab~trusty_amd64.deb"
+rtps_deb_SHA: "sha256:"
