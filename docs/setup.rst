@@ -302,6 +302,14 @@ repository, while still being able to safely provide your own version of
 ``_rtlocal.rc`` from a custom playbook. Or apply customizations
 manually, by editing ``~rtorrent/rtorrent/_rtlocal.rc``.
 
+A typical use of ``_rtlocal.rc`` is to enable XMLRPC logging (off by default):
+
+.. code-block:: shell
+
+    # Enable XMLRPC logging
+    pyro.log.xmlrpc.enabled = 1
+    log.xmlrpc = (pyro.logfile_path, xmlrpc)
+
 Another way to customize rTorrent is to use the
 ``~/rtorrent/rtorrent.d`` directory. Just place any file with a ``.rc``
 extension there, and it will be loaded on the next restart. This is
