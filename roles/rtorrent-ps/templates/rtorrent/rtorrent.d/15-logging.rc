@@ -13,6 +13,10 @@
 method.insert.value = pyro.log_retention.days, 7
 method.insert.value = pyro.log_archival.days,  2
 
+# Create HUGE xmlrpc log files?
+method.insert.value = pyro.log.xmlrpc.enabled, 0
+
+
 # Create a "YYYY-mm-dd-HHMMSS" time stamp
 method.insert = pyro.date_iso.log_stamp, simple|private,\
     "execute.capture_nothrow = bash, -c, \"echo -n $(date +%Y-%m-%d-%H%M%S)\""
@@ -34,7 +38,7 @@ method.set_key = pyro.log_rotate, execute,\
 method.set_key = pyro.log_rotate, messages,\
     "branch = (pyro.extended), ((log.messages, (pyro.logfile_path, messages) ))"
 method.set_key = pyro.log_rotate, xmlrpc,\
-    "log.xmlrpc = (pyro.logfile_path, xmlrpc)"
+    "branch = pyro.log.xmlrpc.enabled=, \"log.xmlrpc=(pyro.logfile_path, xmlrpc)\", log.xmlrpc="
 method.set_key = pyro.log_rotate, ~main,\
     "log.open_file = log, (pyro.logfile_path, rtorrent)"
 
