@@ -22,12 +22,35 @@ branch=(not, (pyro.extended)), ((method.insert, ui.column.render, multi|rlookup|
 # Define default columns for older rTorrent-PS builds
 branch=(not, (system.has, canvas_v2)), ((import, rtorrent.d/05-rt-ps-columns.rc.include))
 
+
+# ETA (only on 'active' and 'leeching' views)
+# → https://github.com/pyroscope/rtorrent-ps/issues/86
+method.insert.value = pyro.eta.min_rate, 512
+
+# TODO: implement in C++ as d.eta.time and d.eta.seconds!
+method.insert = d.eta.seconds, simple, \
+    "branch = d.down.rate=, \
+        \"math.div = \\\"$math.sub = $d.size_bytes=, $d.bytes_done=\\\", $d.down.rate=\", \
+        value=0"
+# (rate & ~(uint32_t)(512 - 1));
+
+method.set_key = ui.column.render, "533:?6C21/1C24/1C21/2C24/2:⌛◔…● ", \
+    "branch = \"greater=d.down.rate=, pyro.eta.min_rate=\", \
+        \"convert.time_delta = (math.add, (system.time), (d.eta.seconds))\", \
+        \"cat=\\\"⋆ ⋆⋆ \\\"\""
+
+#method.set_key = event.view.show, ~eta_toggle, \
+#    "branch = \"string.contains=$ui.current_view=, active, leeching\", \
+#        ui.column.show=533, ui.column.hide=533"
+
+
 # Throttle name (see "_rtlocal.rc" for matching throttle definitions)
 method.set_key = ui.column.render, "800:?3:⋉ ",\
     ((string.map, ((d.throttle_name)),\
         {"", "  "}, {NULL, "∞ "}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅ "},\
         {thr_0, "⓪ "}, {thr_1, "① "}, {thr_2, "② "}, {thr_3, "③ "}, {thr_4, "④ "},\
         {thr_5, "⑤ "}, {thr_6, "⑥ "}, {thr_7, "⑦ "}, {thr_8, "⑧ "}, {thr_9, "⑨ "}))
+
 
 # Chunk Size
 ui.color.custom9.set = "bright blue"
