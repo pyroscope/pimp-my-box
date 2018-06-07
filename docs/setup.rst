@@ -281,6 +281,9 @@ You can check explicitly with the following command:
 Changing Configuration Defaults
 -------------------------------
 
+Customizing Your Setup
+^^^^^^^^^^^^^^^^^^^^^^
+
 A good way to provide customizations is writing your own playbooks.
 Create a separate project in your own git repository. In that project,
 you can provide your versions of existing files, add your own helper
@@ -293,6 +296,12 @@ As described in this and the following sections, some key config files
 are designed to be replaced in this way. Just be aware that once you
 copy them, you also have to manage them yourself, and merge with changes
 made to the master in this repo!
+
+
+.. _force-cfg:
+
+Handling Top-Level Config Files
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once created, the file ``rtorrent.rc`` is only overwritten when you
 provide ``-e force_cfg=yes`` on the Ansible command line, and
@@ -309,6 +318,10 @@ A typical use of ``_rtlocal.rc`` is to enable XMLRPC logging (off by default):
     # Enable XMLRPC logging
     pyro.log.xmlrpc.enabled = 1
     log.xmlrpc = (pyro.logfile_path, xmlrpc)
+
+
+Adding Drop-In Files
+^^^^^^^^^^^^^^^^^^^^
 
 Another way to customize rTorrent is to use the
 ``~/rtorrent/rtorrent.d`` directory. Just place any file with a ``.rc``
@@ -330,6 +343,9 @@ user (or put the line into that file via *Ansible*):
 
 Then restart rTorrent.
 
+
+Optional Applications & More
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 See :doc:`options` on how to activate add-ons like ruTorrent,
 and  :doc:`advanced` for more details about the box installation

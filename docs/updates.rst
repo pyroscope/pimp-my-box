@@ -23,7 +23,7 @@ updating:
 Before you start, make sure to read any warnings that might be at the
 top of the `README`_.
 
-Also re-read the explanation of adding ``-e force_cfg=yes`` and the
+Also :ref:`re-read the explanation <force-cfg>` of adding ``-e force_cfg=yes`` and the
 consequences that has, namely overwriting some configuration files that
 are normally created only once and then left untouched.
 
