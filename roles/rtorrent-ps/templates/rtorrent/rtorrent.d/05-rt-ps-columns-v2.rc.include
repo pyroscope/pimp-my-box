@@ -1,0 +1,46 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# rTorrent-PS Extended Canvas Configuration: Canvas v2 Custom Columns
+#
+# This file gets included by the main file only if the "import.return" command is present
+# (i.e. newer builds with canvas_v2 and related features on board).
+#
+
+# Throttle name (see "_rtlocal.rc" for matching throttle definitions)
+method.set_key = ui.column.render, "800:?3:⋉ ",\
+    ((string.map, ((d.throttle_name)),\
+        {"", "  "}, {NULL, "∞ "}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅ "},\
+        {thr_0, "⓪ "}, {thr_1, "① "}, {thr_2, "② "}, {thr_3, "③ "}, {thr_4, "④ "},\
+        {thr_5, "⑤ "}, {thr_6, "⑥ "}, {thr_7, "⑦ "}, {thr_8, "⑧ "}, {thr_9, "⑨ "}))
+
+
+# Chunk Size
+branch=(not, (system.has, "ui.color.custom9=")), ((import.return))
+ui.color.custom9.set = "bright blue"
+method.set_key = ui.column.render, "935:?5C9/3C21/2: ≣   ", \
+    ((convert.human_size, ((d.chunk_size)) ))
+
+
+# ETA (only on 'active' and 'leeching' views)
+# → https://github.com/pyroscope/rtorrent-ps/issues/86
+branch=(not, (system.has, "ui.column.hide=")), ((import.return))
+method.insert.value = pyro.eta.min_rate, 512
+
+# TODO: implement in C++ as d.eta.time and d.eta.seconds!
+#       (rate & ~(uint32_t)(512 - 1))
+method.insert = d.eta.seconds, simple, \
+    "branch = d.down.rate=, \
+        \"math.div = \\\"$math.sub = $d.size_bytes=, $d.bytes_done=\\\", $d.down.rate=\", \
+        value=0"
+
+method.set_key = ui.column.render, "533:?6C21/1C28/1C21/2C28/2:⌛◔…● ", \
+    "branch = \"greater=d.down.rate=, pyro.eta.min_rate=\", \
+        \"convert.time_delta = (math.add, (system.time), (d.eta.seconds))\", \
+        \"cat=\\\"⋆ ⋆⋆ \\\"\""
+
+method.set_key = event.view.show, ~eta_toggle, \
+    "branch = \"string.contains=$ui.current_view=, active, leeching\", \
+        ui.column.show=533, ui.column.hide=533"
+ui.column.hide = 533
