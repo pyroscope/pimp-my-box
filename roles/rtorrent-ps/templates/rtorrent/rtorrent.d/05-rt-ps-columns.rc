@@ -38,7 +38,7 @@ method.insert = d.eta.seconds, simple, \
         \"math.div = \\\"$math.sub = $d.size_bytes=, $d.bytes_done=\\\", $d.down.rate=\", \
         value=0"
 
-method.set_key = ui.column.render, "533:?6C21/1C24/1C21/2C24/2:⌛◔…● ", \
+method.set_key = ui.column.render, "533:?6C21/1C28/1C21/2C28/2:⌛◔…● ", \
     "branch = \"greater=d.down.rate=, pyro.eta.min_rate=\", \
         \"convert.time_delta = (math.add, (system.time), (d.eta.seconds))\", \
         \"cat=\\\"⋆ ⋆⋆ \\\"\""
