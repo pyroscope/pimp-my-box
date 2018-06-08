@@ -22,6 +22,11 @@ ui.color.custom9.set = "bright blue"
 method.set_key = ui.column.render, "935:?5C9/3C21/2: ≣   ", \
     ((convert.human_size, ((d.chunk_size)) ))
 
+method.insert = pmb._toggle_chunk_size, simple|private, \
+    "branch = ui.column.is_hidden=935, ui.column.show=935, ui.column.hide=935 ; \
+     ui.current_view.set = (ui.current_view)"
+pyro.bind_key = toggle_chunk_size, _, "pmb._toggle_chunk_size="
+
 
 # ETA (only on 'active' and 'leeching' views)
 # → https://github.com/pyroscope/rtorrent-ps/issues/86
