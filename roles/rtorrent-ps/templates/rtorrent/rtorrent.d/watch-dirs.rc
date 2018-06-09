@@ -2,8 +2,10 @@
 # ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
-# This file defines standard watch directories. If you use "pyrotorque",
+# This file defines standard watch directories. If you use `pyrotorque`,
 # you should disable them.
+#
+# `pyro.category.add` and `load.category` are defined by ‘pyrocore’.
 #
 # To disable / override these settings, execute this command as the 'rtorrent' user:
 #
