@@ -1,3 +1,4 @@
+#############################################################################
 # Local settings include file
 #
 # This is installed by Ansible, but gets never overwritten,
@@ -17,7 +18,15 @@ throttle.up = lo_up, 2048
 # NETWORK: Unwanted peers
 ##ipv4_filter.add_address = 1.2.3.666, unwanted
 
-# Logging:
+# Reduce retention period of uncompressed logs
+pyro.log_archival.days.set = 1
+
+# Enable XMLRPC logging, and open log file *now*
+pyro.log.xmlrpc.enabled = 1
+log.xmlrpc = (pyro.logfile_path, xmlrpc)
+
+# General logging
+#
 #   Levels = critical error warn notice info debug
 #   Groups = connection_* dht_* peer_* rpc_* storage_* thread_* tracker_* torrent_*
 #
