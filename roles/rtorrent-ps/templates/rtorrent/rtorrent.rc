@@ -42,6 +42,9 @@ schedule2 = scgi_permission, 0, 0, "execute.nothrow=chmod,\"g+w,o=\",/var/torren
 #
 # Import settings from "~/rtorrent/rtorrent.d"
 #
+# Prefer to put your own custom settings into additional files in
+# that directory, or else "_rtlocal.rc" (see below)!
+#
 
 execute.throw = (cat,(pyro.bin_dir),pyroadmin),-q,--create-import,(cat,(cfg.basedir),"rtorrent.d/*.rc")
 import = (cat,(cfg.basedir),"rtorrent.d/.import.rc")
@@ -51,8 +54,8 @@ import = (cat,(cfg.basedir),"rtorrent.d/.import.rc")
 # Include custom / optional settings
 #
 
-# INCLUDE: Local settings
-import = (cat,(cfg.basedir),"_rtlocal.rc")
+# INCLUDE: Local settings (optional)
+try_import = (cat,(cfg.basedir),"_rtlocal.rc")
 
 # INCLUDE: ruTorrent (optional)
 try_import = (cat,(cfg.basedir),"_rutorrent.rc")
