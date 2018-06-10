@@ -30,6 +30,7 @@ pyro.bind_key = toggle_chunk_size, _, "pmb._toggle_chunk_size="
 
 # ETA (only on 'active' and 'leeching' views)
 # → https://github.com/pyroscope/rtorrent-ps/issues/86
+branch=(not, (system.has, "ui.column.hide=")), ((print, "WARNING: No ETA column (update rTorrent-PS)!"))
 branch=(not, (system.has, "ui.column.hide=")), ((import.return))
 method.insert.value = pyro.eta.min_rate, 512
 
@@ -45,7 +46,9 @@ method.set_key = ui.column.render, "533:?6C21/1C28/1C21/2C28/2:⌛⚪≋⚫ ", \
         \"convert.time_delta = (math.add, (system.time), (d.eta.seconds))\", \
         \"cat=\\\"⋆ ⋆⋆ \\\"\""
 
+branch=(not, (system.has, "string.equals=")), ((print, "WARNING: ETA column is static (update rTorrent-PS)!"))
+branch=(not, (system.has, "string.equals=")), ((import.return))
 method.set_key = event.view.show, ~eta_toggle, \
-    "branch = \"string.contains=$ui.current_view=, active, leeching\", \
+    "branch = \"string.equals=$ui.current_view=, active, leeching\", \
         ui.column.show=533, ui.column.hide=533"
 ui.column.hide = 533
