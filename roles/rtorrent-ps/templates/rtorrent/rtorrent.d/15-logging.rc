@@ -37,8 +37,9 @@ method.set_key = pyro.log_rotate, execute,\
     "log.execute = (pyro.logfile_path, execute)"
 method.set_key = pyro.log_rotate, messages,\
     "branch = (pyro.extended), ((log.messages, (pyro.logfile_path, messages) ))"
-method.set_key = pyro.log_rotate, xmlrpc,\
-    "branch = pyro.log.xmlrpc.enabled=, \"log.xmlrpc=(pyro.logfile_path, xmlrpc)\", log.xmlrpc="
+## TODO: https://github.com/pyroscope/rtorrent-ps/issues/94
+##method.set_key = pyro.log_rotate, xmlrpc,\
+##    "branch = pyro.log.xmlrpc.enabled=, \"log.xmlrpc=(pyro.logfile_path, xmlrpc)\", log.xmlrpc="
 method.set_key = pyro.log_rotate, ~main,\
     "log.open_file = log, (pyro.logfile_path, rtorrent)"
 
