@@ -12,6 +12,9 @@
 #
 # Then restart rTorrent.
 
+# Provide dummy method for plain rTorrent
+branch=(not, (pyro.extended)), ((method.redirect, trackers.alias.set_key, false))
+
 trackers.alias.set_key = bt1.archive.org, "Internet Archive"
 trackers.alias.set_key = linuxtracker.org, LinuxTracker
 trackers.alias.set_key = files2.publicdomaintorrents.com, "PD Torrents"

@@ -21,7 +21,9 @@
 branch=(not, (pyro.extended)), ((method.insert, ui.column.render, multi|rlookup|static))
 
 # Define default columns for older rTorrent-PS builds
-branch=(not, (system.has, canvas_v2)), ((import, rtorrent.d/05-rt-ps-columns.rc.include))
+branch=(and, (pyro.extended), (not, (system.has, canvas_v2))), \
+    ((import, rtorrent.d/05-rt-ps-columns.rc.include))
 
 # Define custom columns for rTorrent-PS 1.1+ builds
-branch=(system.has, "import.return="), ((import, rtorrent.d/05-rt-ps-columns-v2.rc.include))
+branch=(system.has, "import.return="), \
+    ((import, rtorrent.d/05-rt-ps-columns-v2.rc.include))
