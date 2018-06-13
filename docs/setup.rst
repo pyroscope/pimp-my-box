@@ -304,21 +304,33 @@ Handling Top-Level Config Files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once created, the file ``rtorrent.rc`` is only overwritten when you
-provide ``-e force_cfg=yes`` on the Ansible command line, and
-``_rtlocal.rc`` is never overwritten. This gives you the opportunity to
-easily refresh the main configuration in ``rtorrent.rc`` from this
-repository, while still being able to safely provide your own version of
-``_rtlocal.rc`` from a custom playbook. Or apply customizations
-manually, by editing ``~rtorrent/rtorrent/_rtlocal.rc``.
+provide ``-e force_cfg=yes`` on the Ansible command line.
+This gives you the opportunity to easily refresh the main configuration
+in ``rtorrent.rc`` from this repository.
+But it *also* gives you the option to provide your own
+custom version by other means, e.g. your own additional playbook,
+without having that version constantly overwritten.
 
-A typical use of ``_rtlocal.rc`` is to enable XMLRPC logging (off by default):
+However, additional files in ``rtorrent.d/``
+or the ``_rtlocal.rc`` include file are
+the intended places to make customizations, so it's advisable to always
+add ``-e force_cfg=yes`` on updates.
+
+The ``_rtlocal.rc`` file, which is included by ``rtorrent.rc`` *after*
+the standard configuration includes in ``rtorrent.d/``, is never overwritten.
+So it's easy and safe to provide your own version of ``_rtlocal.rc`` from a custom playbook.
+Or apply customizations manually, by editing ``~rtorrent/rtorrent/_rtlocal.rc``
+– these will not be reverted by updating from the repository.
+
+A typical use of ``_rtlocal.rc`` is to change how long log files are kept uncompressed,
+here the default of 2 days is reduced to just one:
 
 .. code-block:: shell
 
-    # Enable XMLRPC logging
-    pyro.log.xmlrpc.enabled = 1
-    log.xmlrpc = (pyro.logfile_path, xmlrpc)
+    pyro.log_archival.days.set = 1
 
+
+.. _drop-in-files:
 
 Adding Drop-In Files
 ^^^^^^^^^^^^^^^^^^^^
