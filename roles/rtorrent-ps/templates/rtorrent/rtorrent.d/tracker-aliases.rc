@@ -12,7 +12,7 @@
 #
 # Then restart rTorrent.
 
-# Provide dummy method for plain rTorrent
+# Provide dummy method for plain rTorrent (making anything here just ignored, but working)
 branch=(not, (pyro.extended)), ((method.redirect, trackers.alias.set_key, false))
 
 trackers.alias.set_key = bt1.archive.org, "Internet Archive"
