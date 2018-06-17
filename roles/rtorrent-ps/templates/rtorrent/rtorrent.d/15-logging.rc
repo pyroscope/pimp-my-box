@@ -6,7 +6,7 @@
 # -----------------------------------
 
 # Note that the "main" log is only rotated when using rTorrent-PS 1.1+ (after 2017-03-26),
-# since 'log.open_file' needed to learn how to re-open first. Otherwise, you'll get a daily
+# since 'log.open_file' needed to learn how to re-open first. Otherwise, you will get a daily
 # console warning.
 
 # Settings for archival delay, and retention [days]
@@ -44,7 +44,7 @@ method.set_key = pyro.log_rotate, ~main,\
     "log.open_file = log, (pyro.logfile_path, rtorrent)"
 
 # Logrotate schedule (rotating shortly after 1AM, so DST shenanigans
-# are taken care of, and rotation is always near the next day's begin)
+# are taken care of, and rotation is always near the begin of the next day)
 schedule2 = pyro_daily_log_rotate, 01:05:00, 24:00:00, ((pyro.log_rotate))
 
 # Log file archival and pruning
