@@ -1,10 +1,10 @@
-#############################################################################
-# Local settings include file
+### Local settings include file #############################################
+#                                                              vim: ft=dosini
 #
 # This is installed by Ansible, but gets never overwritten,
 # unless you do so in a custom playbook.
 #
-# Add anything of your own here, or remove the examples you don't need.
+# Add anything of your own here, or remove the examples you do not need.
 # A better way to add your own *additional* settings is to create new
 # files in the "rtorrent.d" directory.
 

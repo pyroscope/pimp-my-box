@@ -1,5 +1,5 @@
 ### rtorrent settings #######################################################
-#
+#                                                              vim: ft=dosini
 # This is the standard configuration that supports both PyroScope and
 # (optionally) rTorrent-PS features.
 #
