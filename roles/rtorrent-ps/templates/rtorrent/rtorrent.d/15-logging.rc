@@ -16,6 +16,8 @@ method.insert.value = pyro.log_archival.days,  2
 # Create HUGE xmlrpc log files?
 method.insert.value = pyro.log.xmlrpc.enabled, 0
 
+method.insert = pyro._log.xmlrpc.closing, const|private|simple, \
+    "if = (system.has, fixed-log-xmlrpc-close), (cat,), (cat, /dev/null)"
 
 # Create a "YYYY-mm-dd-HHMMSS" time stamp
 method.insert = pyro.date_iso.log_stamp, simple|private,\
@@ -37,9 +39,9 @@ method.set_key = pyro.log_rotate, execute,\
     "log.execute = (pyro.logfile_path, execute)"
 method.set_key = pyro.log_rotate, messages,\
     "branch = (pyro.extended), ((log.messages, (pyro.logfile_path, messages) ))"
-## TODO: https://github.com/pyroscope/rtorrent-ps/issues/94
-##method.set_key = pyro.log_rotate, xmlrpc,\
-##    "branch = pyro.log.xmlrpc.enabled=, \"log.xmlrpc=(pyro.logfile_path, xmlrpc)\", log.xmlrpc="
+method.set_key = pyro.log_rotate, xmlrpc,\
+    "branch = pyro.log.xmlrpc.enabled=, \"log.xmlrpc=(pyro.logfile_path, xmlrpc)\", \
+                                        \"log.xmlrpc=(pyro._log.xmlrpc.closing)\""
 method.set_key = pyro.log_rotate, ~main,\
     "log.open_file = log, (pyro.logfile_path, rtorrent)"
 
@@ -62,5 +64,7 @@ schedule2 = pyro_logfile_pruning, 01:20:00, 24:00:00,\
 
 # Open logs initially on startup
 pyro.log_rotate=
+schedule2 = pyro_startup_log_xmlrpc_open, 7, 0, \
+    "branch = pyro.log.xmlrpc.enabled=, \"log.xmlrpc=(pyro.logfile_path, xmlrpc)\""
 
 # END logging

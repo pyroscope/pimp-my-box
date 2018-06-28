@@ -21,10 +21,8 @@ throttle.up = lo_up, 2048
 # Reduce retention period of uncompressed logs
 pyro.log_archival.days.set = 1
 
-# Enable XMLRPC logging, and open log file *now*
-## DO NOT USE, MIGHT BE PROBLEMATIC!
-##pyro.log.xmlrpc.enabled = 1
-##log.xmlrpc = (pyro.logfile_path, xmlrpc)
+# Enable XMLRPC logging
+pyro.log.xmlrpc.enabled.set = 1
 
 # General logging
 #
