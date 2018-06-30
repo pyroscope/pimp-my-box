@@ -13,7 +13,7 @@
     - sweep_rules
 
 - name: Add rtorrent cron job 'rt_invalid_items'
-  cron: user=rtorrent minute=*/3 name=rt_invalid_items job="test -f ~/NOCRON || test -S ~/rtorrent/.scgi_local && sleep 21 && nice ~/bin/_cron_rt_invalid_items --stop --cron"
+  cron: user=rtorrent minute=*/3 name=rt_invalid_items job="test ! -f ~/NOCRON && test -S ~/rtorrent/.scgi_local && sleep 21 && nice ~/bin/_cron_rt_invalid_items --stop --cron"
 
 - name: Add rtorrent cron job '_cron_autolabel'
-  cron: user=rtorrent minute=*/31 name=_cron_autolabel job="test -f ~/NOCRON || ~/bin/_cron_autolabel --cron"
+  cron: user=rtorrent minute=*/31 name=_cron_autolabel job="test ! -f ~/NOCRON && ~/bin/_cron_autolabel --cron"
