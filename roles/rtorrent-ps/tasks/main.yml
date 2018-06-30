@@ -107,4 +107,4 @@
   copy: src=crontab dest=/var/spool/cron/crontabs/rtorrent owner=rtorrent group=crontab mode=0600 force=no
 
 - name: Add rtorrent cron job 'rt_backup_session'
-  cron: user=rtorrent minute=7 hour=0 name=rt_backup_session job="cd /var/torrent && tar cfz \"backups/session-$(date +'\%u').tgz\" .session/"
+  cron: user=rtorrent minute=7 hour=0 name=rt_backup_session job="test -f ~/NOCRON || cd /var/torrent && tar cfz \"backups/session-$(date +'\%u').tgz\" .session/"
