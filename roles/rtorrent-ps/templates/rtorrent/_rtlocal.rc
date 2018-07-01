@@ -22,7 +22,7 @@ throttle.up = lo_up, 2048
 pyro.log_archival.days.set = 1
 
 # Enable XMLRPC logging
-pyro.log.xmlrpc.enabled.set = 1
+##pyro.log.xmlrpc.enabled.set = 1
 
 # General logging
 #
