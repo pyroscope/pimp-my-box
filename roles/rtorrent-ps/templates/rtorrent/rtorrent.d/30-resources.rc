@@ -8,19 +8,39 @@
 #
 #   echo >>~/rtorrent/rtorrent.d/.rcignore "{{ item }}"
 #
-# Then restart rTorrent.
+# Then restart rTorrent. You can also add your values to "_rtlocal.rc", so they are
+# seen AFTER this include.
 
+# File handle limits (keep sum around 950, unless you raise the system limits)
 network.http.max_open.set = 64
 network.max_open_files.set = 600
 network.max_open_sockets.set = 300
 
+# Per item and global slot limits
 throttle.max_uploads.set = 100
 throttle.max_uploads.global.set = 250
+throttle.max_downloads.set = 50
+throttle.max_downloads.global.set = 250
 
+# No completion hashing, and use sane encoding
 pieces.hash.on_completion.set = no
 encoding.add = utf8
 
 # Limit pre-load bandwidth (see rTorrent issue #443)
+# `0` (Off / Default) , `1` (Madvise) , `2` (Direct paging).
 pieces.preload.type.set = 1
 pieces.preload.min_size.set = 1
 pieces.preload.min_rate.set = 1
+
+# Send and receive buffer size for sockets. Disabled by default (`0`),
+# i.e. using the OS defaults (`send_buffer_size`, `receive_buffer_size`).
+# Increasing buffer sizes may help reduce disk seeking and connection
+# polling as more data is buffered each time the socket is written to.
+network.receive_buffer.size.set = 4M
+network.send_buffer.size.set = 12M
+
+# TOS of peer connections (default: throughput). If the option is set
+# to `default`, then the system default TOS is used. A hex value may
+# be used for non-standard settings.
+# One of default | lowdelay | throughput | reliability | mincost or a hex value.
+network.tos.set = throughput
