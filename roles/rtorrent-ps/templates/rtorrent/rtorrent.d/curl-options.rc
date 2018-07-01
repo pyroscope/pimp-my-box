@@ -14,6 +14,6 @@
 #
 # Then restart rTorrent.
 
-branch=pyro.extended=,"network.http.ssl_verify_peer.set=0"
-branch=pyro.extended=,"network.http.ssl_verify_host.set=0"
-branch=pyro.extended=,"network.http.dns_cache_timeout.set=25"
+catch = network.http.ssl_verify_peer.set=0
+catch = network.http.ssl_verify_host.set=0
+catch = network.http.dns_cache_timeout.set=25
