@@ -9,7 +9,7 @@
 #
 
 # Throttle name (see "_rtlocal.rc" for matching throttle definitions)
-method.set_key = ui.column.render, "800:?3:⋉ ",\
+method.set_key = ui.column.render, "800:?3:⋉  ",\
     ((string.map, ((d.throttle_name)),\
         {"", "  "}, {NULL, "∞ "}, {kb500, 5₀₀}, {onemb, 1M}, {lo_up, "⌅ "},\
         {thr_0, "⓪ "}, {thr_1, "① "}, {thr_2, "② "}, {thr_3, "③ "}, {thr_4, "④ "},\
@@ -41,7 +41,7 @@ method.insert = d.eta.seconds, simple, \
         \"math.div = \\\"$math.sub = $d.size_bytes=, $d.bytes_done=\\\", $d.down.rate=\", \
         value=0"
 
-method.set_key = ui.column.render, "533:?6C21/1C28/1C21/2C28/2:⌛⚪≋⚫ ", \
+method.set_key = ui.column.render, "533:?6C21/1C28/1C21/2C28/2:⟲ ◥◤  ", \
     "branch = \"greater=d.down.rate=, pyro.eta.min_rate=\", \
         \"convert.time_delta = (math.add, (system.time), (d.eta.seconds))\", \
         \"cat=\\\"⋆ ⋆⋆ \\\"\""
