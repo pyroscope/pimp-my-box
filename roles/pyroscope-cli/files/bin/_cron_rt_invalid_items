@@ -21,3 +21,6 @@ rtcontrol --from-view started prio=-3 [ 'message=!*hammer*' [ \
         OR 'message=*operator*could?not?find?element*,*Something?is?wrong*' \
     ] OR is_complete=yes is_ghost=yes ] "$@" \
     && echo $(date +"%Y-%m-%d %H:%M:%S") $(basename "$0")":" "Found some invalid items" || :
+
+rtcontrol -Q1 message='Ghost item - no data' is_ghost=0 --exec 'message.set=""' --yes --cron || :
+rtcontrol message= is_ghost=1 --exec 'message.set="Ghost item - no data"' --yes --cron || :
