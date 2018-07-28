@@ -27,7 +27,7 @@ Environment="TERM=xterm-256color"
 WorkingDirectory=%h/rtorrent
 ExecStartPre=/bin/bash -c "if test -e %h/rtorrent/.session/rtorrent.lock && ! ( test -S %h/rtorrent/.scgi_local && lsof %h/rtorrent/.scgi_local >/dev/null ); then rm -f %h/rtorrent/.session/rtorrent.lock; fi"
 ExecStart=/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d %h/rtorrent/start
-ExecStop=/bin/bash -c "/usr/bin/tmux -L rtps-%u send-keys -t rtps-%u:rT-PS.0 C-x quit= Enter; for i in `seq 180 -1 1`; do if pgrep -u %u rtorrent >/dev/null; then echo Stopping rtorrent... [$i]; sleep 1; else break; fi; done"
+ExecStop=/bin/bash -c "/bin/kill -INT `pgrep -u %u rtorrent`; for i in `seq 180 -1 1`; do if pgrep -u %u rtorrent >/dev/null; then echo Stopping rtorrent... [$i]; sleep 1; else break; fi; done"
 Restart=on-failure
 
 [Install]
