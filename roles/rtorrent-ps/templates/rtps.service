@@ -1,0 +1,36 @@
+# rTorrent-PS systemd unit (with dedicated tmux, as a user service)
+#
+# Save to:
+#   ~/.config/systemd/user/rtps.service
+#
+# Exec as *root*:
+#   loginctl enable-linger rtorrent
+#
+# Exec as *rtorrent*:
+#   systemctl --user start rtps
+#   systemctl --user status rtps
+#   journalctl -xe --user-unit=rtps
+#
+# To start at boot (exec as *rtorrent*):
+#
+#   systemctl --user enable rtps
+#
+# Attach to tmux:
+#
+#   tmux -2u -L rtps-$USER attach
+
+[Unit]
+Description=rTorrent-PS
+After=network.target
+
+[Service]
+Type=forking
+Environment="TERM=xterm-256color"
+WorkingDirectory=%h/rtorrent
+ExecStartPre=/bin/bash -c "if test -e %h/rtorrent/.session/rtorrent.lock && ! ( test -S %h/rtorrent/.scgi_local && lsof %h/rtorrent/.scgi_local >/dev/null ); then rm -f %h/rtorrent/.session/rtorrent.lock; fi"
+ExecStart=/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d %h/rtorrent/start
+ExecStop=/bin/bash -c "/usr/bin/tmux -L rtps-%u send-keys -t rtps-%u:rT-PS.0 C-x quit= Enter; for i in `seq 180 -1 1`; do if pgrep -u %u rtorrent >/dev/null; then echo Stopping rtorrent... [$i]; sleep 1; else break; fi; done"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
