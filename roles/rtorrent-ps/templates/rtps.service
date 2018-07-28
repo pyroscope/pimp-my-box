@@ -12,11 +12,9 @@
 #   journalctl -xe --user-unit=rtps
 #
 # To start at boot (exec as *rtorrent*):
-#
 #   systemctl --user enable rtps
 #
 # Attach to tmux:
-#
 #   tmux -2u -L rtps-$USER attach
 
 [Unit]
