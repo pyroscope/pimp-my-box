@@ -27,7 +27,11 @@
 #      (writes tmux log files to "~/rtorrent")
 
 [Unit]
-Description=rTorrent-PS
+Description=rTorrent-PS in tmux
+Documentation=https://rtorrent-ps.readthedocs.io/
+Documentation=https://rtorrent-docs.readthedocs.io/
+Documentation=https://pimp-my-box.readthedocs.io/
+Documentation=https://pyrocore.readthedocs.io/
 After=network.target
 
 [Service]
