@@ -19,11 +19,14 @@
 #
 # Trouble-shooting:
 #
-#   a) Do a manual start like so:
+#   a) Check the status output (see above); make sure the service 
+#      is "active (running)" and rtorrent is listed at the end of 
+#      the "CGroup" process tree
 #
-#      tmux -2u -L test new-session -s test -n rT-PS bash -c "$HOME/rtorrent/start ; exec $SHELL"
+#   b) Attach to tmux session and look out for errors (e.g. errors
+#      in the rtorrent.rc configuration)
 #
-#   b) Add "-vv" to the tmux call in ExecStart
+#   c) Add "-vv" to the tmux call in ExecStart
 #      (writes tmux log files to "~/rtorrent")
 
 [Unit]
@@ -39,7 +42,7 @@ Type=forking
 Environment="TERM=xterm-256color"
 WorkingDirectory=%h/rtorrent
 ExecStartPre=/bin/bash -c "if test -e %h/rtorrent/.session/rtorrent.lock && ! ( test -S %h/rtorrent/.scgi_local && lsof %h/rtorrent/.scgi_local >/dev/null ); then rm -f %h/rtorrent/.session/rtorrent.lock; fi"
-ExecStart=/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d %h/rtorrent/start
+ExecStart=/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d bash -c "%h/rtorrent/start ; exec $SHELL"
 ExecStop=/bin/bash -c "/bin/kill -INT `pgrep -u %u rtorrent` 2>/dev/null || : ; for i in `seq 180 -1 1`; do if pgrep -u %u rtorrent >/dev/null; then echo Stopping rtorrent... [$i]; sleep 1; else break; fi; done"
 Restart=on-failure
 
