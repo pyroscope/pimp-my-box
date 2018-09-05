@@ -38,13 +38,26 @@ Documentation=https://pyrocore.readthedocs.io/
 After=network.target
 
 [Service]
-Type=forking
 Environment="TERM=xterm-256color"
 WorkingDirectory=%h/rtorrent
 ExecStartPre=/bin/bash -c "if test -e %h/rtorrent/.session/rtorrent.lock && ! ( test -S %h/rtorrent/.scgi_local && lsof %h/rtorrent/.scgi_local >/dev/null ); then rm -f %h/rtorrent/.session/rtorrent.lock; fi"
-ExecStart=/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d bash -c "%h/rtorrent/start ; exec $SHELL"
 ExecStop=/bin/bash -c "/bin/kill -INT `pgrep -u %u rtorrent` 2>/dev/null || : ; for i in `seq 180 -1 1`; do if pgrep -u %u rtorrent >/dev/null; then echo Stopping rtorrent... [$i]; sleep 1; else break; fi; done"
+TimeoutStopSec=200
+TimeoutStartSec=20
 Restart=on-failure
+
+#Type=forking
+#ExecStart=/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d bash -c "%h/rtorrent/start ; exec $SHELL"
+
+Type=notify
+NotifyAccess=all
+ExecStart=/bin/bash -c "/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d /bin/bash -c '%h/rtorrent/start ; exec $SHELL' ; while ! ( test -S %h/rtorrent/.scgi_local && lsof -a -U -u %u -t %h/rtorrent/.scgi_local >/dev/null 2>&1 ); do sleep 1; done ; systemd-notify --ready ; while test -S %h/rtorrent/.scgi_local && lsof -a -U -u %u -t %h/rtorrent/.scgi_local >/dev/null 2>&1; do systemd-notify WATCHDOG=1; sleep 420; done ; exit 69"
+WatchdogSec=15min
+StartLimitInterval=1min
+StartLimitBurst=6
+
+# Prevent starts with unmounted data volumes
+#AssertPathExists=/mnt/data-volume/.mounted
 
 [Install]
 WantedBy=default.target
