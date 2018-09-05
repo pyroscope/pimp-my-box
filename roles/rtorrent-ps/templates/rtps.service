@@ -51,7 +51,7 @@ Restart=on-failure
 
 Type=notify
 NotifyAccess=all
-ExecStart=/bin/bash -c "/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d /bin/bash -c '%h/rtorrent/start ; exec $SHELL' ; while ! ( test -S %h/rtorrent/.scgi_local && lsof -a -U -u %u -t %h/rtorrent/.scgi_local >/dev/null 2>&1 ); do sleep 1; done ; systemd-notify --ready --status SESSION=$(rtxmlrpc --repr session.name 2>/dev/null) ; while test -S %h/rtorrent/.scgi_local && lsof -a -U -u %u -t %h/rtorrent/.scgi_local >/dev/null 2>&1; do systemd-notify WATCHDOG=1; sleep 420; done ; sleep 420 ; exit 69"
+ExecStart=/bin/bash -c "/usr/bin/tmux -2u -L rtps-%u new-session -s rtps-%u -n rT-PS -d /bin/bash -c '%h/rtorrent/start ; exec $SHELL' ; while ! ( test -S %h/rtorrent/.scgi_local && lsof -a -U -u %u -t %h/rtorrent/.scgi_local >/dev/null 2>&1 ); do sleep 1; done ; systemd-notify --ready --status SESSION=$(rtxmlrpc --repr session.name 2>/dev/null) ; while test -S %h/rtorrent/.scgi_local && lsof -a -U -u %u -t %h/rtorrent/.scgi_local >/dev/null 2>&1; do systemd-notify WATCHDOG=1; sleep 420; done ; systemd-notify --status 'rTorrent died before '\"$(date --rfc-3339=seconds)\" ; sleep 420 ; exit 69"
 WatchdogSec=15min
 StartLimitInterval=1min
 StartLimitBurst=6
