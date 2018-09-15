@@ -33,6 +33,7 @@
     - mkvtoolnix
     - ncdu
     - p7zip-full
+    - procps
     - psmisc
     - python-virtualenv
     - sysstat
