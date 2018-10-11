@@ -55,7 +55,7 @@ this:
 
 .. code-block:: shell
 
-    ansible box -f4 -a "sudo -i -u rtorrent -- ~rtorrent/.local/pyroscope/update-to-head.sh"
+    ansible box -f4 -a "sudo -i -u {{ rt_user }} -- ~rtorrent/.local/pyroscope/update-to-head.sh"
     ansible box -f4 --become-user={{ rt_user }}/ -a "~/bin/pyroadmin --version" -o
 
 This is especially useful if you control more than one host.
@@ -110,7 +110,7 @@ added to ``~rtorrent/.netrc``, like this:
 .. code-block:: ini
 
     machine localhost
-        login rtorrent
+        login {{ rt_user }}
         password YOUR_PWD
 
 Make sure to call ``chmod 0600 ~/.netrc`` after creating the file.

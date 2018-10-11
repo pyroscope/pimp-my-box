@@ -1,13 +1,13 @@
 ---
 - name: Create FlexGet virtualenv
-  shell: su -c '{{ venv_bin }} .local/flexget' rtorrent
+  shell: su -c '{{ venv_bin }} .local/flexget' {{ rt_user }}
   args:
     executable: /bin/bash
     chdir: /home/{{ rt_user }}
     creates: /home/{{ rt_user }}/.local/flexget/bin/pip
 
 - name: Install FlexGet
-  shell: su -c '.local/flexget/bin/pip install flexget' rtorrent
+  shell: su -c '.local/flexget/bin/pip install flexget' {{ rt_user }}
   args:
     executable: /bin/bash
     chdir: /home/{{ rt_user }}
