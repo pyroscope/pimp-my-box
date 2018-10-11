@@ -4,23 +4,23 @@
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/.local/flexget/bin/pip
+    creates: /home/{{ rt_user }}/.local/flexget/bin/pip
 
 - name: Install FlexGet
   shell: su -c '.local/flexget/bin/pip install flexget' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
-    creates: /home/rtorrent/.local/flexget/bin/flexget
+    creates: /home/{{ rt_user }}/.local/flexget/bin/flexget
 
 - name: Create flexget ~/bin symlink
-  file: src=../.local/flexget/bin/flexget path=/home/rtorrent/bin/flexget state=link owner=rtorrent group=rtorrent
+  file: src=../.local/flexget/bin/flexget path=/home/{{ rt_user }}/bin/flexget state=link owner={{ rt_user }}/ group={{ rt_user }}/
 
 - name: Create default FlexGet config (so --help works)
-  copy: content="" dest=/home/rtorrent/.local/flexget/config.yml owner=rtorrent group=rtorrent mode=0640 force=no
+  copy: content="" dest=/home/{{ rt_user }}/.local/flexget/config.yml owner={{ rt_user }}/ group={{ rt_user }}/ mode=0640 force=no
 
 - name: Create FlexGet config dir
-  file: path=/home/rtorrent/.config/flexget state=directory owner=rtorrent group=rtorrent mode=0750
+  file: path=/home/{{ rt_user }}/.config/flexget state=directory owner={{ rt_user }}/ group={{ rt_user }}/ mode=0750
 
 - name: Add FlexGet cron job
   cron: user=rtorrent minute=*/11 name=flexget job="test ! -f ~/NOCRON && test -f ~/.config/flexget/config.yml && sleep 11 && nice ~/bin/flexget -c ~/.config/flexget/config.yml --cron execute >~/.config/flexget/flexget-cron.log 2>&1"

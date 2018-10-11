@@ -145,17 +145,17 @@ Implementation Details
 Location of Configuration Files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
--  ``/home/rtorrent/rtorrent/rtorrent.rc`` – Main *rTorrent*
+-  ``/home/{{ rt_user }}/rtorrent/rtorrent.rc`` – Main *rTorrent*
    configuration file; to update it from this repository use
    ``-e force_cfg=yes``, see :doc:`setup` for details.
--  ``/home/rtorrent/rtorrent/_rtlocal.rc`` – *rTorrent* configuration
+-  ``/home/{{ rt_user }}/rtorrent/_rtlocal.rc`` – *rTorrent* configuration
    include for custom modifications, this is *never* overwritten once it
    exists.
--  ``/home/rtorrent/.pyroscope/config.ini`` – ``pyrocore`` main
+-  ``/home/{{ rt_user }}/.pyroscope/config.ini`` – ``pyrocore`` main
    configuration.
--  ``/home/rtorrent/.pyroscope/config.py`` – ``pyrocore`` custom field
+-  ``/home/{{ rt_user }}/.pyroscope/config.py`` – ``pyrocore`` custom field
    configuration.
--  ``/home/rtorrent/.config/flexget/config.yml`` – *FlexGet*
+-  ``/home/{{ rt_user }}/.config/flexget/config.yml`` – *FlexGet*
    configuration.
 -  ``/home/rutorrent/ruTorrent-master/conf/config.php`` – *ruTorrent*
    configuration.
@@ -170,13 +170,13 @@ Location of Configuration Files
 Location of Installed Software
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
--  ``/home/rtorrent/.local/profile.d/`` — Directory with shell scripts
+-  ``/home/{{ rt_user }}/.local/profile.d/`` — Directory with shell scripts
    that get sourced in ``~rtorrrent/.bash_aliases``.
--  ``/home/rtorrent/.local/pyenv/`` — Unless you chose to use the
+-  ``/home/{{ rt_user }}/.local/pyenv/`` — Unless you chose to use the
    system's *Python*, the interpreter used to run ``pyrocore`` and
    ``flexget`` is installed here.
--  ``/home/rtorrent/.local/pyroscope`` — Virtualenv for ``pyrocore``.
--  ``/home/rtorrent/.local/flexget`` — Virtualenv for ``flexget``.
+-  ``/home/{{ rt_user }}/.local/pyroscope`` — Virtualenv for ``pyrocore``.
+-  ``/home/{{ rt_user }}/.local/flexget`` — Virtualenv for ``flexget``.
 -  ``/home/rutorrent/ruTorrent-master`` — *ruTorrent* code base.
 
 
