@@ -1,11 +1,11 @@
 ---
 - name: Copy profile scripts
-  copy: src=profile.d/{{ item }} dest=/home/rtorrent/.local/profile.d/{{ item }} owner=rtorrent group=rtorrent mode=0640
+  copy: src=profile.d/{{ item }} dest=/home/{{ rt_user  }}/.local/profile.d/{{ item }} owner={{ rt_user  }} group={{ rt_user  }} mode=0640
   with_items:
     - rt-alias.sh
 
 - name: Copy helper scripts
-  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0750
+  copy: src=bin/{{ item }} dest=/home/{{ rt_user  }}/bin/{{ item }} owner={{ rt_user  }} group={{ rt_user  }} mode=0750
   with_items:
     - rt-throttle
 
@@ -33,29 +33,29 @@
     - libffi-dev
 
 - name: Create PyroScope config dir
-  file: path=/home/rtorrent/.pyroscope state=directory owner=rtorrent group=rtorrent mode=0750
+  file: path=/home/{{ rt_user  }}/.pyroscope state=directory owner={{ rt_user  }} group={{ rt_user  }} mode=0750
 
 - name: Render default configuration files (no overwrite)
-  template: src="{{ item }}" dest="/home/rtorrent/.pyroscope/{{ item }}" owner=rtorrent group=rtorrent mode=0640 force=no
+  template: src="{{ item }}" dest="/home/{{ rt_user  }}/.pyroscope/{{ item }}" owner={{ rt_user  }} group={{ rt_user  }} mode=0640 force=no
   with_items:
     - config.ini
 
 - name: git clone 'pyrocore'
-  shell: su -c 'git clone https://github.com/pyroscope/pyrocore.git pyroscope' rtorrent
+  shell: su -c 'git clone https://github.com/pyroscope/pyrocore.git pyroscope' {{ rt_user  }}
   args:
     executable: /bin/bash
-    chdir: /home/rtorrent/.local
-    creates: /home/rtorrent/.local/pyroscope/.gitignore
+    chdir: /home/{{ rt_user  }}/.local
+    creates: /home/{{ rt_user  }}/.local/pyroscope/.gitignore
 
 - name: Initial 'pyroscope' installation
-  shell: su -c './update-to-head.sh {{ python_bin }}' rtorrent
+  shell: su -c './update-to-head.sh {{ python_bin }}' {{ rt_user  }}
   args:
     executable: /bin/bash
-    chdir: /home/rtorrent/.local/pyroscope
-    creates: /home/rtorrent/.local/pyroscope/bin/pyroadmin
+    chdir: /home/{{ rt_user  }}/.local/pyroscope
+    creates: /home/{{ rt_user  }}/.local/pyroscope/bin/pyroadmin
 
 - name: Get PyroScope & Python version
-  shell: "/home/rtorrent/bin/pyroadmin --version ; /home/rtorrent/.local/pyroscope/bin/python --version 2>&1"
+  shell: "/home/{{ rt_user  }}/bin/pyroadmin --version ; /home/{{ rt_user  }}/.local/pyroscope/bin/python --version 2>&1"
   changed_when: False
   register: pyro_versions
 - debug: var=pyro_versions.stdout_lines

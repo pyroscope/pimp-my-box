@@ -1,14 +1,14 @@
 - name: Render default configuration and start script
-  template: src="rtorrent/{{ item.name }}" dest="/home/rtorrent/rtorrent/{{ item.name }}" owner=rtorrent group=rtorrent mode="{{ item.mode }}" force="{{ force_cfg }}"
+  template: src="rtorrent/{{ item.name }}" dest="/home/{{ rt_user  }}/rtorrent/{{ item.name }}" owner={{ rt_user  }} group={{ rt_user  }} mode="{{ item.mode }}" force="{{ force_cfg }}"
   with_items:
     - { name: 'rtorrent.rc', mode: '0640' }
     - { name: 'start', mode: '0750' }
 
 - name: Render default "Local settings" include file
-  template: src=rtorrent/_rtlocal.rc dest=/home/rtorrent/rtorrent/_rtlocal.rc owner=rtorrent group=rtorrent mode=0640 force=no
+  template: src=rtorrent/_rtlocal.rc dest=/home/{{ rt_user  }}/rtorrent/_rtlocal.rc owner={{ rt_user  }} group={{ rt_user  }} mode=0640 force=no
 
 - name: Render "rtorrent.d" include files
-  template: src="rtorrent/rtorrent.d/{{ item }}" dest="/home/rtorrent/rtorrent/rtorrent.d/{{ item }}" owner=rtorrent group=rtorrent mode=0640
+  template: src="rtorrent/rtorrent.d/{{ item }}" dest="/home/{{ rt_user  }}/rtorrent/rtorrent.d/{{ item }}" owner={{ rt_user  }} group={{ rt_user  }} mode=0640
   with_items:
     - 00-pyrocore.rc
     - 05-rt-ps-columns.rc
@@ -33,4 +33,4 @@
     - watch-dirs.rc
 
 - name: Create rutorrent include placeholder
-  copy: content="" dest=/var/torrent/_rutorrent.rc owner=rtorrent group=rtorrent mode=0640 force=no
+  copy: content="" dest=/var/torrent/_rutorrent.rc owner={{ rt_user  }} group={{ rt_user  }} mode=0640 force=no

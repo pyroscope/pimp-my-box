@@ -1,19 +1,19 @@
 ---
 - name: Install rtorrent cron scripts
-  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0750
+  copy: src=bin/{{ item }} dest=/home/{{ rt_user  }}/bin/{{ item }} owner={{ rt_user  }} group={{ rt_user  }} mode=0750
   with_items:
     - _cron_autolabel
     - _cron_rt_invalid_items
     - _cron_sweep
 
 - name: Copy ~/etc config files (once)
-  copy: src=etc/{{ item }} dest=/home/rtorrent/etc/{{ item }} owner=rtorrent group=rtorrent mode=0640 force=no
+  copy: src=etc/{{ item }} dest=/home/{{ rt_user  }}/etc/{{ item }} owner={{ rt_user  }} group={{ rt_user  }} mode=0640 force=no
   with_items:
     - autolabel_rules
     - sweep_rules
 
 - name: Add rtorrent cron job 'rt_invalid_items'
-  cron: user=rtorrent minute=*/3 name=rt_invalid_items job="test ! -f ~/NOCRON && test -S ~/rtorrent/.scgi_local && sleep 21 && nice ~/bin/_cron_rt_invalid_items --stop --cron"
+  cron: user={{ rt_user  }} minute=*/3 name=rt_invalid_items job="test ! -f ~/NOCRON && test -S ~/{{ rt_user  }}/.scgi_local && sleep 21 && nice ~/bin/_cron_rt_invalid_items --stop --cron"
 
 - name: Add rtorrent cron job '_cron_autolabel'
-  cron: user=rtorrent minute=*/31 name=_cron_autolabel job="test ! -f ~/NOCRON && ~/bin/_cron_autolabel --cron"
+  cron: user={{ rt_user  }} minute=*/31 name=_cron_autolabel job="test ! -f ~/NOCRON && ~/bin/_cron_autolabel --cron"

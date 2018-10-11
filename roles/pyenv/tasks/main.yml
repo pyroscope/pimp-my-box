@@ -1,6 +1,6 @@
 ---
 - name: Create .local directory
-  file: path=/home/rtorrent/.local state=directory owner=rtorrent group=rtorrent mode=0750
+  file: path=/home/{{ rt_user  }}/.local state=directory owner={{ rt_user  }} group={{ rt_user  }} mode=0750
 
 - name: Install build dependencies for pyenv
   apt: name={{ item }} state=latest
@@ -20,18 +20,18 @@
     - libncursesw5-dev
 
 - name: Probe pyenv checkout
-  stat: path=/home/rtorrent/.local/pyenv/plugins/pyenv-installer/.gitignore
+  stat: path=/home/{{ rt_user  }}/.local/pyenv/plugins/pyenv-installer/.gitignore
   register: pyenv_flagfile
 
 - name: git clone pyenv project
-  git: repo=https://github.com/yyuu/pyenv.git dest=/home/rtorrent/.local/pyenv
+  git: repo=https://github.com/yyuu/pyenv.git dest=/home/{{ rt_user  }}/.local/pyenv
   when: not pyenv_flagfile.stat.exists
 
 - name: Create plugins directory
-  file: path=/home/rtorrent/.local/pyenv/plugins state=directory owner=rtorrent group=rtorrent mode=0750
+  file: path=/home/{{ rt_user  }}/.local/pyenv/plugins state=directory owner={{ rt_user  }} group={{ rt_user  }} mode=0750
 
 - name: git clone pyenv plugins
-  git: repo=https://github.com/yyuu/{{ item }}.git dest=/home/rtorrent/.local/pyenv/plugins/{{ item }}
+  git: repo=https://github.com/yyuu/{{ item }}.git dest=/home/{{ rt_user  }}/.local/pyenv/plugins/{{ item }}
   when: not pyenv_flagfile.stat.exists
   with_items:
     - pyenv-doctor
@@ -41,31 +41,31 @@
     - pyenv-installer
 
 - name: Fix pyenv ownership
-  file: path=/home/rtorrent/.local/pyenv state=directory recurse=true owner=rtorrent group=rtorrent
+  file: path=/home/{{ rt_user  }}/.local/pyenv state=directory recurse=true owner={{ rt_user  }} group={{ rt_user  }}
   when: not pyenv_flagfile.stat.exists
 
 - name: Install pyenv activation
-  copy: src=pyenv.sh dest=/home/rtorrent/.local/profile.d/pyenv.sh owner=rtorrent group=rtorrent mode=0640
+  copy: src=pyenv.sh dest=/home/{{ rt_user  }}/.local/profile.d/pyenv.sh owner={{ rt_user  }} group={{ rt_user  }} mode=0640
 
 - name: Probe Python installation
-  stat: path=/home/rtorrent/.local/pyenv/version
+  stat: path=/home/{{ rt_user  }}/.local/pyenv/version
   register: pyenv_py_flagfile
 
 - name: Install Python
-  shell: su -c '. .bash_aliases; TMPDIR=$PWD/tmp pyenv install {{ pyenv_python_version }}' rtorrent
+  shell: su -c '. .bash_aliases; TMPDIR=$PWD/tmp pyenv install {{ pyenv_python_version }}' {{ rt_user  }}
   args:
     executable: /bin/bash
-    chdir: /home/rtorrent
-    creates: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/python"
+    chdir: /home/{{ rt_user  }}
+    creates: "/home/{{ rt_user  }}/.local/pyenv/versions/{{ pyenv_python_version }}/bin/python"
   when: not pyenv_py_flagfile.stat.exists
 
 - name: Install virtualenv and update pip
-  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U pip virtualenv' rtorrent
+  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U pip virtualenv' {{ rt_user  }}
   args:
     executable: /bin/bash
-    chdir: /home/rtorrent
-    creates: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/virtualenv"
+    chdir: /home/{{ rt_user  }}
+    creates: "/home/{{ rt_user  }}/.local/pyenv/versions/{{ pyenv_python_version }}/bin/virtualenv"
   when: not pyenv_py_flagfile.stat.exists
 
 - name: Define global pyenv version
-  copy: content="{{ pyenv_python_version }}" dest=/home/rtorrent/.local/pyenv/version owner=rtorrent group=rtorrent mode=0640 force=no
+  copy: content="{{ pyenv_python_version }}" dest=/home/{{ rt_user  }}/.local/pyenv/version owner={{ rt_user  }} group={{ rt_user  }} mode=0640 force=no

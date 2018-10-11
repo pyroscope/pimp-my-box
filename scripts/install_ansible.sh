@@ -9,23 +9,23 @@ python="/usr/bin/python2"
 # just to make sure you have the packages you need
 echo "*** Checking build essentials"
 test -f "/usr/share/build-essential/essential-packages-list" \
-    || sudo apt-get install build-essential
+    || sudo apt-get install -y build-essential
 
 echo "*** Checking curl"
-which curl >/dev/null 2>&1 || sudo apt-get install curl
+which curl >/dev/null 2>&1 || sudo apt-get install -y curl
 
 echo "*** Checking virtualenv"
-which virtualenv >/dev/null 2>&1 || sudo apt-get install python-virtualenv
+which virtualenv >/dev/null 2>&1 || sudo apt-get install -y python-virtualenv
 
 echo "*** Checking Python development support"
-test -f "/usr/bin/python-config" || sudo apt-get install python-dev
+test -f "/usr/bin/python-config" || sudo apt-get install -y python-dev
 
 echo "*** Checking ffi-dev"
-test -f "/usr/share/man/man3/ffi.3.gz" || sudo apt-get install libffi-dev
+test -f "/usr/share/man/man3/ffi.3.gz" || sudo apt-get install -y libffi-dev
 
 echo "*** Checking openssl-dev"
 test -f "/usr/include/openssl/opensslconf.h" -o -f "/usr/include/openssl/conf.h" \
-    || sudo apt-get install libssl-dev
+    || sudo apt-get install -y libssl-dev
 
 
 # install Ansible
