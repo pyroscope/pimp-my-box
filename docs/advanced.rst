@@ -46,7 +46,7 @@ rTorrent, for all hosts in your inventory:
 
 .. code-block:: console
 
-    $ ansible box -f4 --become-user=rtorrent -a "~/bin/rtxmlrpc view.size '' default" -o
+    $ ansible box -f4 --become-user={{ rt_user }}/ -a "~/bin/rtxmlrpc view.size '' default" -o
     my-box | success | rc=0 | (stdout) 42
     my-box2 | success | rc=0 | (stdout) 123
 
@@ -56,7 +56,7 @@ this:
 .. code-block:: shell
 
     ansible box -f4 -a "sudo -i -u rtorrent -- ~rtorrent/.local/pyroscope/update-to-head.sh"
-    ansible box -f4 --become-user=rtorrent -a "~/bin/pyroadmin --version" -o
+    ansible box -f4 --become-user={{ rt_user }}/ -a "~/bin/pyroadmin --version" -o
 
 This is especially useful if you control more than one host.
 

@@ -23,4 +23,4 @@
   file: path=/home/{{ rt_user }}/.config/flexget state=directory owner={{ rt_user }}/ group={{ rt_user }}/ mode=0750
 
 - name: Add FlexGet cron job
-  cron: user=rtorrent minute=*/11 name=flexget job="test ! -f ~/NOCRON && test -f ~/.config/flexget/config.yml && sleep 11 && nice ~/bin/flexget -c ~/.config/flexget/config.yml --cron execute >~/.config/flexget/flexget-cron.log 2>&1"
+  cron: user={{ rt_user }}/ minute=*/11 name=flexget job="test ! -f ~/NOCRON && test -f ~/.config/flexget/config.yml && sleep 11 && nice ~/bin/flexget -c ~/.config/flexget/config.yml --cron execute >~/.config/flexget/flexget-cron.log 2>&1"
