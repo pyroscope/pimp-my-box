@@ -3,14 +3,14 @@
   shell: su -c '{{ venv_bin }} .local/flexget' rtorrent
   args:
     executable: /bin/bash
-    chdir: /home/rtorrent
+    chdir: /home/{{ rt_user }}
     creates: /home/{{ rt_user }}/.local/flexget/bin/pip
 
 - name: Install FlexGet
   shell: su -c '.local/flexget/bin/pip install flexget' rtorrent
   args:
     executable: /bin/bash
-    chdir: /home/rtorrent
+    chdir: /home/{{ rt_user }}
     creates: /home/{{ rt_user }}/.local/flexget/bin/flexget
 
 - name: Create flexget ~/bin symlink
