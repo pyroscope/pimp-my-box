@@ -46,6 +46,8 @@ schedule2 = scgi_permission, 0, 0, "execute.nothrow=chmod,\"g+w,o=\",/var/torren
 # that directory, or else "_rtlocal.rc" (see below)!
 #
 
+# Uncomment the following line for debugging purposes only
+#log.execute = (cat, /tmp/rtorrent-bootstrap-, (system.pid), .log)
 execute.throw = (cat,(pyro.bin_dir),pyroadmin),-q,--create-import,(cat,(cfg.basedir),"rtorrent.d/*.rc")
 import = (cat,(cfg.basedir),"rtorrent.d/.import.rc")
 
