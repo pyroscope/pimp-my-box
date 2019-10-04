@@ -1,0 +1,18 @@
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#                                                                                 vim: ft=dosini
+# This file defines standard watch directories. If you use `pyrotorque`,
+# you should disable them.
+#
+# `load.category` is defined by ‘pyrocore’.
+
+# Simple watches that load items started or closed
+load.start_verbose = (cat, (cfg.watch), "start/*.torrent")
+load.verbose = (cat, (cfg.watch), "load/*.torrent")
+
+# Load categorized items (sets the ruTorrent label, and define a view)
+load.category = hdtv
+
+# Load item and delete the metafile from the watch dir
+load.verbose = (cat, (cfg.watch), "cleaned/*.torrent"), "d.delete_tied=", "d.watch.startable="

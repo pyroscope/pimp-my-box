@@ -2,10 +2,10 @@
 # ! FILE IS CONTROLLED BY ANSIBLE, DO NOT CHANGE, OR ELSE YOUR CHANGES WILL BE EVENTUALLY LOST !
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #                                                                                 vim: ft=dosini
-# This file defines standard watch directories. If you use `pyrotorque`,
-# you should disable them.
+# This file regularly executes standard directory watches. If you use `pyrotorque`,
+# you should disable the schedule.
 #
-# `pyro.category.add` and `load.category` are defined by ‘pyrocore’.
+# `pyro.category.add` is defined by ‘pyrocore’.
 #
 # To disable / override these settings, execute this command as the 'rtorrent' user:
 #
@@ -13,14 +13,6 @@
 #
 # Then restart rTorrent.
 
-# Simple watches that load items started or closed
-schedule2 = watch_start, 121, 10, ((load.start_verbose, (cat, (cfg.watch), "start/*.torrent")))
-schedule2 = watch_load,  122, 10, ((load.verbose, (cat, (cfg.watch), "load/*.torrent")))
-
-# Load categorized items (sets the ruTorrent label, and define a view)
 pyro.category.add = hdtv
-schedule2 = watch_hdtv,  123, 10, ((load.category, hdtv))
 
-# Load item and delete the metafile from the watch dir
-schedule2 = watch_cleaned, 129, 10, \
-    ((load.verbose, (cat, (cfg.watch), "cleaned/*.torrent"), "d.delete_tied=", "d.watch.startable="))
+schedule2 = watch_dirs, 121, 10, ((import, (cat, (cfg.basedir), "rtorrent.d/watch-dirs.rc.include")))
