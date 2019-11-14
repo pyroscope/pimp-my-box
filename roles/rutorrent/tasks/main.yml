@@ -30,7 +30,7 @@
 - include: install.yml
 
 - name: Render rutorrent include for rtorrent
-  template: src=_rutorrent.rc dest=/var/torrent/_rutorrent.rc owner=rtorrent group=rtorrent mode=0640 force=yes
+  template: src=_rutorrent.rc dest=/var/torrent/_rutorrent.rc owner={{ rt_user }}/ group={{ rt_user }}/ mode=0640 force=yes
 
 - name: Set ruTorrent config values
   lineinfile:
@@ -73,7 +73,7 @@
   register: avconv_bin
 
 - name: Create ffmpeg to avconv symlink
-  file: src=/usr/bin/avconv path=/home/rtorrent/bin/ffmpeg state=link owner=rtorrent group=rtorrent
+  file: src=/usr/bin/avconv path=/home/{{ rt_user }}/bin/ffmpeg state=link owner={{ rt_user }}/ group={{ rt_user }}/
   when: "( av_tool is not defined or av_tool != 'ffmpeg' ) and avconv_bin.stat.exists"
 
 - include: fpm.yml

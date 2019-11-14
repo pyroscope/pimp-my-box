@@ -1,5 +1,5 @@
 force_cfg: no
-main_rtrc_file: /home/rtorrent/rtorrent/rtorrent.rc
+main_rtrc_file: /home/{{ rt_user }}/rtorrent/rtorrent.rc
 rutorrent_rtrc_file: "{{ main_rtrc_file }}"
 rtorrent_bindir: /opt/rtorrent/bin/
 

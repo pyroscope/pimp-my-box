@@ -51,15 +51,16 @@
 
 - name: Create rtorrent group
   group: name=rtorrent state=present
+  group: name={{ rt_user  }} state=present
 
 - name: Create rtorrent user
-  user: name=rtorrent comment="rTorrent Client" group=rtorrent groups=users append=yes shell=/bin/bash
+  user: name={{ rt_user  }} comment="{{ rt_user  }} rTorrent" group={{ rt_user  }} groups=users append=yes shell=/bin/bash
 
 - name: Create rtorrent home directory
-  file: path=/home/rtorrent state=directory owner=rtorrent group=rtorrent mode=0750
+  file: path=/home/{{ rt_user  }} state=directory owner={{ rt_user  }} group={{ rt_user  }} mode=0750
 
 - name: Create rtorrent home subdirs
-  file: path=/home/rtorrent/{{ item }} state=directory owner=rtorrent group=rtorrent mode=0750
+  file: path=/home/{{ rt_user  }}/{{ item }} state=directory owner={{ rt_user  }} group={{ rt_user  }} mode=0750
   with_items:
     - bin
     - etc
@@ -83,28 +84,28 @@
     - .local/profile.d
 
 - name: Copy rtorrent dot files
-  copy: src=dotfiles/{{ item.name }} dest=/home/rtorrent/.{{ item.name }} owner=rtorrent group=rtorrent mode=0640 force={{ item.force }}
+  copy: src=dotfiles/{{ item.name }} dest=/home/{{ rt_user  }}/.{{ item.name }} owner={{ rt_user  }} group={{ rt_user  }} mode=0640 force={{ item.force }}
   with_items:
     - { name: bash_aliases, force: yes }
     - { name: tmux.conf, force: no }
 
 - name: Copy rtorrent scripts
-  copy: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0750
+  copy: src=bin/{{ item }} dest=/home/{{ rt_user  }}/bin/{{ item }} owner={{ rt_user  }} group={{ rt_user  }} mode=0750
   with_items:
     - _event.download.finished
 
 - name: Render rtorrent bash helpers
-  template: src=bin/{{ item }} dest=/home/rtorrent/bin/{{ item }} owner=rtorrent group=rtorrent mode=0640
+  template: src=bin/{{ item }} dest=/home/{{ rt_user  }}/bin/{{ item }} owner={{ rt_user  }} group={{ rt_user  }} mode=0640
   with_items:
     - _tools.sh
 
 - name: Create rtorrent /var symlink
-  file: src=/home/rtorrent/rtorrent path=/var/torrent state=link
+  file: src=/home/{{ rt_user  }}/rtorrent path=/var/torrent state=link
 
 - include: config.yml
 
 - name: Install initial rtorrent crontab
-  copy: src=crontab dest=/var/spool/cron/crontabs/rtorrent owner=rtorrent group=crontab mode=0600 force=no
+  copy: src=crontab dest=/var/spool/cron/crontabs/{{ rt_user  }} owner={{ rt_user  }} group=crontab mode=0600 force=no
 
 - name: Add rtorrent cron job 'rt_backup_session'
-  cron: user=rtorrent minute=7 hour=0 name=rt_backup_session job="test ! -f ~/NOCRON && cd /var/torrent && tar cfz \"backups/session-$(date +'\%u').tgz\" .session/"
+  cron: user={{ rt_user  }} minute=7 hour=0 name=rt_backup_session job="test ! -f ~/NOCRON && cd /var/torrent && tar cfz \"backups/session-$(date +'\%u').tgz\" .session/"

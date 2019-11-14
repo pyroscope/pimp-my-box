@@ -15,7 +15,7 @@
 
 CRON=true
 MAILTO=root@localhost
-HOME=/home/rtorrent
+HOME=/home/{{ rt_user }}
 LANG=en_US.UTF-8
 PATH=$HOME/bin:/usr/bin:/usr/local/bin:/bin
 

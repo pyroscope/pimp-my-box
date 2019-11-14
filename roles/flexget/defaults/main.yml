@@ -1,3 +1,3 @@
 flexget_enabled: false
 pyenv_python_version: 2.7.13
-venv_bin: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/virtualenv"
+venv_bin: "/home/{{ rt_user }}/.local/pyenv/versions/{{ pyenv_python_version }}/bin/virtualenv"
