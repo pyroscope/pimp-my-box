@@ -66,6 +66,13 @@ rTorrent, for all hosts in the ``box`` group of your inventory:
     my-box | success | rc=0 | (stdout) 42
     my-box2 | success | rc=0 | (stdout) 123
 
+Similarly, this shows the Linux release you're using:
+
+.. code-block:: console
+
+    $ rtansible box 'lsb_release -cs' -o | sort
+    my-box | CHANGED | rc=0 | (stdout) bionic
+
 Another example is updating the ``pyrocore`` installation from git, like
 this:
 
