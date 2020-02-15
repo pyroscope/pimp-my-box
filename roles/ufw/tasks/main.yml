@@ -9,9 +9,10 @@
 #   ufw show user-rules | grep -B999 '^IPV6'
 
 - name: Install UFW packages
-  apt: name={{ item }} state=latest
-  with_items:
-    - ufw
+  apt:
+    state: latest
+    name:
+      - ufw
 
 - name: Enable UFW logging
   shell: "ufw status verbose | grep ^Logging.*low || ufw logging low"
