@@ -3,4 +3,4 @@
 - hosts: box
   roles:
     - { role: sshd, sudo: yes, tags: sshd }
-    - { role: ufw, sudo: yes, when: ufw, tags: ufw }
+    - { role: ufw, sudo: yes, when: ufw|bool, tags: ufw }
