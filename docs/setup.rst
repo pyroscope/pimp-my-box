@@ -3,7 +3,7 @@ Basic Installation
 
 Here's the steps you need to follow to get a working installation on
 your target host. This might seem like an arduous process, but if you're
-accustomed to a *Linux* command prompt and ideally also *Ansbile*, it
+accustomed to a *Linux* command prompt and ideally also *Ansible*, it
 boils down to these steps:
 
 -  Create your working directory.
@@ -18,7 +18,7 @@ and almost no work, just add that host and run the playbooks for it.
 
 Note that this cannot be an `Ansible`_ or Linux shell 101, so if these
 topics are new for you refer to the usual sources like
-`The Debian Administrator's Handbook`_, `The Linux Command Line`_ and
+`The Debian Administrator's Handbook`_, `The Linux Command Line`_,
 `The Art of Command Line`_, and the `Ansible Documentation`_.
 
 .. _Ansible: http://docs.ansible.com/
@@ -94,7 +94,8 @@ these commands:
 
     account=setup
     groupadd $account
-    useradd -g $account -G $account,users -c "Ansible remote user" -s /bin/bash --create-home $account
+    useradd -g $account -G $account,users -c "Ansible remote user" \
+            -s /bin/bash --create-home $account
     eval chmod 0750 ~$account
     passwd -l $account
 
