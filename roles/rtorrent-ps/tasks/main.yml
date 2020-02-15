@@ -25,29 +25,32 @@
   when: 'rtps_deb_url == ""'
 
 - name: Install runtime dependencies for rTorrent-PS
-  apt: name={{ item }} state=latest
-  with_items:
-    - tmux
-    - locales
+  apt:
+    state: latest
+    name:
+      - tmux
+      - locales
 
 - name: Install build tools for rTorrent-PS
-  apt: name={{ item }} state=latest
-  with_items:
-    - git
-    - wget
-    - build-essential
-    - libtool
-    - autoconf
-    - automake
+  apt:
+    state: latest
+    name:
+      - git
+      - wget
+      - build-essential
+      - libtool
+      - autoconf
+      - automake
 
 - name: Install build dependencies for rTorrent-PS
-  apt: name={{ item }} state=latest
-  with_items:
-    - libssl-dev
-    - libcppunit-dev
-    - libncurses5-dev
-    - libncursesw5-dev
-    - libsigc++-2.0-dev
+  apt:
+    state: latest
+    name:
+      - libssl-dev
+      - libcppunit-dev
+      - libncurses5-dev
+      - libncursesw5-dev
+      - libsigc++-2.0-dev
 
 - name: Create rtorrent group
   group: name=rtorrent state=present
