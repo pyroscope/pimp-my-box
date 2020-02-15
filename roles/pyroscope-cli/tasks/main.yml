@@ -10,27 +10,29 @@
     - rt-throttle
 
 - name: Install tools + build dependencies for PyroScope
-  apt: name={{ item }} state=latest
-  with_items:
-    - git
-    - subversion
-    - build-essential
-    - python-setuptools
-    - python-pkg-resources
-    - python-virtualenv
-    - python-dev
-    - python-pip
-    - libreadline-dev
-    - libsqlite3-dev
-    - libxml2-dev
-    - libxslt1-dev
+  apt:
+    state: latest
+    name:
+      - git
+      - subversion
+      - build-essential
+      - python-setuptools
+      - python-pkg-resources
+      - python-virtualenv
+      - python-dev
+      - python-pip
+      - libreadline-dev
+      - libsqlite3-dev
+      - libxml2-dev
+      - libxslt1-dev
 
 - name: Install FFI
-  apt: name={{ item }} state=latest
   when: not(ansible_distribution == "Debian") or not(ansible_distribution_major_version == "7")
-  with_items:
-    - python-cffi
-    - libffi-dev
+  apt:
+    state: latest
+    name:
+      - python-cffi
+      - libffi-dev
 
 - name: Create PyroScope config dir
   file: path=/home/rtorrent/.pyroscope state=directory owner=rtorrent group=rtorrent mode=0750
