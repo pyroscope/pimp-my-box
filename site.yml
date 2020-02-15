@@ -1,7 +1,7 @@
 ---
 # All available playbooks
 - include: common.yml
-- include: security.yml
-- include: raspi.yml
-- include: rtorrent.yml
-- include: apps.yml
+#- include: security.yml
+#- include: raspi.yml
+#- include: rtorrent.yml
+#- include: apps.yml

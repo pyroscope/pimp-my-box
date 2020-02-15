@@ -1,5 +1,8 @@
 # pimp-my-box
 
+:warning: | A migration to Ansible 2 is underway, so to get something stable / usable, clone / check out the `ansible1` tag for now!
+---: | :---
+
 ![logo](https://raw.githubusercontent.com/pyroscope/pimp-my-box/master/images/pimp-my-box.png)
 [![issues](https://img.shields.io/github/issues/pyroscope/pimp-my-box.svg)](https://github.com/pyroscope/pimp-my-box/issues)
 [![travis](https://api.travis-ci.org/pyroscope/pimp-my-box.svg)](https://travis-ci.org/pyroscope/pimp-my-box)
