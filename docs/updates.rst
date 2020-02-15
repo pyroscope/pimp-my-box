@@ -85,7 +85,7 @@ Check by calling ``ansible --version``, which should show something like this::
     ansible 2.9.5
       config file = ~/.ansible.cfg
       configured module search path = ['~/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-      ansible python module location = ~/.local/venvs/ansible/lib/python3.6/site-packages/ansible
+      ansible python module location = ~/.local/venvs/ansible2/lib/python3.6/site-packages/ansible
       executable location = ~/.local/bin/ansible
       python version = 3.6.8 (default, Jan 28 2020, 20:29:43) [GCC 4.6.3]
 
