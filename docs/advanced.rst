@@ -41,12 +41,28 @@ Using Ansible for Remote Management
 The setup work to get *Ansible* controlling your machines is not just
 for installing things, you can also simplify daily management tasks.
 
-Consider this example, which prints the number of items loaded into
-rTorrent, for all hosts in your inventory:
+First, define this function to make calls to ``rtorrent`` tools easier:
+
+.. code-block:: shell
+
+    rtansible() {
+        if test -z "$1"; then
+            echo >&2 "usage: rtansible TARGET CMD [ARGS...]"
+            return 1
+        fi
+        local target="${1:?Missing a group/host name as 1st arg}"; shift
+        local cmd="${1:?Missing a remote command as 2nd arg}"; shift
+        ansible "$target" -f4 -a "sudo -i -u rtorrent -- $cmd" "$@"
+    }
+
+Then consider this example, which prints the number of items loaded into
+rTorrent, for all hosts in the ``box`` group of your inventory:
 
 .. code-block:: console
 
-    $ ansible box -f4 --become-user=rtorrent -a "~/bin/rtxmlrpc view.size '' default" -o
+    $ rtansible box \
+        '~rtorrent/bin/rtxmlrpc view.size @/dev/null default' -o \
+        | sort
     my-box | success | rc=0 | (stdout) 42
     my-box2 | success | rc=0 | (stdout) 123
 
@@ -55,8 +71,8 @@ this:
 
 .. code-block:: shell
 
-    ansible box -f4 -a "sudo -i -u rtorrent -- ~rtorrent/.local/pyroscope/update-to-head.sh"
-    ansible box -f4 --become-user=rtorrent -a "~/bin/pyroadmin --version" -o
+    rtansible box '~rtorrent/.local/pyroscope/update-to-head.sh'
+    rtansible box '~rtorrent/bin/pyroadmin --version' -o | sort
 
 This is especially useful if you control more than one host.
 
@@ -79,11 +95,14 @@ confidently read the session files associated with the provided hash.
 Be aware that you cannot call back into rTorrent via XML-RPC within an
 event handler, because that leads to a deadlock. If you need to do that,
 call your script directly using ``execute.bg`` or one of its variants.
+
 Alternatively detach yourself from the process that rTorrent created for
-the event, so the event handler finishes as far as rTorrent is
-concerned. In any of these cases, be aware that things run concurrently
-and can go horribly wrong, if you don't care take of race conditions and
-such.
+the event, so the event handler finishes as far as rTorrent is concerned.
+
+In any of these cases, be aware that things run concurrently and
+can go horribly wrong, if you don't take care of race conditions and such.
+A command queue like `nq`_ can help here, by accepting commands than run
+in the backgropund, but strictly serialized in the order they are added.
 
 Here is a non-trivial example that goes to
 ``~/bin/_event.download.finished-jenkins.sh``, and triggers a `Jenkins`_
@@ -123,6 +142,7 @@ The fact that *Jenkins* runs in its own separate process means your job
 can make free use of ``rtxmlrpc`` and ``rtcontrol`` to change things in
 *rTorrent*.
 
+.. _nq: https://github.com/leahneukirchen/nq#readme
 .. _Jenkins: https://jenkins.io/
 
 
