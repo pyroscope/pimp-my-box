@@ -57,3 +57,5 @@ target/
 # Project
 secrets.yml
 .pyvenv/
+group_vars
+hosts
