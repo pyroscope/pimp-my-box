@@ -48,7 +48,11 @@ def docs(ctx):
             ctx.run("touch docs/index.rst")
             ctx.run('ps {}'.format(pid), pty=False)
             url = 'http://localhost:{port:d}/'.format(port=SPHINX_AUTOBUILD_PORT)
-            print("\n*** Open '{}' in your browser...".format(url))
+            try:
+                import webbrowser
+                webbrowser.open_new_tab(url)
+            except webbrowser.Error:
+                print("\n*** Open '{}' in your browser...".format(url))
             break
 
 
