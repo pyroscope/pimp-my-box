@@ -15,6 +15,12 @@ once and never be able to update them again”*, since you can run this
 setup repeatedly to either fix problems, or to install upgrades and new
 features added to this repository.
 
+Additionally, if your host crashes and cannot be repaired for some reason,
+restoring the software and its configuration is a breeze and typically done in under an hour.
+You just need proper backups of crucial data, like the rTorrent session directory.
+The same works for moving from one hosting provider to another,
+just copy your data via rsync to your new host, to an identical setup.
+
 The playbooks contained in here install the following components:
 
 -  Security hardening of your server.
@@ -25,7 +31,7 @@ The playbooks contained in here install the following components:
 Optionally:
 
 -  `FlexGet`_, the best feed reader and download automation tool there is.
--  `ruTorrent`_ web UI, served by `Nginx`_ over HTTPS and run by PHP5-FPM.
+-  `ruTorrent`_ web UI, served by `Nginx`_ over HTTPS and run by PHP FPM.
 
 Each includes a default configuration, so you end up with a fully
 working system.
