@@ -45,6 +45,8 @@ Executing these commands *on your workstation* takes care of that:
     cd "pimp-my-box"
 
 
+.. _install-ansible:
+
 Installing Ansible
 ------------------
 
@@ -55,16 +57,16 @@ account on that machine, or create an ``ansible`` one – any part of the
 documentation that refers to ‘the workstation’ then means that account.
 
 To get it running on Windows is also possible, by using `Bash for Windows 10`_
-or `CygWin`_ / `Babun`_ on older systems (this is untested, success stories welcome).
+(this is untested, success stories welcome).
 
 See the `Ansible Installation Documentation`_ for how to install it using the package
 manager of your platform. Make sure you get the right version that way,
-the playbooks are tested using Ansible *1.9.6*, and Ansible 2 might not
-work (yet).
+the playbooks are tested using Ansible *2.9.5*.
+Read :ref:`ansible-update` when you have an existing workdir from before February 2020.
 
 The *recommended* way to install Ansible is to put it into your home
-directory. The following commands just require Python to be installed to
-your system, and the installation is easy to get rid of (everything is
+directory. The following commands just require Python 3.5+ to be installed on
+your system. The installation is easy to get rid of (everything is
 contained within a single directory). When you have no
 ``~/.ansible.cfg`` yet (which you very likely do not), one is added.
 

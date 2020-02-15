@@ -61,6 +61,62 @@ inventory. Also, both ``pyrocore`` and ``flexget`` get upgraded to the
 newest available version.
 
 
+.. _ansible-update:
+
+Update to Ansible2 on Your Workstation
+--------------------------------------
+
+Make sure to uninstall the old Ansible version, or move its commands to an extra directory:
+
+.. code-block:: shell
+
+    ls -l ~/bin/ansible*
+    mkdir -p ~/.local/bin/ansible1
+    mv ~/bin/ansible* $_
+
+Install Ansible 2.9.5, see :ref:`install-ansible` for details:
+
+.. code-block:: shell
+
+    ./scripts/install_ansible.sh
+
+Check by calling ``ansible --version``, which should show something like this::
+
+    ansible 2.9.5
+      config file = ~/.ansible.cfg
+      configured module search path = ['~/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+      ansible python module location = ~/.local/venvs/ansible/lib/python3.6/site-packages/ansible
+      executable location = ~/.local/bin/ansible
+      python version = 3.6.8 (default, Jan 28 2020, 20:29:43) [GCC 4.6.3]
+
+Add this to your ``host_vars`` file(s), e.g. ``host_vars/my-box/main.yml``:
+
+.. code-block:: yaml
+
+    ansible_become: true
+    ansible_python_interpreter: /usr/bin/python3
+
+Try to call the playbook in check mode:
+
+.. code-block:: shell
+
+    ansible-playbook site.yml -l my-box -t base --check --diff
+
+This might show deprecation warnings, but should run without errors otherwise.
+
+
+.. hint::
+
+    .. rubric:: Special considerations for Trusty (Ubuntu 14.04)
+
+    Python version 3.4 as available on Trusty is too old for Ansible.
+    So set the Python interpreter explicitly to Python2 as follows:
+
+    .. code-block:: yaml
+
+        ansible_python_interpreter: /usr/bin/python2
+
+
 .. _rt-ps-update:
 
 Upgrade the rTorrent-PS Version
