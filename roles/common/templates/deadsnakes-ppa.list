@@ -1,0 +1,2 @@
+deb [trusted=yes] http://ppa.launchpad.net/deadsnakes/ppa/ubuntu {{ ansible_distribution_release }} main
+deb-src [trusted=yes] http://ppa.launchpad.net/deadsnakes/ppa/ubuntu {{ ansible_distribution_release }} main

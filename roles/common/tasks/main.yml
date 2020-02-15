@@ -1,7 +1,21 @@
 ---
+- name: Add Deadsnakes PPA (Ubuntu)
+  template: src=deadsnakes-ppa.list dest=/etc/apt/sources.list.d/deadsnakes-ppa.list mode=0644
+  when: ansible_distribution == "Ubuntu"
+
 - name: Update APT cache
   apt:
     update_cache: yes
+
+- name: Install Deadsnakes Python 3.7 (Ubuntu)
+  apt:
+    state: latest
+    name:
+      - python3.7
+      - python3.7-venv
+      - python3.7-doc
+      - python3.7-dev
+  when: ansible_distribution == "Ubuntu"
 
 - name: Install basic tools
   apt:
