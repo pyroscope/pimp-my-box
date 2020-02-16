@@ -1,9 +1,10 @@
 ---
 - name: Install nginx packages
-  apt: name={{ item }} state=latest
-  with_items:
-    - nginx-full
-    - apache2-utils
+  apt:
+    state: latest
+    name:
+      - nginx-full
+      - apache2-utils
 
 - name: Create nginx cert directory
   file: path=/etc/nginx/ssl state=directory owner=root group=root mode=0755
