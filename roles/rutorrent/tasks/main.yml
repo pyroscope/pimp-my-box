@@ -111,6 +111,10 @@
   stat: path=/usr/bin/avconv
   register: avconv_bin
 
+- name: Probe ffmpeg binary
+  stat: path=/home/rtorrent/bin/ffmpeg
+  register: ffmpeg_bin
+
 - name: Create ffmpeg to avconv symlink
   file:
     src: /usr/bin/avconv
@@ -118,7 +122,8 @@
     state: link
     owner: rtorrent
     group: rtorrent
-  when: "( av_tool is not defined or av_tool != 'ffmpeg' ) and avconv_bin.stat.exists"
+    force: no
+  when: "( av_tool is not defined or av_tool != 'ffmpeg' ) and avconv_bin.stat.exists and not ffmpeg_bin.stat.exists"
 
 - include: fpm.yml
 - include: nginx.yml
