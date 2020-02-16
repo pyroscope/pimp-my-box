@@ -8,7 +8,7 @@
       - python3-doc
       - python3-pip
       - python3-venv
-  when: "'python3' in venv_bin"
+  when: "'python3 ' in venv_bin"
 
 - name: Create FlexGet virtualenv
   shell: su -c '{{ venv_bin }} .local/flexget' rtorrent
