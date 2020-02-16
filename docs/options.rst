@@ -49,6 +49,13 @@ Look into the files
 
         venv_bin: "python3.7 -m venv"
 
+    Also, check *beforehand* if the ``ssl`` module is supported::
+
+        python3.7 -m ssl
+
+    If you get an error message that ``_ssl`` is not available,
+    you cannot use that Python build for ``https`` RSS feeds.
+
 .. _FlexGet cookbook: http://flexget.com/wiki/Cookbook
 .. _`DeadSnakes PPA`: https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
 
