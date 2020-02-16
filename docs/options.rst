@@ -34,14 +34,23 @@ Look into the files
 
     If your target host has Python 3.6+ installed (i.e. runs Bionic or Buster),
     you can use that for the FlexGet venv by changing ``venv_bin``
-    in your ``host_vars``:
+    in your ``host_vars``::
 
         venv_bin: "python3 -m venv"
 
     Note that the latest versions of FlexGet *require* Python 3,
     i.e. you'll get an older release if you stick to Python 2.
 
+    On older releases of Ubuntu (Xenial), you can install Python 3.7 or higher
+    from the `DeadSnakes PPA`_. For your convenience, the basic installation on
+    Ubuntu already adds Python 3.7 from there.
+
+    Make sure to include the minor version in your configuration then::
+
+        venv_bin: "python3.7 -m venv"
+
 .. _FlexGet cookbook: http://flexget.com/wiki/Cookbook
+.. _`DeadSnakes PPA`: https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa
 
 
 .. _rutorrent:
