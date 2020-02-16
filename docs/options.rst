@@ -38,6 +38,9 @@ Look into the files
 
         venv_bin: "python3 -m venv"
 
+    Note that the latest versions of FlexGet *require* Python 3,
+    i.e. you'll get an older release if you stick to Python 2.
+
 .. _FlexGet cookbook: http://flexget.com/wiki/Cookbook
 
 
