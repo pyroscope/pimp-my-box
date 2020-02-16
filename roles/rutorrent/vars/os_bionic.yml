@@ -1,0 +1,3 @@
+php_version: 7.0
+php_etc_dir: php/7.0
+php_apcu: php-apcu
