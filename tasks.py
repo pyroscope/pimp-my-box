@@ -7,6 +7,7 @@ from __future__ import print_function, unicode_literals
 import os
 import time
 import shutil
+import webbrowser
 
 from invoke import task
 
@@ -24,8 +25,8 @@ def watchdog_pid(ctx):
     return pid
 
 
-@task
-def docs(ctx):
+@task(help={'open-tab': "Open docs in new browser tab after initial build"})
+def docs(ctx, open_tab=False):
     """Start watchdog to build the Sphinx docs."""
     build_dir = 'docs/_build'
     index_html = build_dir + '/html/index.html'
@@ -48,10 +49,9 @@ def docs(ctx):
             ctx.run("touch docs/index.rst")
             ctx.run('ps {}'.format(pid), pty=False)
             url = 'http://localhost:{port:d}/'.format(port=SPHINX_AUTOBUILD_PORT)
-            try:
-                import webbrowser
+            if open_tab:
                 webbrowser.open_new_tab(url)
-            except webbrowser.Error:
+            else:
                 print("\n*** Open '{}' in your browser...".format(url))
             break
 
