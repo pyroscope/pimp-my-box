@@ -1,15 +1,27 @@
 ---
 - name: Render ruTorrent FPM pool definition
-  template: src=fpm-rutorrent.conf dest=/etc/{{ php_etc_dir }}/fpm/pool.d/rutorrent.conf owner=root group=www-data mode=0644 force=yes
+  template:
+    src: "fpm-rutorrent.conf"
+    dest: "/etc/{{ php_etc_dir }}/fpm/pool.d/rutorrent.conf"
+    owner: root
+    group: www-data
+    mode: 0644
+    force: yes
   notify:
     - Restart php-fpm
 
 - name: Set up FPM "php.ini"
-  lineinfile: dest=/etc/{{ php_etc_dir }}/fpm/php.ini regexp="^;? ?{{ item.name }}=" line="{{ item.name }}={{ item.value }}"
+  lineinfile:
+    dest: "/etc/{{ php_etc_dir }}/fpm/php.ini"
+    regexp: "^;? ?{{ item.name }}: "
+    line: "{{ item.name }}: {{ item.value }}"
   with_items:
     - {name: 'cgi.fix_pathinfo', value: '1' }
   notify:
     - Restart php-fpm
 
 - name: Ensure php-fpm is running (and enable it at boot)
-  service: name=php{{ php_version }}-fpm state=started enabled=yes
+  service:
+    name: "php{{ php_version }}-fpm"
+    state: started
+    enabled: yes

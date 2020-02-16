@@ -8,16 +8,31 @@
     - "os_default.yml"
 
 - name: Create rutorrent group
-  group: name=rutorrent state=present
+  group:
+    name: rutorrent
+    state: present
 
 - name: Create rutorrent user
-  user: name=rutorrent comment="ruTorrent Web UI" group=rutorrent groups=rtorrent,users shell=/bin/bash
+  user:
+    name: rutorrent
+    comment: "ruTorrent Web UI"
+    group: rutorrent
+    groups: rtorrent,users
+    shell: /bin/bash
 
 - name: Add rtorrent user to www-data group
-  user: name=rtorrent groups=www-data append=yes
+  user:
+    name: rtorrent
+    groups: www-data
+    append: yes
 
 - name: Create rutorrent home directories
-  file: path=/home/rutorrent/{{ item }} state=directory owner=rutorrent group=www-data mode=0750
+  file:
+    path: /home/rutorrent/{{ item }}
+    state: directory
+    owner: rutorrent
+    group: www-data
+    mode: 0750
   with_items:
     - .
     - bin
@@ -30,11 +45,17 @@
 - include: install.yml
 
 - name: Render rutorrent include for rtorrent
-  template: src=_rutorrent.rc dest=/var/torrent/_rutorrent.rc owner=rtorrent group=rtorrent mode=0640 force=yes
+  template:
+    src: _rutorrent.rc
+    dest: /var/torrent/_rutorrent.rc
+    owner: rtorrent
+    group: rtorrent
+    mode: 0640
+    force: yes
 
 - name: Set ruTorrent config values
   lineinfile:
-    dest: /home/rutorrent/ruTorrent-master/conf/config.php
+    dest: "/home/rutorrent/ruTorrent-master/conf/config.php"
     regexp: "^\\s+\\${{ item.name }} = "
     line: "\t${{ item.name }} = {{ item.value }};"
   with_items:
@@ -47,11 +68,29 @@
   notify:
     - Restart php-fpm
 
+- name: Set _cloudflare plugin Python path
+  lineinfile:
+    dest: "/home/rutorrent/ruTorrent-master/plugins/_cloudflare/conf.php"
+    regexp: "^\\s+\\${{ item.name | regex_replace('[[]|]', '.') }} = "
+    line: "\t${{ item.name }} = {{ item.value }};"
+  with_items:
+    - {name: "pathToExternals['python']", value: "'/usr/bin/python3'" }
+
 - name: Set ruTorrent permissions
-  file: dest=/home/rutorrent/ruTorrent-master owner=rutorrent group=www-data mode=g+rX,o= recurse=yes
+  file:
+    dest: "/home/rutorrent/ruTorrent-{{ rutorrent_version }}"
+    owner: rutorrent
+    group: www-data
+    mode: "g+rX,o:"
+    recurse: yes
 
 - name: Create user directories
-  file: path="/home/rutorrent/profile/users/{{ item }}" state=directory owner=rutorrent group=www-data mode=0770
+  file:
+    path: "/home/rutorrent/profile/users/{{ item }}"
+    state: directory
+    owner: rutorrent
+    group: www-data
+    mode: 0770
   with_items:
     - rutorrent
     - rutorrent/settings
@@ -73,7 +112,12 @@
   register: avconv_bin
 
 - name: Create ffmpeg to avconv symlink
-  file: src=/usr/bin/avconv path=/home/rtorrent/bin/ffmpeg state=link owner=rtorrent group=rtorrent
+  file:
+    src: /usr/bin/avconv
+    path: /home/rtorrent/bin/ffmpeg
+    state: link
+    owner: rtorrent
+    group: rtorrent
   when: "( av_tool is not defined or av_tool != 'ffmpeg' ) and avconv_bin.stat.exists"
 
 - include: fpm.yml

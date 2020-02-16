@@ -1,6 +1,6 @@
 # pimp-my-box
 
-:warning: | A migration to Ansible 2 is underway, so to get something stable / usable, clone / check out the `ansible1` tag for now!
+:warning: | Read the docs regarding the migration to Ansible 2 and ruTorrent 3.9! Report any problems to IRC or issues (rutorrent setup was tested on Bionic)!
 ---: | :---
 
 ![logo](https://raw.githubusercontent.com/pyroscope/pimp-my-box/master/images/pimp-my-box.png)

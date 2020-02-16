@@ -1,15 +1,17 @@
 ---
-- name: Install PHP packages
-  apt: name={{ item }} state=latest
-  with_items:
-    - "php{{ php_version }}-cli"
-    - "php{{ php_version }}-fpm"
-    - "{{ php_apcu }}"
+- name: Install PHP and plugin packages
+  apt:
+    state: latest
+    name:
+      - "php{{ php_version }}-cli"
+      - "php{{ php_version }}-fpm"
+      - "{{ php_apcu }}"
+      - sox
 
 - name: Download ruTorrent release archive
   get_url:
     dest: "/root/ruTorrent-{{ rutorrent_version }}.zip"
-    url: "https://bintray.com/artifact/download/novik65/generic/ruTorrent-{{ rutorrent_version }}.zip"
+    url: "https://github.com/Novik/ruTorrent/archive/v{{ rutorrent_version }}.zip"
     validate_certs: no
 
 - name: Unpack ruTorrent release archive
@@ -18,6 +20,12 @@
     src: "/root/ruTorrent-{{ rutorrent_version }}.zip"
     dest: /home/rutorrent
     creates: /home/rutorrent/ruTorrent-master/conf/config.php
+
+- name: Symlink ruTorrent release
+  file:
+    src: "/home/rutorrent/ruTorrent-{{ rutorrent_version }}"
+    path: "/home/rutorrent/ruTorrent-master"
+    state: link
 
 - name: Download additional themes
   get_url:
