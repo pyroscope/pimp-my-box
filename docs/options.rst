@@ -30,6 +30,14 @@ Look into the files
 ``~/.config/flexget/flexget.log`` and
 ``~/.config/flexget/flexget-cron.log`` to diagnose any problems.
 
+.. hint:: **Running FlexGet with Python 3**
+
+    If your target host has Python 3.6+ installed (i.e. runs Bionic or Buster),
+    you can use that for the FlexGet venv by changing ``venv_bin``
+    in your ``host_vars``:
+
+        venv_bin: "python3 -m venv"
+
 .. _FlexGet cookbook: http://flexget.com/wiki/Cookbook
 
 
