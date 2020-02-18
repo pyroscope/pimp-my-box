@@ -1,8 +1,11 @@
 Overview
 ========
 
-The playbooks in the ``pimp-my-box`` repository will install ``rTorrent-PS``, ``pyrocore``, and related software
-onto any remote dedicated server or VPS with ``root`` access, running Debian or a Debian-like OS.
+The playbooks in the ``pimp-my-box`` repository will install ``rTorrent-PS``, ``pyrocore``,
+and related software onto any remote dedicated server or VPS with ``root`` access,
+running Debian or a Debian-like OS.
+And nobody prevents you from treating your own workstation as ‘remote’,
+so it can be used for a local install too. ☺
 
 ``Ansible`` is used to describe the installation process. It is a tool
 that allows you to perform a complete setup remotely on one or any
