@@ -11,4 +11,4 @@
 # SCHEDULE: Monitor disk space
 branch=(not, (system.has, "close_low_diskspace.normal=")), \
        ((method.redirect, close_low_diskspace.normal, close_low_diskspace))
-schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace.normal, 1000M))
+schedule2 = low_diskspace, 15, 60, ((close_low_diskspace.normal, 1000M))
