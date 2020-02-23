@@ -37,28 +37,64 @@ dependent on how *you* manage your system. See above.
 Upgrade the Python Version
 --------------------------
 
+Updating Python
+^^^^^^^^^^^^^^^
+
 When you installed *Python* via *pyenv* (i.e. ``pyenv_enabled`` is still
 set to ``true``), you can update to a new *Python* release by
-reinstalling the related software. If you want to select a specific
-Python version, set the ``pyenv_python_version`` variable in your
+reinstalling the related software.
+
+You first have to update pyenv itself and remove the old version file
+(this keeps any existing Python version installed).
+Login as ``rtorrent`` and call these commands:
+
+.. code-block:: shell
+
+    cd ~/.local/pyenv
+    git pull --ff-only
+    for i in plugins/py*; do ( cd $i && git pull --ff-only ); done
+    mv version version.$(date --rfc-3339=date)
+
+To get a list of choices for the new version, login as ``rtorrent`` and call this:
+
+.. code-block:: shell
+
+    cd ~/.local/pyenv/ && bin/pyenv install -l | egrep ' 3.[6-9]| 2.7'
+
+Now select the specific Python version you want installed,
+by setting the ``pyenv_python_version`` variable in your
 ``host_vars`` or ``group_vars``.
+On older releases like Trusty, you can only go as high as ``3.6.10``,
+because their SSL libraries are too old for newer Python versions.
 
-You first have to remove the old install directory, and all virtualenvs
-based on it:
-
-.. code-block:: shell
-
-    ansible box -i hosts -a "bash -c 'cd ~rtorrent/.local && rm -rf pyenv pyroscope flexget'"
-
-Then execute the relevant roles again:
+Then execute the ``pyenv`` role:
 
 .. code-block:: shell
 
-    ansible-playbook site.yml -i hosts -t pyenv,cli,fg
+    ansible-playbook site.yml -i hosts -t pyenv
 
 As given, these commands affect all hosts in the ``box`` group of your
-inventory. Also, both ``pyrocore`` and ``flexget`` get upgraded to the
-newest available version.
+inventory.
+
+Updating Virtual Environments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To update all virtualenvs so they're using the new version, just remove them
+(like shown here) or move them to a backup directory:
+
+.. code-block:: shell
+
+    ansible box -i hosts -a \
+        "bash -c 'cd ~rtorrent/.local && rm -rf pyroscope flexget'"
+
+Then execute the relevant roles to restore them with the new version setup:
+
+.. code-block:: shell
+
+    ansible-playbook site.yml -i hosts -t cli,fg
+
+Note that both ``pyrocore`` and ``flexget`` get upgraded to their
+newest available version by this.
 
 
 .. _ansible-update:
