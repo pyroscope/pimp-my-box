@@ -32,7 +32,9 @@
   file: path=/home/rtorrent/.local/pyenv/plugins state=directory owner=rtorrent group=rtorrent mode=0750
 
 - name: git clone pyenv plugins
-  git: repo=https://github.com/yyuu/{{ item }}.git dest=/home/rtorrent/.local/pyenv/plugins/{{ item }}
+  git:
+    repo: https://github.com/yyuu/{{ item }}.git
+    dest: /home/rtorrent/.local/pyenv/plugins/{{ item }}
   when: not pyenv_flagfile.stat.exists
   with_items:
     - pyenv-doctor
@@ -60,13 +62,26 @@
     creates: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/python"
   when: not pyenv_py_flagfile.stat.exists
 
-- name: Install virtualenv and update pip
-  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U pip virtualenv' rtorrent
+- name: Update pip tooling
+  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U pip setuptools wheel' rtorrent
+  args:
+    executable: /bin/bash
+    chdir: /home/rtorrent
+  when: not pyenv_py_flagfile.stat.exists
+
+- name: Install virtualenv
+  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U virtualenv' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
     creates: "/home/rtorrent/.local/pyenv/versions/{{ pyenv_python_version }}/bin/virtualenv"
-  when: not pyenv_py_flagfile.stat.exists
+  when: "not pyenv_py_flagfile.stat.exists and pyenv_python_version < '3'"
 
 - name: Define global pyenv version
-  copy: content="{{ pyenv_python_version }}" dest=/home/rtorrent/.local/pyenv/version owner=rtorrent group=rtorrent mode=0640 force=no
+  copy:
+    content: "{{ pyenv_python_version }}"
+    dest: /home/rtorrent/.local/pyenv/version
+    owner: rtorrent
+    group: rtorrent
+    mode: 0640
+    force: no
