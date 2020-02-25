@@ -6,6 +6,7 @@
       - "php{{ php_version }}-cli"
       - "php{{ php_version }}-fpm"
       - "{{ php_apcu }}"
+      - php-geoip
       - sox
 
 - name: Download ruTorrent release archive
@@ -19,7 +20,7 @@
     copy: no
     src: "/root/ruTorrent-{{ rutorrent_version }}.zip"
     dest: /home/rutorrent
-    creates: /home/rutorrent/ruTorrent-master/conf/config.php
+    creates: "/home/rutorrent/ruTorrent-{{ rutorrent_version }}/conf/config.php"
 
 - name: Symlink ruTorrent release
   file:
