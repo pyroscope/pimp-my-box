@@ -12,6 +12,7 @@ Read :doc:`overview` to learn more.
 
 |issues| |travis|
 
+.. include:: include-contacts.rst
 
 .. warning::
 
@@ -24,11 +25,6 @@ Read :doc:`overview` to learn more.
         echo >>~rtorrent/rtorrent/rtorrent.d/.rcignore 05-rt-ps-columns.rc
 
     when you get errors about ``ui.column.render`` on startup.
-
-
-.. note::
-
-    .. include:: include-contacts.rst
 
 
 .. |logo| image:: https://raw.githubusercontent.com/pyroscope/pimp-my-box/master/images/pimp-my-box.png
