@@ -1,6 +1,6 @@
 # pimp-my-box
 
-:warning: | Read the docs regarding the migration to Ansible 2 and ruTorrent 3.9! Report any problems to IRC or issues (rutorrent setup was tested on Bionic)!
+:warning: | Read the docs regarding the migration to Ansible 2 and ruTorrent 3.9! Report any problems to Gitter or issues (rutorrent setup was tested on Bionic)!
 ---: | :---
 
 ![logo](https://raw.githubusercontent.com/pyroscope/pimp-my-box/master/images/pimp-my-box.png)
@@ -18,9 +18,9 @@ onto any remote dedicated server or VPS with ``root`` access, running Debian or 
 
 **See the [main documentation](http://pimp-my-box.readthedocs.io/) on how to install and use this.**
 
-To get in contact and share your experiences with other users of *PyroScope*, join the
-[pyroscope-users](http://groups.google.com/group/pyroscope-users)
-mailing list or the inofficial ``##rtorrent`` channel on ``irc.freenode.net``.
+To get in contact and share your experiences with other users of *PyroScope*,
+join the [rtorrent-community](https://gitter.im/rtorrent-community/) channel
+[pyroscope-tools](https://gitter.im/rtorrent-community/pyroscope-tools) on Gitter.
 
 
 ## References
