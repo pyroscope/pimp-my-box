@@ -10,9 +10,6 @@
 Automated install of rTorrent-PS etc. via
 [Ansible](http://docs.ansible.com/).
 
-:warning: | Right now, you need a *rTorrent-PS 1.1* version (git head) for the contained configuration to work. If you use an older installation, call ``echo >>~rtorrent/rtorrent/rtorrent.d/.rcignore 05-rt-ps-columns.rc`` when you get errors about ``ui.column.render`` on startup.
----: | :---
-
 The playbooks in the ``pimp-my-box`` repository will install ``rTorrent-PS``, ``pyrocore``, and related software
 onto any remote dedicated server or VPS with ``root`` access, running Debian or a Debian-like OS.
 
