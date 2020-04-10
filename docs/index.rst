@@ -16,15 +16,17 @@ Read :doc:`overview` to learn more.
 
 .. warning::
 
-    Right now, you need a *rTorrent-PS 1.1* version (git head)
-    for the contained configuration to work. If you use an older
-    installation, call
+    If you update an existing installation,
+    you need *rTorrent-PS 1.1* or later
+    for the contained configuration to work.
+    If you use an older version, call
 
     .. code-block:: shell
 
         echo >>~rtorrent/rtorrent/rtorrent.d/.rcignore 05-rt-ps-columns.rc
 
     when you get errors about ``ui.column.render`` on startup.
+    Or simply follow :ref:`rt-ps-update`.
 
 
 .. |logo| image:: https://raw.githubusercontent.com/pyroscope/pimp-my-box/master/images/pimp-my-box.png
