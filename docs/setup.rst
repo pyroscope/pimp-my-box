@@ -57,9 +57,6 @@ In that case, use a personal
 account on that machine, or create an ``ansible`` one – any part of the
 documentation that refers to ‘the workstation’ then means that account.
 
-To get it running on Windows is also possible, by using `Bash for Windows 10`_
-(this is untested, success stories welcome).
-
 See the `Ansible Installation Documentation`_ for how to install it using the package
 manager of your platform. Make sure you get the right version that way,
 the playbooks are tested using Ansible *2.9.5*.
