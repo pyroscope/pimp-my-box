@@ -52,7 +52,8 @@ Installing Ansible
 
 Ansible **must** be installed on the workstation from where you control
 your target hosts. This can also be the target host itself, if you don't
-have a Linux or Mac OSX desktop at hand. In that case, use a personal
+have a local computer running on Linux, Mac OSX, or Windows 10 with WSL installed.
+In that case, use a personal
 account on that machine, or create an ``ansible`` one – any part of the
 documentation that refers to ‘the workstation’ then means that account.
 
