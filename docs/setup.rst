@@ -149,7 +149,7 @@ Now with Ansible installed and able to connect via SSH, you next need to
 configure the target host (by default named ``my-box``) and its specific
 attributes (the so-called *host vars*). There is an example in
 `host\_vars/rpi/main.yml`_ for a default *Raspberry Pi* setup which is
-used a template.
+used as a template.
 
 To create the necessary files, call this command:
 
