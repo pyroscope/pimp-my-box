@@ -53,9 +53,7 @@ files are affected. If you run this against a host with an existing
 installation, make sure that there are no conflicts (Ansible's
 ``--check`` and ``--diff`` options come in very handy here).
 
-If you have questions or need help, please use the `pyroscope-users`_
-mailing list or the inofficial ``##rtorrent`` channel on
-``irc.freenode.net``.
+.. include:: include-contacts.rst
 
 
 .. _Ansible: http://docs.ansible.com/
