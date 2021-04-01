@@ -7,7 +7,7 @@
 [![issues](https://img.shields.io/github/issues/pyroscope/pimp-my-box.svg)](https://github.com/pyroscope/pimp-my-box/issues)
 [![travis](https://api.travis-ci.org/pyroscope/pimp-my-box.svg)](https://travis-ci.org/pyroscope/pimp-my-box)
 
-Automated install of rTorrent-PS etc. via
+Automated install of [rTorrent-PS](https://github.com/pyroscope/rtorrent-ps) etc. via
 [Ansible](http://docs.ansible.com/).
 
 The playbooks in the ``pimp-my-box`` repository will install ``rTorrent-PS``, ``pyrocore``, and related software
