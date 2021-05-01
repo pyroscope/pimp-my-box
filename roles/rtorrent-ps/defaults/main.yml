@@ -3,7 +3,7 @@ main_rtrc_file: /home/rtorrent/rtorrent/rtorrent.rc
 rutorrent_rtrc_file: "{{ main_rtrc_file }}"
 rtorrent_bindir: /opt/rtorrent/bin/
 
-rtps_bintray_url: "https://bintray.com/artifact/download/pyroscope/rtorrent-ps"
+rtps_binary_url: "https://github.com/pyroscope/rtorrent-ps/releases/download"
 
 # rtorrent.rc settings
 rt_global_up_rate_kb: 120000

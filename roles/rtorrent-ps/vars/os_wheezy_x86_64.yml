@@ -1,2 +1,0 @@
-rtps_deb_url: "{{ rtps_bintray_url }}/rtorrent-ps_0.9.6-PS-1.1~wheezy_amd64.deb"
-rtps_deb_SHA: "sha256:32cb975a695e78e2da93f29d6043e6381afad06a874565f433492b76369aacca"
