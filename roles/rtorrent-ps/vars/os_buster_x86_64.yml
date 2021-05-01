@@ -1,0 +1,2 @@
+rtps_deb_url: "{{ rtps_binary_url }}/PS-1.1/rtorrent-ps_0.9.6-PS-1.1-66-gbac90aa~buster_amd64.deb"
+rtps_deb_SHA: "sha256:86cd491a865e8b66111abe90af3aea51f4025ff298280bfa44e4507d7e4abde2"
