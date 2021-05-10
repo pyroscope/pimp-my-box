@@ -82,7 +82,7 @@ that URL).
 
 To *update to a new version* of ruTorrent, first add the desired version
 as ``rutorrent_version`` to your variables – that version has to be
-available on `Bintray`_. Then move the old installation tree away:
+available on `GitHub Releases`_. Then move the old installation tree away:
 
 .. code-block:: shell
 
@@ -94,4 +94,4 @@ Finally, rerun the playbook to install the new version. In case anything
 goes wrong, you can move back that backup you made initially.
 
 .. _this blog post: https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
-.. _Bintray: https://bintray.com/novik65/generic/ruTorrent#files
+.. _GitHub Releases: https://github.com/pyroscope/rtorrent-ps/releases

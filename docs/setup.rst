@@ -238,7 +238,7 @@ see a message like the following:
     WARNING - No DEB package URL defined for '‹platform›', you need to install /opt/rtorrent manually!
 
 In that case, `compile a binary yourself`_. If you want to run a
-*rTorrent-PS* version that is not yet released to `Bintray`_, do the
+*rTorrent-PS* version that is not yet released to `GitHub Releases`_, do the
 same.
 
 If you added more than one host into the ``box`` group and want to only
@@ -247,7 +247,7 @@ address one of them, use
 ``-v`` to get more detailed information on what each task does.
 
 .. _compile a binary yourself: https://github.com/pyroscope/rtorrent-ps/blob/master/docs/DebianInstallFromSource.md#build-rtorrent-and-core-dependencies-from-source
-.. _Bintray: https://bintray.com/pyroscope/rtorrent-ps/rtorrent-ps#files
+.. _GitHub Releases: https://github.com/pyroscope/rtorrent-ps/releases
 
 
 .. _tmux-start:
