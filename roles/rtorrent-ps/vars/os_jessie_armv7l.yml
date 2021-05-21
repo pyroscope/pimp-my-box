@@ -1,2 +1,2 @@
-rtps_deb_url: "{{ rtps_binary_url }}/PS-1.1/rtorrent-ps_0.9.6-20160308-c7c8d31%7Ejessie_armhf.deb"
+rtps_deb_url: "{{ rtps_binary_url }}/PS-1.1/rtorrent-ps_0.9.6-20160308-c7c8d31.jessie_armhf.deb"
 rtps_deb_SHA: "sha1:a6c3d0bafa65df11f851a6bae2e9766d1c68fa3e"

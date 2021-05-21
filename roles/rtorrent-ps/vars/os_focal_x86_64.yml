@@ -1,2 +1,2 @@
-rtps_deb_url: "{{ rtps_binary_url }}/PS-1.1/rtorrent-ps_0.9.6-PS-1.1-66-gbac90aa~focal_amd64.deb"
+rtps_deb_url: "{{ rtps_binary_url }}/PS-1.1/rtorrent-ps_0.9.6-PS-1.1-66-gbac90aa.focal_amd64.deb"
 rtps_deb_SHA: "sha256:66e4e4e0004f898e982d19279373076c879b93ec253ee0a432379271de702619"

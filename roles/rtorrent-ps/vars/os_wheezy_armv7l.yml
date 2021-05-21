@@ -1,2 +1,2 @@
-rtps_deb_url: "{{ rtps_binary_url }}/PS-1.1/rtorrent-ps_0.9.4-20150310-46ed5cb%7Ewheezy_armhf.deb"
+rtps_deb_url: "{{ rtps_binary_url }}/PS-1.1/rtorrent-ps_0.9.4-20150310-46ed5cb.wheezy_armhf.deb"
 rtps_deb_SHA: "sha1:52a6d1498b1f1a936d7ef7faece98cfbbc960740"
