@@ -63,14 +63,14 @@
   when: not pyenv_py_flagfile.stat.exists
 
 - name: Update pip tooling
-  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U pip setuptools wheel' rtorrent
+  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/python -m pip install -U pip setuptools wheel' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
   when: not pyenv_py_flagfile.stat.exists
 
 - name: Install virtualenv
-  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/pip install -U virtualenv' rtorrent
+  shell: su -c '.local/pyenv/versions/{{ pyenv_python_version }}/bin/python -m pip install -U virtualenv' rtorrent
   args:
     executable: /bin/bash
     chdir: /home/rtorrent
